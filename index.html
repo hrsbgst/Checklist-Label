@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checklist Labelling - F34V Chatime Kios AZKO Batoh</title>
+<link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx47N_2AJqhMmtMjpWcoK5XqgG4P_hyVLH8IxU0b6lXFgU3exrDUarZ2M&s=10">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root {
@@ -26,7 +27,7 @@
     --brand-blue: #2563eb;
     --panel-gray: #f4f4f5;
     --logo-chatime: url("https://fbindonesia.com/files/uploads/contentbrand/logo_square/2022/Apr/07/624e710680c6a/logo-chatime-rounded.png");
-    --sticky-top-offset: 88px;
+    --sticky-top-offset: 72px;
   }
   * { box-sizing: border-box; }
   body {
@@ -39,15 +40,15 @@
 
   /* ============ HEADER ============ */
   header {
-  background: var(--bg);
-  border: none;
-  padding: 12px 20px 8px;
-  position: sticky;
-  top: 0;
-  z-index: 300;
-  pointer-events: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
-}
+    background: var(--bg);
+    border: none;
+    padding: 6px 16px 4px;
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    pointer-events: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+  }
   header .head-row {
     max-width: 1600px;
     margin: 0 auto;
@@ -55,11 +56,11 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 14px;
-    padding: 14px 20px;
+    gap: 10px;
+    padding: 8px 16px;
     background: linear-gradient(135deg, #7a35a5 0%, #5a2379 55%, #3a175a 100%);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(106,44,145,0.25);
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(106,44,145,0.22);
     pointer-events: auto;
     position: relative;
     overflow: hidden;
@@ -69,16 +70,16 @@
     position: absolute;
     right: -80px;
     top: -80px;
-    width: 260px;
-    height: 260px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(58,156,58,0.20) 0%, transparent 70%);
     pointer-events: none;
   }
-  .brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
   .brand-logo {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background-image: var(--logo-chatime);
     background-color: #fff;
@@ -92,30 +93,30 @@
   .brand-text { display: flex; flex-direction: column; }
   header h1 {
     margin: 0;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 800;
     color: #fff;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.3px;
   }
   header .eyebrow {
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.1px;
     text-transform: uppercase;
     color: #b8e8b8;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   }
-  header p { margin: 2px 0 0; font-size: 11px; color: rgba(255,255,255,0.75); }
-  .head-actions { display: flex; gap: 8px; flex-wrap: wrap; position: relative; z-index: 1; }
+  header p { margin: 1px 0 0; font-size: 10.5px; color: rgba(255,255,255,0.75); }
+  .head-actions { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 1; }
 
   /* ============ BUTTON ============ */
   .btn {
-    padding: 7px 12px;
+    padding: 6px 11px;
     border-radius: 7px;
     border: 1px solid var(--line-strong);
     background: var(--card);
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text);
     cursor: pointer;
@@ -150,7 +151,7 @@
   }
   input[type="file"] { display: none; }
 
-  .container { max-width: 1600px; margin: 0 auto; padding: 8px 20px 40px; }
+  .container { max-width: 1600px; margin: 0 auto; padding: 6px 16px 32px; }
 
   /* ============ STICKY WRAPPER ============ */
   .sticky-top {
@@ -158,23 +159,23 @@
     top: var(--sticky-top-offset);
     z-index: 250;
     background: var(--bg);
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   /* ============ CONTROLS ============ */
   .controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
     flex-wrap: wrap;
   }
   .controls input[type="date"], .controls input[type="text"] {
-    padding: 7px 10px;
+    padding: 6px 9px;
     border-radius: 7px;
     border: 1px solid var(--line-strong);
-    font-size: 13px;
+    font-size: 12.5px;
     background: var(--card);
     font-family: inherit;
   }
@@ -182,70 +183,101 @@
     position: relative;
     margin-left: auto;
     width: 10cm;
-    min-width: 220px;
+    min-width: 200px;
     max-width: 100%;
   }
   .search-wrap .search {
     width: 100%;
-    padding: 7px 32px 7px 10px;
+    padding: 6px 30px 6px 9px;
     border-radius: 7px;
     border: 1px solid var(--line-strong);
-    font-size: 13px;
+    font-size: 12.5px;
     background: var(--card);
     box-sizing: border-box;
     font-family: inherit;
   }
   .search-clear {
     position: absolute;
-    right: 6px;
+    right: 5px;
     top: 50%;
     transform: translateY(-50%);
     border: none;
     background: transparent;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--muted);
     cursor: pointer;
-    padding: 2px 6px;
+    padding: 2px 5px;
     border-radius: 4px;
     display: none;
   }
   .search-clear:hover { background: #f0f0f0; color: var(--danger); }
   .search-clear.show { display: block; }
 
-  /* ============ PIC SUMMARY ============ */
+  /* ============ PIC SUMMARY + SUMMARY GABUNG ============ */
   .pic-summary {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     background: var(--panel-gray);
     border: 1px solid var(--line);
     border-radius: 10px;
-    padding: 8px 14px;
-    margin-bottom: 12px;
+    padding: 6px 12px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
   }
-  .pic-summary .grp { display: flex; align-items: center; gap: 6px; }
-  .pic-summary label { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+  .pic-summary .grp { display: flex; align-items: center; gap: 5px; }
+  .pic-summary label { font-size: 11px; color: var(--muted); font-weight: 600; }
   .pic-summary select {
-    padding: 6px 10px;
-    border-radius: 7px;
+    padding: 5px 8px;
+    border-radius: 6px;
     border: 1px solid var(--line-strong);
-    font-size: 12.5px;
+    font-size: 12px;
     background: #fff;
-    min-width: 200px;
+    min-width: 160px;
     font-family: inherit;
   }
-  .pic-summary .tanggal-label { font-size: 11.5px; color: var(--muted); font-weight: 600; margin-left: auto; }
+  .pic-summary .tanggal-label { font-size: 11px; color: var(--muted); font-weight: 600; margin-left: auto; }
   .pic-summary .tanggal-value {
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
-    padding: 6px 12px;
+    padding: 5px 10px;
     background: #fff;
     border: 1px solid var(--line-strong);
-    border-radius: 7px;
-    min-width: 130px;
+    border-radius: 6px;
+    min-width: 110px;
     text-align: center;
   }
+
+  /* Summary inline */
+  .summary-inline {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding-left: 10px;
+    border-left: 1px solid var(--line-strong);
+    margin-left: 4px;
+    flex-wrap: wrap;
+  }
+  .summary-inline .box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 4px 9px;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .summary-inline .box .num { font-size: 15px; font-weight: 700; line-height: 1; }
+  .summary-inline .box .lbl { font-size: 10.5px; color: var(--muted); font-weight: 600; }
+  .summary-inline .box.danger { border-color: #f5c0c0; }
+  .summary-inline .box.danger .num { color: var(--danger); }
+  .summary-inline .box.warn { border-color: #f5ddb8; }
+  .summary-inline .box.warn .num { color: var(--warn); }
+  .summary-inline .box.ok { border-color: #c0e6cf; }
+  .summary-inline .box.ok .num { color: var(--ok); }
+  .summary-inline .box.checked { border-color: #c0d2f5; }
+  .summary-inline .box.checked .num { color: var(--brand-blue); }
 
   input[type="date"]::-webkit-calendar-picker-indicator,
   input[type="time"]::-webkit-calendar-picker-indicator {
@@ -265,8 +297,8 @@
     margin-bottom: 0;
   }
   .tab {
-    padding: 8px 16px;
-    font-size: 13px;
+    padding: 7px 14px;
+    font-size: 12.5px;
     font-weight: 500;
     color: var(--muted);
     cursor: pointer;
@@ -277,39 +309,8 @@
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* ============ SUMMARY BOXES ============ */
-  .summary {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-  .summary .box {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 7px;
-    padding: 6px 12px;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    white-space: nowrap;
-  }
-  .summary .box .num { font-size: 20px; font-weight: 700; line-height: 1; }
-  .summary .box .lbl { font-size: 11px; color: var(--muted); font-weight: 600; }
-  .summary .box.danger { border-color: #f5c0c0; }
-  .summary .box.danger .num { color: var(--danger); }
-  .summary .box.warn { border-color: #f5ddb8; }
-  .summary .box.warn .num { color: var(--warn); }
-  .summary .box.ok { border-color: #c0e6cf; }
-  .summary .box.ok .num { color: var(--ok); }
-  .summary .box.checked { border-color: #c0d2f5; }
-  .summary .box.checked .num { color: var(--brand-blue); }
-
   /* ============ ITEM TABLE ============ */
-  .table-wrapper {
-    position: relative;
-  }
+  .table-wrapper { position: relative; }
   table.item-table {
     width: 100%;
     border-collapse: separate;
@@ -335,7 +336,7 @@
     cursor: pointer;
     user-select: none;
     position: sticky;
-    top: var(--thead-top, 240px);
+    top: var(--thead-top, 200px);
     z-index: 200;
     box-shadow: 0 2px 4px rgba(0,0,0,0.06);
   }
@@ -557,13 +558,8 @@
   /* ============ PRINT VIEW ============ */
   #printView { display: none; }
 
-  /* Mading effect - hanya di layar */
-  body.print-view-active {
-    background: #f0f0f0;
-  }
-  body.print-view-active .container {
-    background: transparent;
-  }
+  body.print-view-active { background: #f0f0f0; }
+  body.print-view-active .container { background: transparent; }
 
   .print-page {
     background: #fff;
@@ -894,6 +890,29 @@
     display: none !important;
   }
 
+  /* ============ SYNC BADGE (AUTO HIDE) ============ */
+  #syncBadge {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #f4f4f5;
+    color: #767676;
+    border: 1px solid #e8e8e8;
+    z-index: 9997;
+    font-family: -apple-system, sans-serif;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  #syncBadge.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   /* ============ PIC MODAL ============ */
   #picModal.modal-overlay {
     position: fixed !important;
@@ -1042,9 +1061,9 @@
     <div class="brand">
       <div class="brand-logo"></div>
       <div class="brand-text">
-        <div class="eyebrow">PT Foods Beverages Indonesia</div>
-        <h1>Checklist Labelling</h1>
-        <p>Chatime — perhitungan tanggal expired otomatis dari tanggal produksi</p>
+        <div class="eyebrow">Chatime AZKO Kios Batoh Aceh</div>
+        <h1>CHECKLIST LABELLING</h1>
+        <p>Chatime AZKO Kios Batoh — perhitungan expired otomatis</p>
       </div>
     </div>
     <div class="head-actions">
@@ -1084,15 +1103,16 @@
         <div class="grp">
           <button class="btn" id="managePicBtn" title="Tambah / kelola daftar PIC">👥 Kelola PIC</button>
         </div>
+
+        <div class="summary-inline">
+          <div class="box danger"><span class="num" id="cntDanger">0</span><span class="lbl">Expired</span></div>
+          <div class="box warn"><span class="num" id="cntWarn">0</span><span class="lbl">Segera</span></div>
+          <div class="box ok"><span class="num" id="cntOk">0</span><span class="lbl">Aman</span></div>
+          <div class="box checked"><span class="num" id="cntChecked">0</span><span class="lbl">Dicek</span></div>
+        </div>
+
         <div class="tanggal-label">Tanggal:</div>
         <div class="tanggal-value" id="tanggalDisplay">-</div>
-      </div>
-
-      <div class="summary">
-        <div class="box danger"><span class="num" id="cntDanger">0</span><span class="lbl">Expired</span></div>
-        <div class="box warn"><span class="num" id="cntWarn">0</span><span class="lbl">Segera</span></div>
-        <div class="box ok"><span class="num" id="cntOk">0</span><span class="lbl">Aman</span></div>
-        <div class="box checked"><span class="num" id="cntChecked">0</span><span class="lbl">Sudah dicek</span></div>
       </div>
 
       <div class="tabs">
@@ -1253,7 +1273,6 @@ const DEFAULT_DATA = {
 };
 
 const STORAGE_KEY = 'chatime-checklist-labelling-v8';
-// ============ GOOGLE SHEETS SYNC ============
 const API_URL = 'https://script.google.com/macros/s/AKfycbx0EnrBIKR2OJTElE0u0V3uEPeU_JSt2ToyfexrRbpoCwSEvYhokzQkQvOh-q_ErWC3/exec';
 const SYNC_ENABLED = true;
 const SYNC_DEBOUNCE_MS = 1500;
@@ -1264,12 +1283,12 @@ let DATA = { labelling: [], ouast: [] };
 let state = {
   labelling: {},
   ouast: {},
-  meta: { 
-    picOpening: '', 
-    picClosing: '', 
-    tanggal: '', 
+  meta: {
+    picOpening: '',
+    picClosing: '',
+    tanggal: '',
     lastOpenDate: '',
-    lastModified: 0  // <-- TAMBAH INI
+    lastModified: 0
   }
 };
 let sortState = {
@@ -1392,39 +1411,46 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
 }
+
 /* =========================================================
    SYNC KE GOOGLE SHEETS
    ========================================================= */
 let syncTimer = null;
+let syncHideTimer = null;
 let isSyncing = false;
-let lastSyncStatus = 'idle'; // idle | syncing | ok | error
 
-function updateSyncBadge(status, message) {
+function showSyncBadge(status, message) {
   let el = document.getElementById('syncBadge');
   if (!el) {
     el = document.createElement('div');
     el.id = 'syncBadge';
-    el.style.cssText = `
-      position: fixed; bottom: 12px; right: 12px;
-      font-size: 11px; padding: 4px 10px; border-radius: 20px;
-      background: #f4f4f5; color: #767676; border: 1px solid #e8e8e8;
-      z-index: 9997; transition: all 0.2s; pointer-events: none;
-      font-family: -apple-system, sans-serif;
-    `;
     document.body.appendChild(el);
   }
   const styles = {
-    idle:    { bg: '#f4f4f5', color: '#767676', text: '⏸️  Idle' },
-    syncing: { bg: '#fef6e7', color: '#b45309', text: '🔄 Sync...' },
-    ok:      { bg: '#ecfdf3', color: '#16803d', text: '✅ Tersimpan' },
-    error:   { bg: '#fef2f2', color: '#b91c1c', text: '⚠️ Gagal sync' }
+    syncing: { bg: '#fef6e7', color: '#b45309', text: message || '🔄 Sync...' },
+    ok:      { bg: '#ecfdf3', color: '#16803d', text: message || '✅ Tersimpan' },
+    error:   { bg: '#fef2f2', color: '#b91c1c', text: message || '⚠️ Gagal sync' }
   };
-  const s = styles[status] || styles.idle;
+  const s = styles[status];
+  if (!s) return;
   el.style.background = s.bg;
   el.style.color = s.color;
   el.style.borderColor = s.bg;
-  el.textContent = message || s.text;
-  lastSyncStatus = status;
+  el.textContent = s.text;
+  el.classList.add('show');
+
+  clearTimeout(syncHideTimer);
+  // Auto-hide setelah 1.5 detik (kecuali masih syncing)
+  if (status !== 'syncing') {
+    syncHideTimer = setTimeout(() => {
+      el.classList.remove('show');
+    }, 1500);
+  }
+}
+
+function hideSyncBadge() {
+  const el = document.getElementById('syncBadge');
+  if (el) el.classList.remove('show');
 }
 
 async function syncToSheets() {
@@ -1432,7 +1458,7 @@ async function syncToSheets() {
   if (isSyncing) return;
 
   isSyncing = true;
-  updateSyncBadge('syncing');
+  showSyncBadge('syncing');
 
   try {
     const payload = {
@@ -1441,7 +1467,6 @@ async function syncToSheets() {
       meta: state.meta
     };
 
-    // Pakai URLSearchParams + form-encoded (cara paling reliable untuk GAS)
     const body = new URLSearchParams();
     body.append('action', 'save');
     body.append('payload', JSON.stringify(payload));
@@ -1449,8 +1474,6 @@ async function syncToSheets() {
     const res = await fetch(API_URL, {
       method: 'POST',
       body: body,
-      // JANGAN set Content-Type manual — biar browser set otomatis
-      // JANGAN pakai no-cors
     });
 
     const text = await res.text();
@@ -1458,15 +1481,14 @@ async function syncToSheets() {
     try { json = JSON.parse(text); } catch(e) {}
 
     if (json && json.ok) {
-      updateSyncBadge('ok');
-      setTimeout(() => updateSyncBadge('idle'), 3000);
+      showSyncBadge('ok', '✅ Tersimpan');
     } else {
       console.error('Sync response tidak OK:', text);
-      updateSyncBadge('error', '⚠️ Gagal sync');
+      showSyncBadge('error', '⚠️ Gagal sync');
     }
   } catch (e) {
     console.error('Sync error:', e);
-    updateSyncBadge('error', '⚠️ Gagal sync');
+    showSyncBadge('error', '⚠️ Gagal sync');
   } finally {
     isSyncing = false;
   }
@@ -1483,32 +1505,31 @@ async function loadFromSheets() {
     const res = await fetch(API_URL + '?action=load');
     const json = await res.json();
     if (!json || !json.ok || !json.data) return false;
-    
+
     const remoteData = json.data;
     const remoteModified = (remoteData.state && remoteData.state.meta && remoteData.state.meta.lastModified) || 0;
     const localModified = (state.meta && state.meta.lastModified) || 0;
-    
-    // Kalau lokal lebih baru → jangan timpa, malah kirim ke Sheets
+
     if (localModified > remoteModified) {
       console.log('Lokal lebih baru, sync ke Sheets...');
       scheduleSyncToSheets();
       return false;
     }
-    
-    // Kalau Sheets lebih baru (atau sama) → pakai Sheets
+
     DATA = remoteData.data || DATA;
     state = remoteData.state || state;
-    
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
     } catch (e) {}
-    
+
     return true;
   } catch (e) {
     console.warn('Gagal load dari Sheets, pakai data lokal.', e);
   }
   return false;
 }
+
 function loadAll() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -1546,9 +1567,7 @@ function loadAll() {
 
 function saveAll() {
   try {
-    // Tandai waktu modifikasi
     state.meta.lastModified = Date.now();
-    
     const payload = { data: DATA, state: state };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch (e) {
@@ -1709,23 +1728,19 @@ function updateStickyPositions() {
   const stickyTop = document.getElementById('stickyTop');
   if (!header || !stickyTop) return;
 
-  const headerRect = header.getBoundingClientRect();
-  const headerHeight = headerRect.height;
-  const stickyTopHeight = stickyTop.offsetHeight;
+  const headerHeight = Math.ceil(header.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--sticky-top-offset', headerHeight + 'px');
 
-  /* Header ungu: total height (padding wrapper + head-row) */
-  const offset = headerHeight;
-
-  /* Set CSS variable untuk stickyTop */
-  document.documentElement.style.setProperty('--sticky-top-offset', offset + 'px');
-
-  /* Thead tabel posisinya di bawah stickyTop */
-  const theadOffset = offset + stickyTopHeight;
+  const stickyTopHeight = Math.ceil(stickyTop.offsetHeight);
+  const theadOffset = headerHeight + stickyTopHeight;
   document.documentElement.style.setProperty('--thead-top', theadOffset + 'px');
 }
 
 window.addEventListener('resize', updateStickyPositions);
 window.addEventListener('load', updateStickyPositions);
+window.addEventListener('scroll', () => {
+  requestAnimationFrame(updateStickyPositions);
+}, { passive: true });
 
 function updateSortArrows() {
   document.querySelectorAll('.item-table').forEach(table => {
@@ -2035,7 +2050,6 @@ function applyMetaToControls() {
   if (!state.meta.tanggal || state.meta.lastOpenDate !== todayISO) {
     state.meta.tanggal = todayISO;
     state.meta.lastOpenDate = todayISO;
-    // Simpan lokal saja, jangan sync ke Sheets
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
     } catch (e) {}
@@ -2353,7 +2367,6 @@ document.getElementById('floatBackBtn').addEventListener('click', (e) => {
 
 /* ============ INIT ============ */
 (async function init() {
-  // 1. Load dari localStorage dulu (biar cepat tampil)
   loadAll();
   applyMetaToControls();
   updateSortArrows();
@@ -2361,21 +2374,18 @@ document.getElementById('floatBackBtn').addEventListener('click', (e) => {
   updateSummary(activeTab);
   setTimeout(updateStickyPositions, 100);
 
-  // 2. Lalu coba load dari Sheets (background)
-  updateSyncBadge('syncing', '🔄 Memuat dari cloud...');
+  showSyncBadge('syncing', '🔄 Memuat dari cloud...');
   const loaded = await loadFromSheets();
   if (loaded) {
     applyMetaToControls();
     renderAll();
     updateSummary(activeTab);
     renderPicDropdowns();
-    updateSyncBadge('ok', '✅ Data dari cloud');
-    setTimeout(() => updateSyncBadge('idle'), 3000);
+    showSyncBadge('ok', '✅ Data dari cloud');
   } else {
-    updateSyncBadge('idle');
+    hideSyncBadge();
   }
 
-  // 3. Auto-refresh tiap 30 detik (seperti sekarang)
   setInterval(() => {
     const ae = document.activeElement;
     if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'SELECT' || ae.tagName === 'TEXTAREA')) return;
@@ -2500,6 +2510,16 @@ document.getElementById('closePicModal').addEventListener('click', closePicModal
 document.getElementById('picDoneBtn').addEventListener('click', closePicModal);
 document.getElementById('picModal').addEventListener('click', (e) => {
   if (e.target.id === 'picModal') closePicModal();
+});
+
+// ESC untuk close modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('picModal');
+    if (modal && modal.classList.contains('show')) {
+      closePicModal();
+    }
+  }
 });
 
 document.getElementById('picForm').addEventListener('submit', (e) => {
