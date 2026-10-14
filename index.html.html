@@ -1,0 +1,2524 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Labelling - F34V Chatime Kios AZKO Batoh</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --line: #e8e8e8;
+    --line-strong: #d0d0d0;
+    --text: #1a1a1a;
+    --muted: #767676;
+    --accent: #6a2c91;
+    --ok: #16803d;
+    --ok-bg: #ecfdf3;
+    --warn: #b45309;
+    --warn-bg: #fef6e7;
+    --danger: #b91c1c;
+    --danger-bg: #fef2f2;
+    --none-bg: #f4f4f4;
+    --brand-green: #3a9c3a;
+    --brand-purple: #6a2c91;
+    --brand-blue: #2563eb;
+    --panel-gray: #f4f4f5;
+    --logo-chatime: url("https://fbindonesia.com/files/uploads/contentbrand/logo_square/2022/Apr/07/624e710680c6a/logo-chatime-rounded.png");
+    --sticky-top-offset: 88px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  /* ============ HEADER ============ */
+  header {
+  background: var(--bg);
+  border: none;
+  padding: 12px 20px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  pointer-events: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+}
+  header .head-row {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #7a35a5 0%, #5a2379 55%, #3a175a 100%);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(106,44,145,0.25);
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  header .head-row::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(58,156,58,0.20) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-image: var(--logo-chatime);
+    background-color: #fff;
+    background-size: 78%;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .brand-text { display: flex; flex-direction: column; }
+  header h1 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.2px;
+  }
+  header .eyebrow {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #b8e8b8;
+    margin-bottom: 2px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+  header p { margin: 2px 0 0; font-size: 11px; color: rgba(255,255,255,0.75); }
+  .head-actions { display: flex; gap: 8px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+  /* ============ BUTTON ============ */
+  .btn {
+    padding: 7px 12px;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .btn:hover { background: #f5f5f5; }
+  header .btn {
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    backdrop-filter: blur(4px);
+  }
+  header .btn:hover {
+    background: rgba(255,255,255,0.25);
+    border-color: #fff;
+    color: #fff;
+  }
+  .btn.primary { background: var(--brand-purple); color: #fff; border-color: var(--brand-purple); }
+  .btn.primary:hover { background: #571f75; }
+  .btn.danger { background: #fff; color: var(--danger); border-color: var(--danger); }
+  .btn.danger:hover { background: var(--danger-bg); }
+  header .btn.danger {
+    background: rgba(255,255,255,0.1);
+    color: #ffd4d4;
+    border-color: rgba(255,180,180,0.4);
+  }
+  header .btn.danger:hover {
+    background: rgba(185,28,28,0.35);
+    color: #fff;
+    border-color: #ffb4b4;
+  }
+  input[type="file"] { display: none; }
+
+  .container { max-width: 1600px; margin: 0 auto; padding: 8px 20px 40px; }
+
+  /* ============ STICKY WRAPPER ============ */
+  .sticky-top {
+    position: sticky;
+    top: var(--sticky-top-offset);
+    z-index: 250;
+    background: var(--bg);
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  /* ============ CONTROLS ============ */
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .controls input[type="date"], .controls input[type="text"] {
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    font-size: 13px;
+    background: var(--card);
+    font-family: inherit;
+  }
+  .search-wrap {
+    position: relative;
+    margin-left: auto;
+    width: 10cm;
+    min-width: 220px;
+    max-width: 100%;
+  }
+  .search-wrap .search {
+    width: 100%;
+    padding: 7px 32px 7px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    font-size: 13px;
+    background: var(--card);
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  .search-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: none;
+  }
+  .search-clear:hover { background: #f0f0f0; color: var(--danger); }
+  .search-clear.show { display: block; }
+
+  /* ============ PIC SUMMARY ============ */
+  .pic-summary {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: var(--panel-gray);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .pic-summary .grp { display: flex; align-items: center; gap: 6px; }
+  .pic-summary label { font-size: 11.5px; color: var(--muted); font-weight: 600; }
+  .pic-summary select {
+    padding: 6px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--line-strong);
+    font-size: 12.5px;
+    background: #fff;
+    min-width: 200px;
+    font-family: inherit;
+  }
+  .pic-summary .tanggal-label { font-size: 11.5px; color: var(--muted); font-weight: 600; margin-left: auto; }
+  .pic-summary .tanggal-value {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid var(--line-strong);
+    border-radius: 7px;
+    min-width: 130px;
+    text-align: center;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    margin-left: 2px;
+    padding: 2px;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator:hover,
+  input[type="time"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+  /* ============ TABS ============ */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0;
+  }
+  .tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab.active { color: var(--brand-purple); border-bottom-color: var(--brand-green); font-weight: 700; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ============ SUMMARY BOXES ============ */
+  .summary {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .summary .box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .summary .box .num { font-size: 20px; font-weight: 700; line-height: 1; }
+  .summary .box .lbl { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .summary .box.danger { border-color: #f5c0c0; }
+  .summary .box.danger .num { color: var(--danger); }
+  .summary .box.warn { border-color: #f5ddb8; }
+  .summary .box.warn .num { color: var(--warn); }
+  .summary .box.ok { border-color: #c0e6cf; }
+  .summary .box.ok .num { color: var(--ok); }
+  .summary .box.checked { border-color: #c0d2f5; }
+  .summary .box.checked .num { color: var(--brand-blue); }
+
+  /* ============ ITEM TABLE ============ */
+  .table-wrapper {
+    position: relative;
+  }
+  table.item-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: visible;
+  }
+  table.item-table thead th:first-child { border-top-left-radius: 10px; }
+  table.item-table thead th:last-child { border-top-right-radius: 10px; }
+  .item-table thead th {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    padding: 8px 10px;
+    background: #eef0f3;
+    border-bottom: 2px solid var(--line-strong);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    position: sticky;
+    top: var(--thead-top, 240px);
+    z-index: 200;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  }
+  .item-table thead th:hover { color: var(--brand-purple); }
+  .item-table thead th .arrow { font-size: 9px; margin-left: 3px; opacity: 0.6; }
+  .item-table tbody td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+    vertical-align: middle;
+  }
+  .item-table tbody tr:last-child td { border-bottom: none; }
+  .item-table tbody tr:hover { background: #fafafa; }
+  .item-table tbody tr.is-expired { background: var(--danger-bg); }
+  .item-table tbody tr.is-expired:hover { background: #fde8e8; }
+  .item-table tbody tr.is-expired td { color: var(--danger); }
+  .item-table tbody tr.is-expired .item-name { color: var(--danger); }
+  .item-table tbody tr.is-checked .item-name::after {
+    content: ' ✓';
+    color: var(--brand-blue);
+    font-weight: 700;
+  }
+
+  .item-name { font-weight: 600; }
+  .item-shelf { font-size: 11.5px; color: var(--muted); }
+
+  .status-strip { width: 4px; padding: 0 !important; }
+  .status-strip.danger { background: var(--danger); }
+  .status-strip.warn { background: var(--warn); }
+  .status-strip.ok { background: var(--ok); }
+  .status-strip.none { background: var(--line-strong); }
+
+  .item-table th.col-left, .item-table td.col-left { text-align: left; }
+  .item-table th.col-center, .item-table td.col-center { text-align: center; }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  .badge.danger { background: var(--danger-bg); color: var(--danger); }
+  .badge.warn { background: var(--warn-bg); color: var(--warn); }
+  .badge.ok { background: var(--ok-bg); color: var(--ok); }
+  .badge.none { background: var(--none-bg); color: var(--muted); }
+  .pct-note { font-size: 10.5px; color: var(--muted); display: block; margin-top: 2px; }
+
+  .item-table input[type="date"] {
+    padding: 5px 6px;
+    font-size: 12.5px;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  .item-table input[type="time"] {
+    padding: 5px 6px;
+    font-size: 12.5px;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  .dt-inputs {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item-table input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--brand-blue);
+  }
+
+  .check-all-btn {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border-radius: 3px;
+    border: 1.5px solid var(--line-strong);
+    background: #fff;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 6px;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+  }
+  .check-all-btn:hover { border-color: var(--brand-blue); }
+  .check-all-btn.checked {
+    background: var(--brand-blue);
+    border-color: var(--brand-blue);
+  }
+  .check-all-btn.checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .exp-value { font-weight: 600; white-space: nowrap; }
+
+  .empty {
+    text-align: center; color: var(--muted); font-size: 12.5px;
+    padding: 30px 10px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 10px;
+  }
+  .footer-note { font-size: 11.5px; color: var(--muted); margin-top: 14px; }
+
+  /* ============ TOAST ============ */
+  #toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 12.5px;
+    padding: 8px 16px;
+    border-radius: 7px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    z-index: 9999;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ============ KELOLA ARTIKEL ============ */
+  .artikel-toolbar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .artikel-toolbar .spacer { flex: 1; }
+
+  .artikel-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .artikel-tab {
+    padding: 6px 14px;
+    font-size: 12.5px;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-weight: 500;
+  }
+  .artikel-tab.active { color: var(--brand-purple); border-bottom-color: var(--brand-green); font-weight: 700; }
+
+  table.artikel-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .artikel-table thead th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 8px 12px;
+    background: #f7f7f7;
+    border-bottom: 1px solid var(--line);
+  }
+  .artikel-table tbody td {
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12.5px;
+    vertical-align: middle;
+  }
+  .artikel-table tbody tr:last-child td { border-bottom: none; }
+  .artikel-table input[type="text"] {
+    padding: 5px 8px;
+    font-size: 12.5px;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    width: 100%;
+    font-family: inherit;
+  }
+  .artikel-table .actions { display: flex; gap: 6px; justify-content: flex-end; }
+  .artikel-table .actions button {
+    padding: 4px 9px;
+    font-size: 11.5px;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .artikel-table .actions button:hover { background: #f5f5f5; }
+  .artikel-table .actions button.del { color: var(--danger); border-color: var(--danger); }
+  .artikel-table .actions button.del:hover { background: var(--danger-bg); }
+
+  /* ============ PRINT VIEW ============ */
+  #printView { display: none; }
+
+  /* Mading effect - hanya di layar */
+  body.print-view-active {
+    background: #f0f0f0;
+  }
+  body.print-view-active .container {
+    background: transparent;
+  }
+
+  .print-page {
+    background: #fff;
+    max-width: 1400px;
+    margin: 0 auto 24px;
+    padding: 20px 24px;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .print-page.print-dual { max-width: 1400px; }
+
+  .print-dual-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 20px;
+    padding-bottom: 12px;
+    min-height: 80px;
+  }
+  .print-dual-header .print-tanggal {
+    margin: 0;
+    align-self: flex-end;
+    padding-bottom: 4px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .print-dual-body {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .print-dual-body .print-col {
+    flex: 1;
+    min-width: 0;
+  }
+  .print-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  table.print-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 10.5px;
+    table-layout: fixed;
+  }
+  table.print-table th,
+  table.print-table td {
+    border: 1px solid #333;
+    padding: 4px 5px;
+    text-align: left;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 10.5px;
+    line-height: 1.3;
+  }
+  table.print-table th {
+    background: #ddd;
+    font-weight: 700;
+    text-align: center;
+    font-size: 10.5px;
+    line-height: 1.4;
+    padding: 8px 5px;
+    height: 32px;
+  }
+  table.print-table td.center { text-align: center; }
+  table.print-table td.col-nama {
+    white-space: normal;
+    line-height: 1.3;
+    font-size: 10.5px;
+  }
+
+  table.pic-table {
+    border-collapse: collapse;
+    width: 200px;
+    font-size: 11px;
+    table-layout: fixed;
+    flex-shrink: 0;
+  }
+  table.pic-table th, table.pic-table td {
+    border: 1px solid #333;
+    padding: 5px 7px;
+    text-align: center;
+    font-size: 11px;
+  }
+  table.pic-table th { background: #ddd; font-weight: 700; }
+  table.pic-table td { height: 26px; }
+
+  /* ============ THERMAL LABEL ============ */
+  #thermalLabelView { display: none; }
+  .thermal-label-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 0;
+  }
+  .thermal-label-box {
+    width: 2in;
+    height: 1in;
+    background: #fff;
+    border: 1px dashed #bbb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0.15cm;
+    font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+    font-weight: 900;
+    color: #000;
+    line-height: 1.15;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .thermal-label-box .tl-name {
+    font-size: 10pt;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.1cm;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  .thermal-label-box .tl-line { font-size: 10pt; white-space: nowrap; }
+
+  .print-label-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 2px 4px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: background 0.15s ease;
+  }
+  .print-label-btn:hover { background: #f0e9f6; }
+  .print-label-btn:active { transform: scale(0.9); }
+
+  /* ============ PAGE DEFINITIONS ============ */
+  @page labelPage {
+    size: 2in 1in landscape;
+    margin: 0;
+  }
+  @page checklistPage {
+    size: A4 landscape;
+    margin: 8mm 10mm;
+  }
+
+  /* ============ PRINT RULES ============ */
+  @media print {
+    body:not(.printing-thermal-label) {
+      page: checklistPage;
+      background: #fff;
+    }
+    body:not(.printing-thermal-label) header,
+    body:not(.printing-thermal-label) .container > *:not(#printView) {
+      display: none !important;
+    }
+    body:not(.printing-thermal-label) #printView {
+      display: block !important;
+    }
+    body:not(.printing-thermal-label) .print-page {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+      page-break-after: always;
+    }
+    body:not(.printing-thermal-label) .print-page:last-child {
+      page-break-after: auto;
+    }
+    body:not(.printing-thermal-label) .print-page * {
+      font-weight: 400 !important;
+    }
+    body:not(.printing-thermal-label) .print-page .print-title,
+    body:not(.printing-thermal-label) .print-page table.print-table th,
+    body:not(.printing-thermal-label) .print-page .print-dual-header .print-tanggal,
+    body:not(.printing-thermal-label) .print-page table.pic-table th {
+      font-weight: 700 !important;
+    }
+
+    html body.printing-thermal-label > *:not(#thermalLabelView) {
+      display: none !important;
+      visibility: hidden !important;
+    }
+    html body.printing-thermal-label #toast {
+      display: none !important;
+      visibility: hidden !important;
+    }
+    html body.printing-thermal-label {
+      display: block !important;
+      width: 2in !important;
+      height: 1in !important;
+      max-height: 1in !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      position: static !important;
+      page: labelPage;
+    }
+    html {
+      width: 2in !important;
+      height: 1in !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+    html body.printing-thermal-label > * {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    html body.printing-thermal-label header,
+    html body.printing-thermal-label .container {
+      width: 0 !important;
+      height: 0 !important;
+      max-height: 0 !important;
+      overflow: hidden !important;
+      position: absolute !important;
+      left: -9999px !important;
+    }
+    body.printing-thermal-label #thermalLabelView {
+      display: block !important;
+      page: labelPage;
+    }
+    body.printing-thermal-label .thermal-label-wrap {
+      padding: 0;
+      gap: 0;
+    }
+    body.printing-thermal-label .thermal-label-box {
+      border: none;
+      width: 2in;
+      height: 1in;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ============ FLOATING ACTIONS ============ */
+  #floatingActions {
+    display: none;
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    left: auto;
+    bottom: auto;
+    z-index: 9998;
+    background: #fff;
+    border: 1px solid var(--line-strong);
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    padding: 6px;
+    flex-direction: column;
+    gap: 8px;
+    cursor: move;
+    user-select: none;
+  }
+  #floatingActions.visible { display: flex; }
+  #floatingActions .float-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--brand-purple);
+    background: var(--brand-purple);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, transform 0.1s ease;
+    font-family: inherit;
+  }
+  #floatingActions .float-btn:hover { transform: scale(1.08); }
+  #floatingActions .float-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+  #floatingActions .float-btn::before {
+    content: '';
+    position: absolute;
+    right: calc(100% + 4px);
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: #1a1a1a;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+  #floatingActions .float-btn:hover::after,
+  #floatingActions .float-btn:hover::before { opacity: 1; }
+  #floatingActions .float-btn.secondary {
+    background: #fff;
+    color: var(--brand-purple);
+  }
+  #floatingActions .float-btn.secondary:hover { background: var(--panel-gray); }
+
+  body.print-view-active header,
+  body.print-view-active #resetAllBtn {
+    display: none !important;
+  }
+
+  /* ============ PIC MODAL ============ */
+  #picModal.modal-overlay {
+    position: fixed !important;
+    top: 0 !important; left: 0 !important;
+    right: 0 !important; bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 99999 !important;
+    background: rgba(0,0,0,0.5) !important;
+    display: none;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+  }
+  #picModal.modal-overlay.show { display: flex !important; }
+  #picModal .modal-box {
+    background: #fff !important;
+    border-radius: 12px !important;
+    max-width: 440px !important;
+    width: 100% !important;
+    max-height: 90vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
+    position: relative !important;
+    margin: auto !important;
+  }
+  #picModal .modal-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 14px 18px !important;
+    border-bottom: 1px solid #e8e8e8 !important;
+  }
+  #picModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 700 !important; }
+  #picModal .modal-close {
+    background: transparent !important;
+    border: none !important;
+    font-size: 18px !important;
+    color: #767676 !important;
+    cursor: pointer !important;
+    padding: 2px 6px !important;
+    border-radius: 6px !important;
+  }
+  #picModal .modal-close:hover { background: #f0f0f0 !important; }
+  #picModal .modal-body { padding: 16px 18px !important; }
+  #picModal .modal-body label {
+    display: block !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.4px !important;
+    color: #767676 !important;
+    margin-bottom: 5px !important;
+    margin-top: 10px !important;
+  }
+  #picModal .modal-body label:first-child { margin-top: 0 !important; }
+  #picModal .modal-body input {
+    width: 100% !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    border: 1px solid #d0d0d0 !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
+  }
+  #picModal .modal-body input:focus {
+    outline: none !important;
+    border-color: #6a2c91 !important;
+    box-shadow: 0 0 0 2px rgba(106,44,145,0.15) !important;
+  }
+  #picModal .modal-error {
+    color: #b91c1c !important;
+    font-size: 11.5px !important;
+    margin: 8px 0 0 !important;
+    font-weight: 600 !important;
+  }
+  #picModal .modal-actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    margin-top: 16px !important;
+  }
+  #picModal .modal-list-wrap {
+    padding: 12px 18px 16px !important;
+    border-top: 1px solid #e8e8e8 !important;
+    background: #f4f4f5 !important;
+    overflow-y: auto !important;
+  }
+  #picModal .modal-list-head {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-bottom: 8px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    color: #767676 !important;
+    letter-spacing: 0.3px !important;
+  }
+  #picModal .modal-list { max-height: 220px !important; overflow-y: auto !important; }
+  #picModal .pic-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: #fff !important;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+    margin-bottom: 6px !important;
+    font-size: 12.5px !important;
+    cursor: grab !important;
+    gap: 6px !important;
+  }
+  #picModal .pic-row.dragging { opacity: 0.4 !important; }
+  #picModal .pic-row.drag-over { border-color: #6a2c91 !important; background: #f9f3fc !important; }
+  #picModal .pic-row .grip { color: #767676 !important; }
+  #picModal .pic-row .num { color: #767676 !important; font-weight: 700 !important; width: 18px !important; }
+  #picModal .pic-row .pic-text {
+    flex: 1 !important;
+    font-weight: 600 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  #picModal .pic-row .row-btns { display: flex !important; gap: 2px !important; }
+  #picModal .pic-row .row-btns button {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 3px 5px !important;
+    border-radius: 5px !important;
+    font-size: 13px !important;
+    color: #767676 !important;
+  }
+  #picModal .pic-row .row-btns button:hover { background: #f0f0f0 !important; color: #6a2c91 !important; }
+  #picModal .pic-row .row-btns button.del:hover { background: #fef2f2 !important; color: #b91c1c !important; }
+  #picModal .pic-row .row-btns button:disabled { opacity: 0.2 !important; cursor: default !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-row">
+    <div class="brand">
+      <div class="brand-logo"></div>
+      <div class="brand-text">
+        <div class="eyebrow">PT Foods Beverages Indonesia</div>
+        <h1>Checklist Labelling</h1>
+        <p>Chatime — perhitungan tanggal expired otomatis dari tanggal produksi</p>
+      </div>
+    </div>
+    <div class="head-actions">
+      <button class="btn" id="printBtn">Tampilan cetak</button>
+      <button class="btn danger" id="resetAllBtn">Reset All</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="mainView">
+
+    <div class="sticky-top" id="stickyTop">
+      <div class="controls">
+        <input type="date" id="globalDate" title="Tanggal laporan">
+        <button class="btn primary" id="applyAllBtn">Terapkan tanggal ke semua di tab ini</button>
+        <div class="search-wrap">
+          <input type="text" class="search" id="searchBox" placeholder="Cari nama artikel...">
+          <button type="button" class="search-clear" id="searchClearBtn" title="Hapus pencarian">✕</button>
+        </div>
+      </div>
+
+      <div class="pic-summary">
+        <div class="grp">
+          <label>PIC Opening</label>
+          <select id="picOpeningGlobal">
+            <option value="">- pilih -</option>
+          </select>
+        </div>
+        <div class="grp">
+          <label>PIC Closing</label>
+          <select id="picClosingGlobal">
+            <option value="">- pilih -</option>
+          </select>
+        </div>
+        <div class="grp">
+          <button class="btn" id="managePicBtn" title="Tambah / kelola daftar PIC">👥 Kelola PIC</button>
+        </div>
+        <div class="tanggal-label">Tanggal:</div>
+        <div class="tanggal-value" id="tanggalDisplay">-</div>
+      </div>
+
+      <div class="summary">
+        <div class="box danger"><span class="num" id="cntDanger">0</span><span class="lbl">Expired</span></div>
+        <div class="box warn"><span class="num" id="cntWarn">0</span><span class="lbl">Segera</span></div>
+        <div class="box ok"><span class="num" id="cntOk">0</span><span class="lbl">Aman</span></div>
+        <div class="box checked"><span class="num" id="cntChecked">0</span><span class="lbl">Sudah dicek</span></div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="labelling">Labelling</div>
+        <div class="tab" data-tab="ouast">Labelling OUAST</div>
+        <div class="tab" data-tab="kelola">⚙️ Kelola Artikel</div>
+      </div>
+    </div>
+
+    <div id="labelling" class="panel active">
+      <div class="table-wrapper">
+        <table class="item-table" data-cat="labelling">
+          <thead>
+            <tr>
+              <th class="status-strip"></th>
+              <th class="col-left" data-sort="name">Nama artikel<span class="arrow">▾</span></th>
+              <th class="col-left" data-sort="exp">Masa simpan<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="prod">Tanggal produksi<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="expdate">Tanggal expired<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="status">Status<span class="arrow">▾</span></th>
+              <th class="col-center">Labelling checked <button class="check-all-btn" id="checkAllLabelling" title="Check/Uncheck semua"></button></th>
+              <th class="col-center">Print Label</th>
+            </tr>
+          </thead>
+          <tbody id="bodyLabelling"></tbody>
+        </table>
+      </div>
+      <div id="emptyLabelling" class="empty" style="display:none;">Tidak ada item yang cocok.</div>
+    </div>
+
+    <div id="ouast" class="panel">
+      <div class="table-wrapper">
+        <table class="item-table" data-cat="ouast">
+          <thead>
+            <tr>
+              <th class="status-strip"></th>
+              <th class="col-left" data-sort="name">Nama artikel<span class="arrow">▾</span></th>
+              <th class="col-left" data-sort="exp">Masa simpan<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="prod">Tanggal produksi<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="expdate">Tanggal expired<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="status">Status<span class="arrow">▾</span></th>
+              <th class="col-center">Labelling checked <button class="check-all-btn" id="checkAllOuast" title="Check/Uncheck semua"></button></th>
+              <th class="col-center">Print Label</th>
+            </tr>
+          </thead>
+          <tbody id="bodyOuast"></tbody>
+        </table>
+      </div>
+      <div id="emptyOuast" class="empty" style="display:none;">Tidak ada item yang cocok.</div>
+    </div>
+
+    <div id="kelola" class="panel">
+      <div class="artikel-toolbar">
+        <button class="btn primary" id="addArtikelBtn">+ Tambah Artikel</button>
+        <button class="btn" id="resetArtikelBtn">Reset ke Default</button>
+        <div class="spacer"></div>
+        <span style="font-size:11.5px;color:var(--muted);">Drag baris untuk ubah urutan</span>
+      </div>
+
+      <div class="artikel-tabs">
+        <div class="artikel-tab active" data-artikel-cat="labelling">Labelling</div>
+        <div class="artikel-tab" data-artikel-cat="ouast">Labelling OUAST</div>
+      </div>
+
+      <table class="artikel-table" id="artikelTable">
+        <thead>
+          <tr>
+            <th style="width:40px;">#</th>
+            <th>Nama Artikel</th>
+            <th style="width:180px;">Masa Simpan</th>
+            <th style="width:120px; text-align:right;">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="artikelBody"></tbody>
+      </table>
+
+      <p class="footer-note">Perubahan artikel langsung tersimpan otomatis dan langsung terlihat di tab Labelling / OUAST.</p>
+    </div>
+
+    <p class="footer-note">Data tersimpan otomatis di browser ini (localStorage).</p>
+  </div>
+
+  <div id="printView"></div>
+</div>
+
+<div id="thermalLabelView"></div>
+
+<div id="floatingActions">
+  <button class="float-btn" id="floatPrintBtn" data-tooltip="Cetak / Print">🖨️</button>
+  <button class="float-btn" id="floatDownloadBtn" data-tooltip="Download PNG">⬇️</button>
+  <button class="float-btn secondary" id="floatBackBtn" data-tooltip="Kembali ke tampilan biasa">←</button>
+</div>
+
+<div id="picModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>👥 Kelola & Tambah PIC</h3>
+      <button id="closePicModal" class="modal-close">✕</button>
+    </div>
+    <form id="picForm" class="modal-body">
+      <label>Nama Lengkap PIC</label>
+      <input type="text" id="picNameInput" placeholder="Contoh: hrsbgst">
+      <label>NIK</label>
+      <input type="text" id="picNikInput" placeholder="Contoh: 110898">
+      <p id="picError" class="modal-error" style="display:none;"></p>
+      <div class="modal-actions">
+        <button type="button" id="picDoneBtn" class="btn">Selesai</button>
+        <button type="submit" class="btn primary">+ Simpan PIC</button>
+      </div>
+    </form>
+    <div class="modal-list-wrap">
+      <div class="modal-list-head">
+        <span>Daftar PIC Tersimpan (<span id="picCount">0</span>)</span>
+        <span style="font-size:10.5px;color:#767676;">Tarik untuk ubah urutan</span>
+      </div>
+      <div id="picListContainer" class="modal-list"></div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   CHECKLIST LABELLING
+   ========================================================= */
+
+const DEFAULT_DATA = {
+  labelling: [
+    ["LYCHEE SYRUP","90 HARI"],["LEMON JUICE","7 HARI"],["MANGO SYRUP","7 HARI"],
+    ["PEACH SYRUP","14 HARI"],["PALM SUGAR","14 HARI"],["RED BEAN","14 HARI"],
+    ["COCONUT JELLY","7 HARI"],["RAINBOW JELLY","14 HARI"],["COFFEE JELLY","14 HARI"],
+    ["PUDDING","7 HARI"],["GRASS JELLY","5 HARI"],["MOUSSE BASE","7 HARI"],
+    ["FRESH MILK","2 HARI"],["OATMILK","5 HARI"],["HEAVY CREAM","7 HARI"],
+    ["VANILLA BASE (SILKEN)","24 JAM"],["MATCHA POWDER","30 HARI"],["SALTED CARAMEL","30 HARI"],
+    ["BROWN SUGAR SYRUP","90 HARI"],["HAZELNUT SYRUP","90 HARI"],["STRAWBERRY SYRUP","90 HARI"],
+    ["VANILLA SYRUP","90 HARI"],["HONEY HALDIN","30 HARI"],["ROASTED (BIOKIPS)","7 HARI"],
+    ["GREEN TEA (BIOKIPS)","7 HARI"],["BLACK TEA (BIOKIPS)","7 HARI"],["COFFEE BEAN","7 HARI"],
+    ["COCOA POWDER","15 HARI"],["TARO POWDER","15 HARI"],["BUBBLE TEA POWDER MIX","15 HARI"],
+    ["TAPIOCA FLOUR","15 HARI"],["MOUSSE POWDER","15 HARI"],["BEVERAGES VANILLA","15 HARI"],
+    ["TAPIOCA PEARLS","3 HARI"],["RED VELVET POWDER","15 HARI"],["SYRUP MACADAMIA","90 HARI"],
+    ["PISTACHIO POWDER","30 HARI"],["DARK CHOCO POWDER","30 HARI"],["CRUMBLE PISTACHIO","14 HARI"],
+    ["AVOCADO POWDER","15 HARI"]
+  ],
+  ouast: [
+    ["WIJEN","7 HARI"],["BREAD CRUMBS","1 BULAN"],["CTCB MIE INSTANT","14 HARI"],
+    ["HOTDOKK BATTER PREMIX","48 JAM"],["MIE GEMEZ","48 JAM"],["RAGI ANGEL","1 BULAN"],
+    ["UHT MILK","3 HARI"],["PARSLEY","1 BULAN"],["BBQ SEASONING POWDER","1 BULAN"],
+    ["SEAWEED SPRINKLES BUKA","2 BULAN"],["SEAWEED SPRINKLES WADAH","7 HARI"],
+    ["BBURINKLE CHESEE POWDER","14 HARI"],["NASHVILLE HOT CHICKEN POWDER","14 HARI"],
+    ["MENTAI SAUCE","2 HARI"],["CTCB TOKPOKKI SAUCE","3 HARI"],["CHEESE SAUCE","7 HARI"],
+    ["CTCB TOMATO SAUCE","7 HARI"],["HONEY MUSTARD","7 HARI"],["MAYONAISE SAUCE","7 HARI"],
+    ["GARLIC BUTTER SAUCE VENDOR","7 HARI"],["CHI CHI SAUCE VENDOR","7 HARI"],
+    ["FIRE SAUCE","7 HARI"],["SWEET HONEY","7 HARI"],["KOREAN SAUCE","7 HARI"],
+    ["KOREAN SPICY SAUCE","1 BULAN"],["MAYONISE KEWPIE","14 HARI"],["CHICKEN KARAGE","7 HARI"],
+    ["POTATO","7 HARI"],["TOKPOKKI BREADCUMBS","7 HARI"],["NUGGET","14 HARI"],
+    ["FISHCAKE","3 HARI"],["RAW TOKPOKKI","3 HARI"],["SOSIS","48 JAM"]
+  ]
+};
+
+const STORAGE_KEY = 'chatime-checklist-labelling-v8';
+// ============ GOOGLE SHEETS SYNC ============
+const API_URL = 'https://script.google.com/macros/s/AKfycbx0EnrBIKR2OJTElE0u0V3uEPeU_JSt2ToyfexrRbpoCwSEvYhokzQkQvOh-q_ErWC3/exec';
+const SYNC_ENABLED = true;
+const SYNC_DEBOUNCE_MS = 1500;
+const SEGERA_THRESHOLD = 0.20;
+const BULAN_ID = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+let DATA = { labelling: [], ouast: [] };
+let state = {
+  labelling: {},
+  ouast: {},
+  meta: { 
+    picOpening: '', 
+    picClosing: '', 
+    tanggal: '', 
+    lastOpenDate: '',
+    lastModified: 0  // <-- TAMBAH INI
+  }
+};
+let sortState = {
+  labelling: { key: null, dir: 1 },
+  ouast: { key: null, dir: 1 }
+};
+let activeTab = 'labelling';
+let activeArtikelCat = 'labelling';
+let counters = {
+  labelling: { danger: 0, warn: 0, ok: 0, checked: 0 },
+  ouast:     { danger: 0, warn: 0, ok: 0, checked: 0 }
+};
+
+function slugify(s) {
+  return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function parseExp(expStr) {
+  const s = String(expStr).trim().toUpperCase();
+  const m = s.match(/(\d+)\s*(JAM|HARI|BULAN)/);
+  if (!m) return { amount: 0, unit: 'HARI' };
+  return { amount: parseInt(m[1], 10), unit: m[2] };
+}
+
+function totalMs(expStr, prodDate) {
+  const { amount, unit } = parseExp(expStr);
+  if (unit === 'JAM') return amount * 3600000;
+  if (unit === 'BULAN') {
+    if (prodDate) {
+      const end = new Date(prodDate.getTime());
+      end.setMonth(end.getMonth() + amount);
+      return end - prodDate;
+    }
+    return amount * 30 * 86400000;
+  }
+  return amount * 86400000;
+}
+
+function addExp(prodDate, expStr) {
+  if (!prodDate) return null;
+  const { amount, unit } = parseExp(expStr);
+  const d = new Date(prodDate.getTime());
+  if (unit === 'JAM') d.setHours(d.getHours() + amount);
+  else if (unit === 'BULAN') d.setMonth(d.getMonth() + amount);
+  else d.setDate(d.getDate() + amount);
+  return d;
+}
+
+function buildProdDate(dateStr, timeStr) {
+  if (!dateStr) return null;
+  const t = timeStr && timeStr.trim() ? timeStr : '00:00';
+  return new Date(`${dateStr}T${t}:00`);
+}
+
+function fmtDateHuman(d, withTime, timeSep) {
+  if (!d) return '-';
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mmm = BULAN_ID[d.getMonth()];
+  const yy = d.getFullYear();
+  let out = `${dd} ${mmm} ${yy}`;
+  if (withTime) {
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mi = String(d.getMinutes()).padStart(2, '0');
+    out += `${timeSep || ' / '}${hh}:${mi}`;
+  }
+  return out;
+}
+
+function fmtDatePrint(d, withTime) {
+  if (!d) return '';
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yy = d.getFullYear();
+  let out = `${dd} · ${mm} · ${yy}`;
+  if (withTime) {
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mi = String(d.getMinutes()).padStart(2, '0');
+    out += ` / ${hh}:${mi}`;
+  }
+  return out;
+}
+
+function isoToHuman(isoStr) {
+  if (!isoStr) return '-';
+  const parts = isoStr.split('-');
+  if (parts.length !== 3) return '-';
+  const [y, m, d] = parts;
+  const mmm = BULAN_ID[parseInt(m, 10) - 1] || m;
+  return `${d} ${mmm} ${y}`;
+}
+
+function getTodayISO() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${dd}`;
+}
+
+function computeStatus(prodDate, expStr) {
+  if (!prodDate) return { status: 'none', pctRemaining: null, expDate: null };
+  const expDate = addExp(prodDate, expStr);
+  const total = totalMs(expStr, prodDate);
+  const now = new Date();
+  const remainingMs = expDate - now;
+  if (remainingMs <= 0) return { status: 'danger', pctRemaining: 0, expDate };
+  const pct = total > 0 ? remainingMs / total : 0;
+  if (pct <= SEGERA_THRESHOLD) return { status: 'warn', pctRemaining: pct, expDate };
+  return { status: 'ok', pctRemaining: pct, expDate };
+}
+
+const statusLabel = { danger: 'Expired', warn: 'Segera', ok: 'Aman', none: 'Belum diisi' };
+
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+/* =========================================================
+   SYNC KE GOOGLE SHEETS
+   ========================================================= */
+let syncTimer = null;
+let isSyncing = false;
+let lastSyncStatus = 'idle'; // idle | syncing | ok | error
+
+function updateSyncBadge(status, message) {
+  let el = document.getElementById('syncBadge');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'syncBadge';
+    el.style.cssText = `
+      position: fixed; bottom: 12px; right: 12px;
+      font-size: 11px; padding: 4px 10px; border-radius: 20px;
+      background: #f4f4f5; color: #767676; border: 1px solid #e8e8e8;
+      z-index: 9997; transition: all 0.2s; pointer-events: none;
+      font-family: -apple-system, sans-serif;
+    `;
+    document.body.appendChild(el);
+  }
+  const styles = {
+    idle:    { bg: '#f4f4f5', color: '#767676', text: '⏸️  Idle' },
+    syncing: { bg: '#fef6e7', color: '#b45309', text: '🔄 Sync...' },
+    ok:      { bg: '#ecfdf3', color: '#16803d', text: '✅ Tersimpan' },
+    error:   { bg: '#fef2f2', color: '#b91c1c', text: '⚠️ Gagal sync' }
+  };
+  const s = styles[status] || styles.idle;
+  el.style.background = s.bg;
+  el.style.color = s.color;
+  el.style.borderColor = s.bg;
+  el.textContent = message || s.text;
+  lastSyncStatus = status;
+}
+
+async function syncToSheets() {
+  if (!SYNC_ENABLED || !API_URL || API_URL.indexOf('TEMPEL') === 0) return;
+  if (isSyncing) return;
+
+  isSyncing = true;
+  updateSyncBadge('syncing');
+
+  try {
+    const payload = {
+      data: DATA,
+      state: state,
+      meta: state.meta
+    };
+
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      mode: 'no-cors', // GAS butuh ini
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+
+    // Karena no-cors, kita tidak bisa baca response.
+    // Anggap sukses kalau tidak error.
+    updateSyncBadge('ok');
+    setTimeout(() => updateSyncBadge('idle'), 3000);
+  } catch (e) {
+    console.error('Sync error:', e);
+    updateSyncBadge('error');
+  } finally {
+    isSyncing = false;
+  }
+}
+
+function scheduleSyncToSheets() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(syncToSheets, SYNC_DEBOUNCE_MS);
+}
+
+async function loadFromSheets() {
+  if (!SYNC_ENABLED || !API_URL || API_URL.indexOf('TEMPEL') === 0) return false;
+  try {
+    const res = await fetch(API_URL + '?action=load');
+    const json = await res.json();
+    if (!json || !json.ok || !json.data) return false;
+    
+    const remoteData = json.data;
+    const remoteModified = (remoteData.state && remoteData.state.meta && remoteData.state.meta.lastModified) || 0;
+    const localModified = (state.meta && state.meta.lastModified) || 0;
+    
+    // Kalau lokal lebih baru → jangan timpa, malah kirim ke Sheets
+    if (localModified > remoteModified) {
+      console.log('Lokal lebih baru, sync ke Sheets...');
+      scheduleSyncToSheets();
+      return false;
+    }
+    
+    // Kalau Sheets lebih baru (atau sama) → pakai Sheets
+    DATA = remoteData.data || DATA;
+    state = remoteData.state || state;
+    
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
+    } catch (e) {}
+    
+    return true;
+  } catch (e) {
+    console.warn('Gagal load dari Sheets, pakai data lokal.', e);
+  }
+  return false;
+}
+function loadAll() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+      return;
+    }
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object') {
+      if (parsed.data && typeof parsed.data === 'object'
+          && Array.isArray(parsed.data.labelling) && Array.isArray(parsed.data.ouast)) {
+        DATA.labelling = parsed.data.labelling;
+        DATA.ouast = parsed.data.ouast;
+      } else {
+        DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+      }
+      state.labelling = (parsed.state && parsed.state.labelling && typeof parsed.state.labelling === 'object')
+        ? parsed.state.labelling : {};
+      state.ouast = (parsed.state && parsed.state.ouast && typeof parsed.state.ouast === 'object')
+        ? parsed.state.ouast : {};
+      state.meta = (parsed.state && parsed.state.meta && typeof parsed.state.meta === 'object')
+        ? parsed.state.meta
+        : { picOpening: '', picClosing: '', tanggal: '', lastOpenDate: '', lastModified: 0 };
+      if (typeof state.meta.lastModified !== 'number') {
+        state.meta.lastModified = 0;
+      }
+    }
+  } catch (e) {
+    console.error('Gagal memuat data', e);
+    DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  }
+  if (!Array.isArray(DATA.labelling)) DATA.labelling = JSON.parse(JSON.stringify(DEFAULT_DATA.labelling));
+  if (!Array.isArray(DATA.ouast)) DATA.ouast = JSON.parse(JSON.stringify(DEFAULT_DATA.ouast));
+}
+
+function saveAll() {
+  try {
+    // Tandai waktu modifikasi
+    state.meta.lastModified = Date.now();
+    
+    const payload = { data: DATA, state: state };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) {
+    console.error('Gagal menyimpan', e);
+  }
+  scheduleSyncToSheets();
+}
+
+function readItemState(cat, id) {
+  const s = state[cat][id];
+  if (!s) return { prodDate: '', prodTime: '', checked: false };
+  return {
+    prodDate: s.prodDate || '',
+    prodTime: s.prodTime || '',
+    checked: !!s.checked
+  };
+}
+
+function writeItemState(cat, id, patch) {
+  if (!state[cat][id]) {
+    state[cat][id] = { prodDate: '', prodTime: '', checked: false };
+  }
+  Object.assign(state[cat][id], patch);
+}
+
+function sortItems(cat, items) {
+  const s = sortState[cat];
+  if (!s.key) return items;
+  const order = { danger: 0, warn: 1, ok: 2, none: 3 };
+  const withMeta = items.map(([name, exp]) => {
+    const id = slugify(name);
+    const st = readItemState(cat, id);
+    const prodDate = buildProdDate(st.prodDate, st.prodTime);
+    const info = computeStatus(prodDate, exp);
+    return { name, exp, id, st, prodDate, info };
+  });
+  withMeta.sort((a, b) => {
+    let cmp = 0;
+    if (s.key === 'name') cmp = a.name.localeCompare(b.name);
+    else if (s.key === 'exp') cmp = totalMs(a.exp, a.prodDate) - totalMs(b.exp, b.prodDate);
+    else if (s.key === 'prod') cmp = (a.prodDate ? a.prodDate.getTime() : -Infinity) - (b.prodDate ? b.prodDate.getTime() : -Infinity);
+    else if (s.key === 'expdate') cmp = (a.info.expDate ? a.info.expDate.getTime() : Infinity) - (b.info.expDate ? b.info.expDate.getTime() : Infinity);
+    else if (s.key === 'status') cmp = order[a.info.status] - order[b.info.status];
+    return cmp * s.dir;
+  });
+  return withMeta.map(w => [w.name, w.exp]);
+}
+
+function render(cat) {
+  const tbody = document.getElementById(cat === 'labelling' ? 'bodyLabelling' : 'bodyOuast');
+  const emptyBox = document.getElementById(cat === 'labelling' ? 'emptyLabelling' : 'emptyOuast');
+  const query = document.getElementById('searchBox').value.trim().toLowerCase();
+
+  let items = DATA[cat].filter(([name]) => String(name).toLowerCase().includes(query));
+  items = sortItems(cat, items);
+
+  tbody.innerHTML = '';
+  emptyBox.style.display = items.length === 0 ? 'block' : 'none';
+
+  let d = 0, w = 0, o = 0, c = 0;
+  DATA[cat].forEach(([name, exp]) => {
+    const id = slugify(name);
+    const st = readItemState(cat, id);
+    const prodDate = buildProdDate(st.prodDate, st.prodTime);
+    const { status } = computeStatus(prodDate, exp);
+    if (status === 'danger') d++;
+    else if (status === 'warn') w++;
+    else if (status === 'ok') o++;
+    if (st.checked) c++;
+  });
+
+  items.forEach(([name, exp]) => {
+    const id = slugify(name);
+    const st = readItemState(cat, id);
+    const isJam = parseExp(exp).unit === 'JAM';
+    const prodDate = buildProdDate(st.prodDate, st.prodTime);
+    const { status, pctRemaining, expDate } = computeStatus(prodDate, exp);
+
+    const pctNote = (status === 'warn' && pctRemaining !== null)
+      ? `<span class="pct-note">Sisa ${Math.round(pctRemaining*100)}% umur</span>` : '';
+
+    const tr = document.createElement('tr');
+    if (status === 'danger') tr.classList.add('is-expired');
+    if (st.checked) tr.classList.add('is-checked');
+
+    const dtInputs = isJam
+      ? `<div class="dt-inputs">
+           <input type="date" class="prod-input" data-cat="${cat}" data-id="${id}" data-part="date" value="${st.prodDate}">
+           <input type="time" class="prod-input" data-cat="${cat}" data-id="${id}" data-part="time" value="${st.prodTime}">
+         </div>`
+      : `<div class="dt-inputs">
+           <input type="date" class="prod-input" data-cat="${cat}" data-id="${id}" data-part="date" value="${st.prodDate}">
+         </div>`;
+
+    tr.innerHTML = `
+      <td class="status-strip ${status}"></td>
+      <td class="col-left"><span class="item-name">${name}</span></td>
+      <td class="col-left"><span class="item-shelf">${exp}</span></td>
+      <td class="col-center">${dtInputs}</td>
+      <td class="col-center"><span class="exp-value">${expDate ? fmtDateHuman(expDate, isJam, ' / ') : '-'}</span></td>
+      <td class="col-center">
+        <span class="badge ${status}">${statusLabel[status]}</span>
+        ${pctNote}
+      </td>
+      <td class="col-center">
+        <input type="checkbox" data-cat="${cat}" data-id="${id}" data-field="checked" ${st.checked ? 'checked' : ''}>
+      </td>
+      <td class="col-center">
+        <button class="print-label-btn" data-cat="${cat}" data-id="${id}" title="Cetak label">🖨️</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  counters[cat] = { danger: d, warn: w, ok: o, checked: c };
+  if (activeTab === cat) updateSummary(cat);
+}
+
+function updateSummary(cat) {
+  const c = counters[cat] || { danger: 0, warn: 0, ok: 0, checked: 0 };
+  document.getElementById('cntDanger').textContent = c.danger;
+  document.getElementById('cntWarn').textContent = c.warn;
+  document.getElementById('cntOk').textContent = c.ok;
+  document.getElementById('cntChecked').textContent = c.checked;
+}
+
+function renderAll() {
+  render('labelling');
+  render('ouast');
+  updateCheckAllButton('labelling');
+  updateCheckAllButton('ouast');
+  updateStickyPositions();
+}
+
+function updateCheckAllButton(cat) {
+  const btnId = cat === 'labelling' ? 'checkAllLabelling' : 'checkAllOuast';
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  const items = DATA[cat];
+  if (items.length === 0) {
+    btn.classList.remove('checked');
+    btn.disabled = true;
+    return;
+  }
+  btn.disabled = false;
+  const allChecked = items.every(([name]) => {
+    const id = slugify(name);
+    return state[cat][id] && state[cat][id].checked;
+  });
+  btn.classList.toggle('checked', allChecked);
+}
+
+/* =========================================================
+   STICKY POSITION CALC
+   ========================================================= */
+function updateStickyPositions() {
+  const header = document.querySelector('header');
+  const stickyTop = document.getElementById('stickyTop');
+  if (!header || !stickyTop) return;
+
+  const headerRect = header.getBoundingClientRect();
+  const headerHeight = headerRect.height;
+  const stickyTopHeight = stickyTop.offsetHeight;
+
+  /* Header ungu: total height (padding wrapper + head-row) */
+  const offset = headerHeight;
+
+  /* Set CSS variable untuk stickyTop */
+  document.documentElement.style.setProperty('--sticky-top-offset', offset + 'px');
+
+  /* Thead tabel posisinya di bawah stickyTop */
+  const theadOffset = offset + stickyTopHeight;
+  document.documentElement.style.setProperty('--thead-top', theadOffset + 'px');
+}
+
+window.addEventListener('resize', updateStickyPositions);
+window.addEventListener('load', updateStickyPositions);
+
+function updateSortArrows() {
+  document.querySelectorAll('.item-table').forEach(table => {
+    const cat = table.dataset.cat;
+    table.querySelectorAll('th[data-sort]').forEach(th => {
+      const arrow = th.querySelector('.arrow');
+      if (sortState[cat].key === th.dataset.sort) {
+        arrow.textContent = sortState[cat].dir === 1 ? '▲' : '▼';
+      } else {
+        arrow.textContent = '▾';
+      }
+    });
+  });
+}
+
+function renderArtikelTable() {
+  const tbody = document.getElementById('artikelBody');
+  const cat = activeArtikelCat;
+  const items = DATA[cat] || [];
+  tbody.innerHTML = '';
+
+  if (items.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px;">Belum ada artikel. Klik "+ Tambah Artikel".</td></tr>`;
+    return;
+  }
+
+  items.forEach(([name, exp], idx) => {
+    const tr = document.createElement('tr');
+    tr.draggable = true;
+    tr.dataset.idx = idx;
+    tr.innerHTML = `
+      <td style="text-align:center;cursor:move;color:var(--muted);">${idx + 1}</td>
+      <td><input type="text" class="art-name" data-idx="${idx}" value="${String(name).replace(/"/g,'&quot;')}"></td>
+      <td><input type="text" class="art-exp" data-idx="${idx}" value="${String(exp).replace(/"/g,'&quot;')}"></td>
+      <td>
+        <div class="actions">
+          <button class="del" data-idx="${idx}" title="Hapus">Hapus</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  let dragIdx = null;
+  tbody.querySelectorAll('tr').forEach(tr => {
+    tr.addEventListener('dragstart', () => {
+      dragIdx = parseInt(tr.dataset.idx, 10);
+      tr.style.opacity = '0.5';
+    });
+    tr.addEventListener('dragend', () => { tr.style.opacity = '1'; });
+    tr.addEventListener('dragover', (e) => e.preventDefault());
+    tr.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const dropIdx = parseInt(tr.dataset.idx, 10);
+      if (dragIdx === null || dragIdx === dropIdx) return;
+      const arr = DATA[cat];
+      const [moved] = arr.splice(dragIdx, 1);
+      arr.splice(dropIdx, 0, moved);
+      saveAll();
+      renderArtikelTable();
+      renderAll();
+      showToast('Urutan diubah.');
+      dragIdx = null;
+    });
+  });
+}
+
+document.querySelectorAll('.item-table thead th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const table = th.closest('.item-table');
+    const cat = table.dataset.cat;
+    const key = th.dataset.sort;
+    const s = sortState[cat];
+
+    if (s.key !== key) { s.key = key; s.dir = 1; }
+    else if (s.dir === 1) { s.dir = -1; }
+    else { s.key = null; s.dir = 1; }
+
+    updateSortArrows();
+    renderAll();
+  });
+});
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    activeTab = tab.dataset.tab;
+    if (activeTab !== 'kelola') {
+      updateSummary(activeTab);
+      updateSortArrows();
+    } else {
+      renderArtikelTable();
+    }
+    setTimeout(updateStickyPositions, 50);
+  });
+});
+
+document.querySelectorAll('.artikel-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.artikel-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeArtikelCat = tab.dataset.artikelCat;
+    renderArtikelTable();
+  });
+});
+
+const searchBoxEl = document.getElementById('searchBox');
+const searchClearEl = document.getElementById('searchClearBtn');
+
+function updateSearchClearBtn() {
+  searchClearEl.classList.toggle('show', searchBoxEl.value.length > 0);
+}
+
+searchBoxEl.addEventListener('input', () => {
+  updateSearchClearBtn();
+  renderAll();
+});
+
+searchClearEl.addEventListener('click', () => {
+  searchBoxEl.value = '';
+  updateSearchClearBtn();
+  renderAll();
+  searchBoxEl.focus();
+});
+
+document.addEventListener('change', (e) => {
+  const t = e.target;
+
+  if (t.classList.contains('prod-input')) {
+    const { cat, id, part } = t.dataset;
+    if (part === 'date') writeItemState(cat, id, { prodDate: t.value });
+    else writeItemState(cat, id, { prodTime: t.value });
+    saveAll();
+    renderAll();
+    return;
+  }
+
+  if (t.dataset && t.dataset.field === 'checked') {
+    const { cat, id } = t.dataset;
+    writeItemState(cat, id, { checked: t.checked });
+    saveAll();
+    const ae = document.activeElement;
+    renderAll();
+    if (ae && ae.dataset && ae.dataset.field === 'checked') {
+      const sel = document.querySelector(
+        `input[data-field="checked"][data-cat="${ae.dataset.cat}"][data-id="${ae.dataset.id}"]`
+      );
+      if (sel) sel.focus();
+    }
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.print-label-btn');
+  if (!btn) return;
+  const cat = btn.dataset.cat;
+  const id = btn.dataset.id;
+  if (!cat || !id) return;
+  openThermalLabelView(cat, id);
+});
+
+function handleCheckAll(cat) {
+  const items = DATA[cat];
+  if (items.length === 0) return;
+  const allChecked = items.every(([name]) => {
+    const id = slugify(name);
+    return state[cat][id] && state[cat][id].checked;
+  });
+  const target = !allChecked;
+  items.forEach(([name]) => {
+    const id = slugify(name);
+    writeItemState(cat, id, { checked: target });
+  });
+  saveAll();
+  renderAll();
+  showToast(target
+    ? `Semua ${cat === 'labelling' ? 'Labelling' : 'OUAST'} dicentang.`
+    : `Semua ${cat === 'labelling' ? 'Labelling' : 'OUAST'} dilepas.`);
+}
+
+document.getElementById('checkAllLabelling').addEventListener('click', () => handleCheckAll('labelling'));
+document.getElementById('checkAllOuast').addEventListener('click', () => handleCheckAll('ouast'));
+
+document.getElementById('applyAllBtn').addEventListener('click', () => {
+  const date = document.getElementById('globalDate').value;
+  if (!date) { showToast('Pilih tanggal dulu.'); return; }
+  const cat = activeTab;
+  if (cat === 'kelola') { showToast('Buka tab Labelling atau OUAST dulu.'); return; }
+  DATA[cat].forEach(([name]) => {
+    writeItemState(cat, slugify(name), { prodDate: date });
+  });
+  saveAll();
+  renderAll();
+  showToast(`Tanggal diterapkan ke tab ${cat === 'labelling' ? 'Labelling' : 'OUAST'}.`);
+});
+
+document.getElementById('picOpeningGlobal').addEventListener('change', (e) => {
+  state.meta.picOpening = e.target.value;
+  saveAll();
+});
+document.getElementById('picClosingGlobal').addEventListener('change', (e) => {
+  state.meta.picClosing = e.target.value;
+  saveAll();
+});
+
+document.getElementById('globalDate').addEventListener('change', (e) => {
+  state.meta.tanggal = e.target.value;
+  state.meta.lastOpenDate = getTodayISO();
+  document.getElementById('tanggalDisplay').textContent = isoToHuman(e.target.value);
+  saveAll();
+});
+
+document.getElementById('resetAllBtn').addEventListener('click', () => {
+  const cat = activeTab;
+  if (cat === 'kelola') { showToast('Tidak bisa reset dari tab Kelola Artikel.'); return; }
+  const label = cat === 'labelling' ? 'Labelling' : 'Labelling OUAST';
+  if (!confirm(`Reset semua data di tab "${label}"?\n\nSemua tanggal produksi, jam, centang, dan PIC akan dihapus.\n\nLanjut?`)) return;
+
+  DATA[cat].forEach(([name]) => {
+    state[cat][slugify(name)] = { prodDate: '', prodTime: '', checked: false };
+  });
+  state.meta.picOpening = '';
+  state.meta.picClosing = '';
+  saveAll();
+  closeThermalLabelView();
+  renderAll();
+  document.getElementById('picOpeningGlobal').value = '';
+  document.getElementById('picClosingGlobal').value = '';
+  showToast(`Tab ${label} dan PIC sudah direset.`);
+});
+
+document.getElementById('addArtikelBtn').addEventListener('click', () => {
+  const cat = activeArtikelCat;
+  DATA[cat].push(['ARTIKEL BARU', '7 HARI']);
+  saveAll();
+  renderArtikelTable();
+  renderAll();
+  const tbody = document.getElementById('artikelBody');
+  const lastRow = tbody.lastElementChild;
+  if (lastRow) {
+    const inp = lastRow.querySelector('.art-name');
+    if (inp) { inp.focus(); inp.select(); }
+  }
+  showToast('Artikel baru ditambah.');
+});
+
+document.getElementById('resetArtikelBtn').addEventListener('click', () => {
+  if (!confirm(`Reset daftar artikel ke default?\n\nArtikel yang sudah ditambah/diubah akan HILANG.\nData checklist TIDAK ikut direset.\n\nLanjut?`)) return;
+  DATA.labelling = JSON.parse(JSON.stringify(DEFAULT_DATA.labelling));
+  DATA.ouast = JSON.parse(JSON.stringify(DEFAULT_DATA.ouast));
+  saveAll();
+  renderArtikelTable();
+  renderAll();
+  showToast('Daftar artikel dikembalikan ke default.');
+});
+
+document.getElementById('artikelBody').addEventListener('input', (e) => {
+  const t = e.target;
+  const cat = activeArtikelCat;
+
+  if (t.classList.contains('art-name')) {
+    const idx = parseInt(t.dataset.idx, 10);
+    if (!DATA[cat][idx]) return;
+    const oldName = DATA[cat][idx][0];
+    const newName = t.value.toUpperCase();
+    if (oldName === newName) return;
+    const oldId = slugify(oldName);
+    const newId = slugify(newName);
+    if (oldId !== newId && state[cat][oldId]) {
+      state[cat][newId] = state[cat][oldId];
+      delete state[cat][oldId];
+    }
+    DATA[cat][idx][0] = newName;
+    saveAll();
+    renderAll();
+  }
+  if (t.classList.contains('art-exp')) {
+    const idx = parseInt(t.dataset.idx, 10);
+    if (!DATA[cat][idx]) return;
+    DATA[cat][idx][1] = t.value.toUpperCase();
+    saveAll();
+    renderAll();
+  }
+});
+
+document.getElementById('artikelBody').addEventListener('click', (e) => {
+  if (!e.target.classList.contains('del')) return;
+  const idx = parseInt(e.target.dataset.idx, 10);
+  const cat = activeArtikelCat;
+  const name = DATA[cat][idx][0];
+  if (!confirm(`Hapus artikel "${name}"?\n\nData checklist untuk artikel ini juga akan dihapus.`)) return;
+  delete state[cat][slugify(name)];
+  DATA[cat].splice(idx, 1);
+  saveAll();
+  renderArtikelTable();
+  renderAll();
+  showToast(`Artikel "${name}" dihapus.`);
+});
+
+function applyMetaToControls() {
+  document.getElementById('picOpeningGlobal').value = state.meta.picOpening || '';
+  document.getElementById('picClosingGlobal').value = state.meta.picClosing || '';
+  const todayISO = getTodayISO();
+  if (!state.meta.tanggal || state.meta.lastOpenDate !== todayISO) {
+    state.meta.tanggal = todayISO;
+    state.meta.lastOpenDate = todayISO;
+    // Simpan lokal saja, jangan sync ke Sheets
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
+    } catch (e) {}
+  }
+  document.getElementById('globalDate').value = state.meta.tanggal;
+  document.getElementById('tanggalDisplay').textContent = isoToHuman(state.meta.tanggal);
+}
+
+/* ============ THERMAL LABEL ============ */
+function buildThermalLabelHTML(cat, id) {
+  const item = DATA[cat].find(([name]) => slugify(name) === id);
+  if (!item) return null;
+  const [name, exp] = item;
+  const st = readItemState(cat, id);
+  if (!st.prodDate) return null;
+
+  const prodDate = buildProdDate(st.prodDate, st.prodTime);
+  const { expDate } = computeStatus(prodDate, exp);
+  const O = fmtDatePrint(prodDate, false);
+  const E = expDate ? fmtDatePrint(expDate, false) : '- · - · -';
+
+  let nameStyle = '';
+  if (name.length > 20) nameStyle = 'font-size:8pt;';
+  else if (name.length > 14) nameStyle = 'font-size:9pt;';
+
+  return `
+    <div class="thermal-label-wrap">
+      <div class="thermal-label-box">
+        <div class="tl-name" style="${nameStyle}">${name}</div>
+        <div class="tl-line">O : ${O}</div>
+        <div class="tl-line">E : ${E}</div>
+      </div>
+    </div>`;
+}
+
+let currentLabelCtx = { cat: null, id: null };
+
+function openThermalLabelView(cat, id) {
+  const html = buildThermalLabelHTML(cat, id);
+  if (!html) { showToast('Isi tanggal produksi dulu sebelum cetak label.'); return; }
+  currentLabelCtx = { cat, id };
+  const labelView = document.getElementById('thermalLabelView');
+  labelView.innerHTML = html;
+  labelView.style.display = 'block';
+  document.body.classList.add('printing-thermal-label');
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      document.body.classList.remove('printing-thermal-label');
+      labelView.style.display = 'none';
+      labelView.innerHTML = '';
+      currentLabelCtx = { cat: null, id: null };
+    }, 500);
+  }, 100);
+}
+
+function closeThermalLabelView() {
+  const mainView = document.getElementById('mainView');
+  const labelView = document.getElementById('thermalLabelView');
+  labelView.style.display = 'none';
+  labelView.innerHTML = '';
+  mainView.style.display = 'block';
+  currentLabelCtx = { cat: null, id: null };
+}
+
+/* ============ PRINT VIEW ============ */
+function buildPrintDualPage() {
+  const itemsL = DATA['labelling'];
+  const itemsO = DATA['ouast'];
+
+  function buildRows(items, cat) {
+    return items.map(([name, exp]) => {
+      const id = slugify(name);
+      const st = readItemState(cat, id);
+      const isJam = parseExp(exp).unit === 'JAM';
+      const prodDate = buildProdDate(st.prodDate, st.prodTime);
+      const { expDate } = computeStatus(prodDate, exp);
+      return `
+        <tr>
+          <td class="col-nama">${name}</td>
+          <td class="center">${exp}</td>
+          <td class="center">${prodDate ? fmtDatePrint(prodDate, isJam) : ''}</td>
+          <td class="center">${expDate ? fmtDatePrint(expDate, isJam) : ''}</td>
+          <td class="center">${st.checked ? '✓' : ''}</td>
+        </tr>`;
+    }).join('');
+  }
+
+  const adaDataL = itemsL.some(([name]) => {
+    const st = readItemState('labelling', slugify(name));
+    return st.prodDate && st.prodDate.trim() !== '';
+  });
+  const adaDataO = itemsO.some(([name]) => {
+    const st = readItemState('ouast', slugify(name));
+    return st.prodDate && st.prodDate.trim() !== '';
+  });
+  const adaData = adaDataL || adaDataO;
+
+  const tanggalStr = adaData && state.meta.tanggal
+    ? isoToHuman(state.meta.tanggal)
+    : '.....................';
+
+  return `
+    <div class="print-page print-dual">
+      <div class="print-dual-header">
+        <div class="print-tanggal">Tanggal : ${tanggalStr}</div>
+        <table class="pic-table">
+          <thead>
+            <tr><th colspan="2">PIC</th></tr>
+            <tr><th>Opening</th><th>Closing</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${adaData ? (state.meta.picOpening || '') : ''}</td>
+              <td>${adaData ? (state.meta.picClosing || '') : ''}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="print-dual-body">
+        <div class="print-col">
+          <div class="print-title">CHECKLIST LABELLING</div>
+          <table class="print-table">
+            <colgroup>
+              <col style="width:32%;">
+              <col style="width:13%;">
+              <col style="width:20%;">
+              <col style="width:22%;">
+              <col style="width:13%;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Nama Artikel</th>
+                <th>EXP</th>
+                <th>Prod</th>
+                <th>Expired</th>
+                <th>Checked</th>
+              </tr>
+            </thead>
+            <tbody>${buildRows(itemsL, 'labelling')}</tbody>
+          </table>
+        </div>
+        <div class="print-col">
+          <div class="print-title">CHECKLIST LABELLING OUAST</div>
+          <table class="print-table">
+            <colgroup>
+              <col style="width:32%;">
+              <col style="width:13%;">
+              <col style="width:20%;">
+              <col style="width:22%;">
+              <col style="width:13%;">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>Nama Artikel</th>
+                <th>EXP</th>
+                <th>Prod</th>
+                <th>Expired</th>
+                <th>Checked</th>
+              </tr>
+            </thead>
+            <tbody>${buildRows(itemsO, 'ouast')}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+}
+
+document.getElementById('printBtn').addEventListener('click', () => {
+  const mainView = document.getElementById('mainView');
+  const printView = document.getElementById('printView');
+  const labelView = document.getElementById('thermalLabelView');
+
+  labelView.style.display = 'none';
+  labelView.innerHTML = '';
+
+  const showingPrint = printView.style.display === 'block';
+
+  if (showingPrint) {
+    printView.style.display = 'none';
+    mainView.style.display = 'block';
+    document.body.classList.remove('print-view-active');
+    document.getElementById('floatingActions').classList.remove('visible');
+    document.getElementById('printBtn').textContent = 'Tampilan cetak';
+    setTimeout(updateStickyPositions, 50);
+  } else {
+    printView.innerHTML = buildPrintDualPage();
+    mainView.style.display = 'none';
+    printView.style.display = 'block';
+    document.body.classList.add('print-view-active');
+    document.getElementById('floatingActions').classList.add('visible');
+    document.getElementById('printBtn').textContent = 'Kembali ke tampilan biasa';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+/* ============ DOWNLOAD PNG ============ */
+document.getElementById('floatDownloadBtn').addEventListener('click', async (e) => {
+  e.stopPropagation();
+
+  const printView = document.getElementById('printView');
+  if (!printView.innerHTML.trim()) {
+    showToast('Buka tampilan cetak dulu.');
+    return;
+  }
+  if (typeof html2canvas === 'undefined') {
+    showToast('Library html2canvas belum siap. Cek koneksi internet.');
+    return;
+  }
+
+  showToast('Menyiapkan gambar...');
+
+  try {
+    const clone = printView.cloneNode(true);
+    clone.style.position = 'fixed';
+    clone.style.left = '-99999px';
+    clone.style.top = '0';
+    clone.style.width = '1600px';
+    clone.style.background = '#fff';
+    clone.style.padding = '24px';
+    clone.style.boxSizing = 'border-box';
+    clone.querySelectorAll('.print-page').forEach(p => {
+      p.style.maxWidth = '100%';
+      p.style.width = '100%';
+      p.style.margin = '0';
+      p.style.border = 'none';
+      p.style.boxShadow = 'none';
+      p.style.borderRadius = '0';
+    });
+    document.body.appendChild(clone);
+
+    const canvas = await html2canvas(clone, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+      logging: false
+    });
+
+    document.body.removeChild(clone);
+
+    const tanggal = (state.meta.tanggal || getTodayISO()).replace(/-/g, '');
+    const filename = `Checklist-Labelling_${tanggal}.png`;
+
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+
+    showToast('Gambar berhasil di-download.');
+  } catch (err) {
+    console.error(err);
+    showToast('Gagal membuat gambar.');
+  }
+});
+
+/* ============ FLOATING ACTIONS ============ */
+document.getElementById('floatPrintBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  window.print();
+});
+
+document.getElementById('floatBackBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('printBtn').click();
+});
+
+(function initFloatingDrag() {
+  const floating = document.getElementById('floatingActions');
+  let isDragging = false;
+  let offsetX = 0, offsetY = 0;
+
+  try {
+    const saved = localStorage.getItem('chatime-floating-pos');
+    if (saved) {
+      const pos = JSON.parse(saved);
+      floating.style.left = pos.left + 'px';
+      floating.style.top = pos.top + 'px';
+      floating.style.right = 'auto';
+    }
+  } catch (e) {}
+
+  floating.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.float-btn')) return;
+    isDragging = true;
+    const rect = floating.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    floating.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const x = e.clientX - offsetX;
+    const y = e.clientY - offsetY;
+    const maxX = window.innerWidth - floating.offsetWidth;
+    const maxY = window.innerHeight - floating.offsetHeight;
+    floating.style.left = Math.max(0, Math.min(x, maxX)) + 'px';
+    floating.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
+    floating.style.right = 'auto';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    floating.style.cursor = 'move';
+    try {
+      localStorage.setItem('chatime-floating-pos', JSON.stringify({
+        left: parseInt(floating.style.left, 10) || 0,
+        top: parseInt(floating.style.top, 10) || 0
+      }));
+    } catch (e) {}
+  });
+})();
+
+/* ============ INIT ============ */
+(async function init() {
+  // 1. Load dari localStorage dulu (biar cepat tampil)
+  loadAll();
+  applyMetaToControls();
+  updateSortArrows();
+  renderAll();
+  updateSummary(activeTab);
+  setTimeout(updateStickyPositions, 100);
+
+  // 2. Lalu coba load dari Sheets (background)
+  updateSyncBadge('syncing', '🔄 Memuat dari cloud...');
+  const loaded = await loadFromSheets();
+  if (loaded) {
+    applyMetaToControls();
+    renderAll();
+    updateSummary(activeTab);
+    renderPicDropdowns();
+    updateSyncBadge('ok', '✅ Data dari cloud');
+    setTimeout(() => updateSyncBadge('idle'), 3000);
+  } else {
+    updateSyncBadge('idle');
+  }
+
+  // 3. Auto-refresh tiap 30 detik (seperti sekarang)
+  setInterval(() => {
+    const ae = document.activeElement;
+    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'SELECT' || ae.tagName === 'TEXTAREA')) return;
+    if (document.getElementById('printView').style.display === 'block') return;
+    renderAll();
+  }, 30000);
+})();
+
+/* ============ KELOLA PIC ============ */
+const PIC_STORAGE_KEY = 'chatime-pic-list-v1';
+
+function loadPicList() {
+  try {
+    const raw = localStorage.getItem(PIC_STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return [
+    'Krisna Haryadi (165027)',
+    'Yulia Putri (175170)',
+    'M Haris Sebagust (182665)'
+  ];
+}
+function savePicList(list) {
+  try { localStorage.setItem(PIC_STORAGE_KEY, JSON.stringify(list)); } catch (e) {}
+}
+
+let PIC_LIST = loadPicList();
+
+function renderPicDropdowns() {
+  ['picOpeningGlobal', 'picClosingGlobal'].forEach(selId => {
+    const sel = document.getElementById(selId);
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">- pilih -</option>' +
+      PIC_LIST.map(p => `<option value="${p}">${p}</option>`).join('');
+    if (PIC_LIST.includes(current)) sel.value = current;
+  });
+}
+
+function renderPicModalList() {
+  const container = document.getElementById('picListContainer');
+  if (!container) return;
+  document.getElementById('picCount').textContent = PIC_LIST.length;
+  container.innerHTML = '';
+
+  PIC_LIST.forEach((p, idx) => {
+    const row = document.createElement('div');
+    row.className = 'pic-row';
+    row.draggable = true;
+    row.dataset.idx = idx;
+    row.innerHTML = `
+      <span class="grip">⠿</span>
+      <span class="num">${idx + 1}.</span>
+      <span class="pic-text" title="${p}">${p}</span>
+      <div class="row-btns">
+        <button data-act="up" ${idx === 0 ? 'disabled' : ''} title="Naik">▲</button>
+        <button data-act="down" ${idx === PIC_LIST.length - 1 ? 'disabled' : ''} title="Turun">▼</button>
+        <button data-act="del" class="del" title="Hapus">🗑</button>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+
+  let dragIdx = null;
+  container.querySelectorAll('.pic-row').forEach(row => {
+    row.addEventListener('dragstart', () => {
+      dragIdx = parseInt(row.dataset.idx, 10);
+      row.classList.add('dragging');
+    });
+    row.addEventListener('dragend', () => {
+      row.classList.remove('dragging');
+      container.querySelectorAll('.pic-row').forEach(r => r.classList.remove('drag-over'));
+      dragIdx = null;
+    });
+    row.addEventListener('dragover', (e) => { e.preventDefault(); row.classList.add('drag-over'); });
+    row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
+    row.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const targetIdx = parseInt(row.dataset.idx, 10);
+      if (dragIdx === null || dragIdx === targetIdx) return;
+      const [moved] = PIC_LIST.splice(dragIdx, 1);
+      PIC_LIST.splice(targetIdx, 0, moved);
+      savePicList(PIC_LIST);
+      renderPicModalList();
+      renderPicDropdowns();
+    });
+  });
+
+  container.querySelectorAll('.row-btns button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.closest('.pic-row').dataset.idx, 10);
+      const act = btn.dataset.act;
+      if (act === 'up' && idx > 0) {
+        [PIC_LIST[idx - 1], PIC_LIST[idx]] = [PIC_LIST[idx], PIC_LIST[idx - 1]];
+      } else if (act === 'down' && idx < PIC_LIST.length - 1) {
+        [PIC_LIST[idx + 1], PIC_LIST[idx]] = [PIC_LIST[idx], PIC_LIST[idx + 1]];
+      } else if (act === 'del') {
+        if (!confirm(`Hapus PIC "${PIC_LIST[idx]}"?`)) return;
+        PIC_LIST.splice(idx, 1);
+      }
+      savePicList(PIC_LIST);
+      renderPicModalList();
+      renderPicDropdowns();
+    });
+  });
+}
+
+function openPicModal() {
+  document.getElementById('picModal').classList.add('show');
+  document.getElementById('picError').style.display = 'none';
+  document.getElementById('picNameInput').value = '';
+  document.getElementById('picNikInput').value = '';
+  renderPicModalList();
+  setTimeout(() => document.getElementById('picNameInput').focus(), 50);
+}
+function closePicModal() {
+  document.getElementById('picModal').classList.remove('show');
+}
+
+document.getElementById('managePicBtn').addEventListener('click', openPicModal);
+document.getElementById('closePicModal').addEventListener('click', closePicModal);
+document.getElementById('picDoneBtn').addEventListener('click', closePicModal);
+document.getElementById('picModal').addEventListener('click', (e) => {
+  if (e.target.id === 'picModal') closePicModal();
+});
+
+document.getElementById('picForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('picNameInput').value.trim();
+  const nik = document.getElementById('picNikInput').value.trim();
+  const errEl = document.getElementById('picError');
+
+  if (!name) {
+    errEl.textContent = 'Nama tidak boleh kosong';
+    errEl.style.display = 'block';
+    return;
+  }
+  const picString = nik ? `${name} (${nik})` : name;
+  if (PIC_LIST.includes(picString)) {
+    errEl.textContent = 'PIC dengan nama/NIK ini sudah ada di daftar';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  PIC_LIST.push(picString);
+  savePicList(PIC_LIST);
+  document.getElementById('picNameInput').value = '';
+  document.getElementById('picNikInput').value = '';
+  errEl.style.display = 'none';
+  renderPicModalList();
+  renderPicDropdowns();
+});
+
+renderPicDropdowns();
+</script>
+
+</body>
+</html>
