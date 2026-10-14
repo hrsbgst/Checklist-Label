@@ -1441,20 +1441,32 @@ async function syncToSheets() {
       meta: state.meta
     };
 
+    // Pakai URLSearchParams + form-encoded (cara paling reliable untuk GAS)
+    const body = new URLSearchParams();
+    body.append('action', 'save');
+    body.append('payload', JSON.stringify(payload));
+
     const res = await fetch(API_URL, {
       method: 'POST',
-      mode: 'no-cors', // GAS butuh ini
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
+      body: body,
+      // JANGAN set Content-Type manual — biar browser set otomatis
+      // JANGAN pakai no-cors
     });
 
-    // Karena no-cors, kita tidak bisa baca response.
-    // Anggap sukses kalau tidak error.
-    updateSyncBadge('ok');
-    setTimeout(() => updateSyncBadge('idle'), 3000);
+    const text = await res.text();
+    let json = null;
+    try { json = JSON.parse(text); } catch(e) {}
+
+    if (json && json.ok) {
+      updateSyncBadge('ok');
+      setTimeout(() => updateSyncBadge('idle'), 3000);
+    } else {
+      console.error('Sync response tidak OK:', text);
+      updateSyncBadge('error', '⚠️ Gagal sync');
+    }
   } catch (e) {
     console.error('Sync error:', e);
-    updateSyncBadge('error');
+    updateSyncBadge('error', '⚠️ Gagal sync');
   } finally {
     isSyncing = false;
   }
