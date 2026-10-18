@@ -8,46 +8,62 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root {
-    --bg: #ffffff;
+    --bg: #f8fafc;
     --card: #ffffff;
-    --line: #e8e8e8;
-    --line-strong: #d0d0d0;
-    --text: #1a1a1a;
-    --muted: #767676;
-    --accent: #6a2c91;
-    --ok: #16803d;
-    --ok-bg: #ecfdf3;
+    --line: #e2e8f0;
+    --line-strong: #cbd5e1;
+    --text: #0f172a;
+    --muted: #64748b;
+
+    /* Status Colors */
+    --ok: #15803d;
+    --ok-bg: #f0fdf4;
     --warn: #b45309;
-    --warn-bg: #fef6e7;
+    --warn-bg: #fffbeb;
     --danger: #b91c1c;
     --danger-bg: #fef2f2;
-    --none-bg: #f4f4f4;
-    --brand-green: #3a9c3a;
-    --brand-purple: #6a2c91;
+    --none-bg: #f1f5f9;
+
+    /* Brand Chatime Defaults */
+    --brand-primary: #6a2c91;
+    --brand-primary-hover: #521e74;
+    --brand-secondary: #3a9c3a;
+    --brand-gradient: linear-gradient(135deg, #7a35a5 0%, #5a2379 55%, #3a175a 100%);
+    --brand-text-header: #ffffff;
     --brand-blue: #2563eb;
-    --panel-gray: #f4f4f5;
+    --panel-gray: #f1f5f9;
     --logo-chatime: url("https://fbindonesia.com/files/uploads/contentbrand/logo_square/2022/Apr/07/624e710680c6a/logo-chatime-rounded.png");
-    --sticky-top-offset: 72px;
+    --sticky-top-offset: 78px;
   }
+
+  /* Dual Brand Mode OUAST / Cupbop Yellow Override */
+  body.theme-ouast {
+    --brand-primary: #ca8a04;
+    --brand-primary-hover: #a16207;
+    --brand-secondary: #eab308;
+    --brand-gradient: linear-gradient(135deg, #facc15 0%, #eab308 60%, #ca8a04 100%);
+    --brand-text-header: #0f172a;
+  }
+
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     font-size: 13px;
+    transition: background-color 0.25s ease;
   }
 
-  /* ============ HEADER ============ */
+  /* ============ HEADER (SOLID, NON-TRANSPARENT ON SCROLL) ============ */
   header {
     background: var(--bg);
-    border: none;
-    padding: 6px 16px 4px;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 16px 8px;
     position: sticky;
     top: 0;
     z-index: 300;
-    pointer-events: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   }
   header .head-row {
     max-width: 1600px;
@@ -57,99 +73,124 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, #7a35a5 0%, #5a2379 55%, #3a175a 100%);
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(106,44,145,0.22);
-    pointer-events: auto;
+    padding: 10px 18px;
+    background: var(--brand-gradient);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
+    transition: background 0.3s ease;
   }
   header .head-row::after {
     content: '';
     position: absolute;
-    right: -80px;
-    top: -80px;
-    width: 200px;
-    height: 200px;
+    right: -60px;
+    top: -60px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(58,156,58,0.20) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,255,255,0.22) 0%, transparent 70%);
     pointer-events: none;
   }
-  .brand { display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
   .brand-logo {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-image: var(--logo-chatime);
     background-color: #fff;
-    background-size: 78%;
+    background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
     flex-shrink: 0;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255,255,255,0.5);
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .brand-logo:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.4);
   }
   .brand-text { display: flex; flex-direction: column; }
   header h1 {
     margin: 0;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
-    color: #fff;
+    color: var(--brand-text-header);
     letter-spacing: 0.3px;
   }
   header .eyebrow {
-    font-size: 9px;
-    font-weight: 700;
+    font-size: 9.5px;
+    font-weight: 800;
     letter-spacing: 1.1px;
     text-transform: uppercase;
-    color: #b8e8b8;
+    color: var(--brand-text-header);
+    opacity: 0.9;
     margin-bottom: 1px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  header p { margin: 1px 0 0; font-size: 10.5px; color: rgba(255,255,255,0.75); }
+  .brand-tag {
+    background: rgba(0,0,0,0.15);
+    color: var(--brand-text-header);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 800;
+  }
+  header p { margin: 1px 0 0; font-size: 11px; color: var(--brand-text-header); opacity: 0.85; }
   .head-actions { display: flex; gap: 6px; flex-wrap: wrap; position: relative; z-index: 1; }
 
   /* ============ BUTTON ============ */
   .btn {
-    padding: 6px 11px;
-    border-radius: 7px;
+    padding: 6px 12px;
+    border-radius: 8px;
     border: 1px solid var(--line-strong);
     background: var(--card);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text);
     cursor: pointer;
     transition: all 0.15s ease;
     font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
-  .btn:hover { background: #f5f5f5; }
+  .btn:hover { background: #f1f5f9; }
   header .btn {
-    background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #fff;
+    background: rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: var(--brand-text-header);
     backdrop-filter: blur(4px);
   }
   header .btn:hover {
-    background: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.4);
     border-color: #fff;
-    color: #fff;
   }
-  .btn.primary { background: var(--brand-purple); color: #fff; border-color: var(--brand-purple); }
-  .btn.primary:hover { background: #571f75; }
+  .btn.primary {
+    background: var(--brand-primary);
+    color: #fff;
+    border-color: var(--brand-primary);
+  }
+  body.theme-ouast .btn.primary {
+    color: #0f172a;
+  }
+  .btn.primary:hover { background: var(--brand-primary-hover); }
   .btn.danger { background: #fff; color: var(--danger); border-color: var(--danger); }
   .btn.danger:hover { background: var(--danger-bg); }
   header .btn.danger {
-    background: rgba(255,255,255,0.1);
-    color: #ffd4d4;
-    border-color: rgba(255,180,180,0.4);
+    background: rgba(255,255,255,0.2);
+    color: var(--brand-text-header);
+    border-color: rgba(255,255,255,0.4);
   }
   header .btn.danger:hover {
-    background: rgba(185,28,28,0.35);
+    background: rgba(185,28,28,0.8);
     color: #fff;
-    border-color: #ffb4b4;
+    border-color: #b91c1c;
   }
-  input[type="file"] { display: none; }
 
   .container { max-width: 1600px; margin: 0 auto; padding: 6px 16px 32px; }
 
@@ -159,8 +200,9 @@
     top: var(--sticky-top-offset);
     z-index: 250;
     background: var(--bg);
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    transition: background-color 0.25s ease;
   }
 
   /* ============ CONTROLS ============ */
@@ -168,16 +210,17 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
   }
   .controls input[type="date"], .controls input[type="text"] {
-    padding: 6px 9px;
-    border-radius: 7px;
+    padding: 7px 10px;
+    border-radius: 8px;
     border: 1px solid var(--line-strong);
     font-size: 12.5px;
     background: var(--card);
     font-family: inherit;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
   }
   .search-wrap {
     position: relative;
@@ -188,17 +231,18 @@
   }
   .search-wrap .search {
     width: 100%;
-    padding: 6px 30px 6px 9px;
-    border-radius: 7px;
+    padding: 7px 30px 7px 10px;
+    border-radius: 8px;
     border: 1px solid var(--line-strong);
     font-size: 12.5px;
     background: var(--card);
     box-sizing: border-box;
     font-family: inherit;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
   }
   .search-clear {
     position: absolute;
-    right: 5px;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
     border: none;
@@ -210,42 +254,60 @@
     border-radius: 4px;
     display: none;
   }
-  .search-clear:hover { background: #f0f0f0; color: var(--danger); }
+  .search-clear:hover { background: #f1f5f9; color: var(--danger); }
   .search-clear.show { display: block; }
 
-  /* ============ PIC SUMMARY + SUMMARY GABUNG ============ */
+  /* ============ PIC SUMMARY + DUAL BRAND SUMMARY ============ */
   .pic-summary {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
-    background: var(--panel-gray);
+    background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 6px 12px;
-    margin-bottom: 8px;
+    border-radius: 12px;
+    padding: 8px 14px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
   }
-  .pic-summary .grp { display: flex; align-items: center; gap: 5px; }
-  .pic-summary label { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .pic-summary .grp { display: flex; align-items: center; gap: 6px; }
+  .pic-summary label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
   .pic-summary select {
-    padding: 5px 8px;
-    border-radius: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
     border: 1px solid var(--line-strong);
     font-size: 12px;
     background: #fff;
     min-width: 160px;
     font-family: inherit;
   }
-  .pic-summary .tanggal-label { font-size: 11px; color: var(--muted); font-weight: 600; margin-left: auto; }
+  
+  /* Kelola PIC Button styling */
+  .btn-pic {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    font-weight: 700;
+  }
+  .btn-pic:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+  }
+  .btn-pic .icon-pic {
+    font-size: 14px;
+  }
+
+  .pic-summary .tanggal-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-left: auto; }
   .pic-summary .tanggal-value {
     font-size: 12.5px;
-    font-weight: 600;
-    padding: 5px 10px;
-    background: #fff;
+    font-weight: 700;
+    padding: 6px 12px;
+    background: var(--panel-gray);
     border: 1px solid var(--line-strong);
-    border-radius: 6px;
+    border-radius: 8px;
     min-width: 110px;
     text-align: center;
+    color: var(--brand-primary);
   }
 
   /* Summary inline & Filter Box */
@@ -253,7 +315,7 @@
     display: flex;
     gap: 6px;
     align-items: center;
-    padding-left: 10px;
+    padding-left: 12px;
     border-left: 1px solid var(--line-strong);
     margin-left: 4px;
     flex-wrap: wrap;
@@ -261,11 +323,11 @@
   .summary-inline .box {
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 4px 9px;
+    border-radius: 8px;
+    padding: 5px 10px;
     display: flex;
     align-items: baseline;
-    gap: 5px;
+    gap: 6px;
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.15s ease;
@@ -273,53 +335,82 @@
   }
   .summary-inline .box:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
   }
   .summary-inline .box.active {
-    outline: 2px solid var(--brand-purple);
+    outline: 2px solid var(--brand-primary);
     outline-offset: 1px;
-    background: #fdf8ff;
+    background: #faf5ff;
   }
-  .summary-inline .box .num { font-size: 15px; font-weight: 700; line-height: 1; }
-  .summary-inline .box .lbl { font-size: 10.5px; color: var(--muted); font-weight: 600; }
+  body.theme-ouast .summary-inline .box.active {
+    background: #fefce8;
+  }
+
+  .summary-inline .box .num { font-size: 15px; font-weight: 800; line-height: 1; }
+  .summary-inline .box .lbl { font-size: 10.5px; color: var(--muted); font-weight: 700; }
   .summary-inline .box.all { border-color: var(--line-strong); }
-  .summary-inline .box.all .num { color: var(--brand-purple); }
-  .summary-inline .box.danger { border-color: #f5c0c0; }
+  .summary-inline .box.all .num { color: var(--brand-primary); }
+  .summary-inline .box.danger { border-color: #fca5a5; }
   .summary-inline .box.danger .num { color: var(--danger); }
-  .summary-inline .box.warn { border-color: #f5ddb8; }
+  .summary-inline .box.warn { border-color: #fde68a; }
   .summary-inline .box.warn .num { color: var(--warn); }
-  .summary-inline .box.ok { border-color: #c0e6cf; }
+  .summary-inline .box.ok { border-color: #86efac; }
   .summary-inline .box.ok .num { color: var(--ok); }
-  .summary-inline .box.checked { border-color: #c0d2f5; }
+  .summary-inline .box.checked { border-color: #93c5fd; }
   .summary-inline .box.checked .num { color: var(--brand-blue); }
 
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="time"]::-webkit-calendar-picker-indicator {
-    margin-left: 2px;
-    padding: 2px;
-    cursor: pointer;
-    opacity: 0.7;
-  }
-  input[type="date"]::-webkit-calendar-picker-indicator:hover,
-  input[type="time"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
-
-  /* ============ TABS ============ */
+  /* ============ BRAND TABS ============ */
   .tabs {
     display: flex;
-    gap: 4px;
-    border-bottom: 1px solid var(--line);
+    gap: 6px;
+    border-bottom: 2px solid var(--line);
     margin-bottom: 0;
   }
   .tab {
-    padding: 7px 14px;
-    font-size: 12.5px;
-    font-weight: 500;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--muted);
     cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s ease;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  .tab.active { color: var(--brand-purple); border-bottom-color: var(--brand-green); font-weight: 700; }
+  .tab:hover { color: var(--text); background: rgba(0,0,0,0.02); }
+
+  .tab[data-tab="labelling"].active {
+    color: #6a2c91;
+    border-bottom-color: #6a2c91;
+    font-weight: 800;
+    background: #fdf8ff;
+  }
+  .tab[data-tab="ouast"].active {
+    color: #a16207;
+    border-bottom-color: #eab308;
+    font-weight: 800;
+    background: #fefce8;
+  }
+  .tab[data-tab="kelola"].active {
+    color: var(--brand-primary);
+    border-bottom-color: var(--brand-primary);
+    font-weight: 800;
+  }
+
+  .tab-badge {
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .tab[data-tab="labelling"] .tab-badge { background: #f3e8ff; color: #6a2c91; }
+  .tab[data-tab="ouast"] .tab-badge { background: #fef08a; color: #854d0e; }
+
   .panel { display: none; }
   .panel.active { display: block; }
 
@@ -331,39 +422,40 @@
     border-spacing: 0;
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     overflow: visible;
   }
-  table.item-table thead th:first-child { border-top-left-radius: 10px; }
-  table.item-table thead th:last-child { border-top-right-radius: 10px; }
+  table.item-table thead th:first-child { border-top-left-radius: 12px; }
+  table.item-table thead th:last-child { border-top-right-radius: 12px; }
   .item-table thead th {
     text-align: center;
     font-size: 11px;
-    font-weight: 700;
-    color: var(--text);
+    font-weight: 800;
+    color: var(--muted);
     text-transform: uppercase;
-    letter-spacing: 0.3px;
-    padding: 8px 10px;
-    background: #eef0f3;
-    border-bottom: 2px solid var(--line-strong);
+    letter-spacing: 0.4px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-bottom: 2px solid var(--line);
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
     position: sticky;
     top: var(--thead-top, 200px);
     z-index: 200;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
   }
-  .item-table thead th:hover { color: var(--brand-purple); }
-  .item-table thead th .arrow { font-size: 9px; margin-left: 3px; opacity: 0.6; }
+  .item-table thead th:hover { color: var(--brand-primary); }
+  .item-table thead th .arrow { font-size: 9px; margin-left: 4px; opacity: 0.6; }
   .item-table tbody td {
-    padding: 6px 10px;
+    padding: 8px 12px;
     border-bottom: 1px solid var(--line);
-    font-size: 12.5px;
+    font-size: 13px;
     vertical-align: middle;
   }
   .item-table tbody tr:last-child td { border-bottom: none; }
-  .item-table tbody tr:hover { background: #fafafa; }
+  .item-table tbody tr:hover { background: #f8fafc; }
   .item-table tbody tr.is-expired { background: var(--danger-bg); }
   .item-table tbody tr.is-expired:hover { background: #fde8e8; }
   .item-table tbody tr.is-expired td { color: var(--danger); }
@@ -371,13 +463,13 @@
   .item-table tbody tr.is-checked .item-name::after {
     content: ' ✓';
     color: var(--brand-blue);
-    font-weight: 700;
+    font-weight: 800;
   }
 
-  .item-name { font-weight: 600; }
-  .item-shelf { font-size: 11.5px; color: var(--muted); }
+  .item-name { font-weight: 700; color: var(--text); }
+  .item-shelf { font-size: 11.5px; color: var(--muted); font-weight: 600; }
 
-  .status-strip { width: 4px; padding: 0 !important; }
+  .status-strip { width: 5px; padding: 0 !important; }
   .status-strip.danger { background: var(--danger); }
   .status-strip.warn { background: var(--warn); }
   .status-strip.ok { background: var(--ok); }
@@ -388,41 +480,29 @@
 
   .badge {
     font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
+    font-weight: 700;
+    padding: 3px 9px;
     border-radius: 999px;
     white-space: nowrap;
     display: inline-block;
   }
-  .badge.danger { background: var(--danger-bg); color: var(--danger); }
-  .badge.warn { background: var(--warn-bg); color: var(--warn); }
-  .badge.ok { background: var(--ok-bg); color: var(--ok); }
+  .badge.danger { background: var(--danger-bg); color: var(--danger); border: 1px solid #fca5a5; }
+  .badge.warn { background: var(--warn-bg); color: var(--warn); border: 1px solid #fde68a; }
+  .badge.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid #86efac; }
   .badge.none { background: var(--none-bg); color: var(--muted); }
-  .pct-note { font-size: 10.5px; color: var(--muted); display: block; margin-top: 2px; }
+  .pct-note { font-size: 10.5px; color: var(--muted); display: block; margin-top: 2px; font-weight: 600; }
 
-  .item-table input[type="date"] {
-    padding: 5px 6px;
+  .item-table input[type="date"], .item-table input[type="time"] {
+    padding: 6px 8px;
     font-size: 12.5px;
-    border-radius: 6px;
+    border-radius: 7px;
     border: 1px solid var(--line-strong);
-    width: 140px;
-    min-width: 140px;
-    max-width: 140px;
-    text-align: left;
+    background: #fff;
     box-sizing: border-box;
     font-family: inherit;
   }
-  .item-table input[type="time"] {
-    padding: 5px 6px;
-    font-size: 12.5px;
-    border-radius: 6px;
-    border: 1px solid var(--line-strong);
-    width: 130px;
-    min-width: 130px;
-    max-width: 130px;
-    box-sizing: border-box;
-    font-family: inherit;
-  }
+  .item-table input[type="date"] { width: 140px; min-width: 140px; }
+  .item-table input[type="time"] { width: 120px; min-width: 120px; }
   .dt-inputs {
     display: flex;
     gap: 6px;
@@ -431,17 +511,17 @@
   }
 
   .item-table input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
     accent-color: var(--brand-blue);
   }
 
   .check-all-btn {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
     padding: 0;
-    border-radius: 3px;
+    border-radius: 4px;
     border: 1.5px solid var(--line-strong);
     background: #fff;
     cursor: pointer;
@@ -468,30 +548,32 @@
     transform: rotate(45deg);
   }
 
-  .exp-value { font-weight: 600; white-space: nowrap; }
+  .exp-value { font-weight: 700; white-space: nowrap; color: #1e293b; }
 
   .empty {
-    text-align: center; color: var(--muted); font-size: 12.5px;
-    padding: 30px 10px; background: var(--card);
-    border: 1px solid var(--line); border-radius: 10px;
+    text-align: center; color: var(--muted); font-size: 13px;
+    padding: 36px 10px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; margin-top: 10px;
   }
-  .footer-note { font-size: 11.5px; color: var(--muted); margin-top: 14px; }
+  .footer-note { font-size: 11.5px; color: var(--muted); margin-top: 16px; font-weight: 500; }
 
   /* ============ TOAST ============ */
   #toast {
     position: fixed;
-    bottom: 20px;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: #1a1a1a;
+    background: #0f172a;
     color: #fff;
-    font-size: 12.5px;
-    padding: 8px 16px;
-    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: 8px;
     opacity: 0;
     pointer-events: none;
     transition: all 0.25s ease;
     z-index: 9999;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   }
   #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -504,85 +586,103 @@
     flex-wrap: wrap;
   }
   .artikel-toolbar .spacer { flex: 1; }
+  .artikel-search-wrap {
+    position: relative;
+    width: 240px;
+  }
+  .artikel-search-wrap input {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    background: #fff;
+    font-family: inherit;
+  }
 
   .artikel-tabs {
     display: flex;
-    gap: 4px;
+    gap: 6px;
     margin-bottom: 12px;
     border-bottom: 1px solid var(--line);
   }
   .artikel-tab {
-    padding: 6px 14px;
+    padding: 7px 16px;
     font-size: 12.5px;
     color: var(--muted);
     cursor: pointer;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
-    font-weight: 500;
+    font-weight: 600;
   }
-  .artikel-tab.active { color: var(--brand-purple); border-bottom-color: var(--brand-green); font-weight: 700; }
+  .artikel-tab.active { color: var(--brand-primary); border-bottom-color: var(--brand-primary); font-weight: 800; }
 
   table.artikel-table {
     width: 100%;
     border-collapse: collapse;
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
   }
   .artikel-table thead th {
     text-align: left;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 800;
     color: var(--muted);
     text-transform: uppercase;
-    padding: 8px 12px;
-    background: #f7f7f7;
+    padding: 10px 14px;
+    background: #f8fafc;
     border-bottom: 1px solid var(--line);
+    user-select: none;
   }
+  .artikel-table thead th.sortable { cursor: pointer; }
+  .artikel-table thead th.sortable:hover { color: var(--brand-primary); }
   .artikel-table tbody td {
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-bottom: 1px solid var(--line);
-    font-size: 12.5px;
+    font-size: 13px;
     vertical-align: middle;
   }
   .artikel-table tbody tr:last-child td { border-bottom: none; }
   .artikel-table input[type="text"] {
-    padding: 5px 8px;
+    padding: 6px 10px;
     font-size: 12.5px;
-    border-radius: 6px;
+    border-radius: 7px;
     border: 1px solid var(--line-strong);
     width: 100%;
     font-family: inherit;
   }
-  .artikel-table .actions { display: flex; gap: 6px; justify-content: flex-end; }
+  .artikel-table .actions { display: flex; gap: 4px; justify-content: flex-end; }
   .artikel-table .actions button {
-    padding: 4px 9px;
-    font-size: 11.5px;
+    padding: 4px 8px;
+    font-size: 12px;
     border-radius: 6px;
     border: 1px solid var(--line-strong);
     background: #fff;
     cursor: pointer;
     font-family: inherit;
+    font-weight: 600;
+    transition: all 0.15s ease;
   }
-  .artikel-table .actions button:hover { background: #f5f5f5; }
+  .artikel-table .actions button:hover { background: #f1f5f9; color: var(--brand-primary); }
   .artikel-table .actions button.del { color: var(--danger); border-color: var(--danger); }
   .artikel-table .actions button.del:hover { background: var(--danger-bg); }
 
   /* ============ PRINT VIEW ============ */
   #printView { display: none; }
 
-  body.print-view-active { background: #f0f0f0; }
+  body.print-view-active { background: #e2e8f0; }
   body.print-view-active .container { background: transparent; }
 
   .print-page {
     background: #fff;
     max-width: 1400px;
     margin: 0 auto 24px;
-    padding: 20px 24px;
+    padding: 24px 28px;
     border: none;
-    border-radius: 4px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
   }
   .print-page.print-dual { max-width: 1400px; }
 
@@ -590,7 +690,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     gap: 20px;
     padding-bottom: 12px;
     min-height: 80px;
@@ -600,21 +700,18 @@
     align-self: flex-end;
     padding-bottom: 4px;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
   }
   .print-dual-body {
     display: flex;
-    gap: 14px;
+    gap: 16px;
     align-items: flex-start;
   }
-  .print-dual-body .print-col {
-    flex: 1;
-    min-width: 0;
-  }
+  .print-dual-body .print-col { flex: 1; min-width: 0; }
   .print-title {
     text-align: center;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 8px;
     letter-spacing: 0.5px;
   }
@@ -625,10 +722,9 @@
     font-size: 10.5px;
     table-layout: fixed;
   }
-  table.print-table th,
-  table.print-table td {
+  table.print-table th, table.print-table td {
     border: 1px solid #333;
-    padding: 4px 5px;
+    padding: 5px 6px;
     text-align: left;
     word-wrap: break-word;
     overflow: hidden;
@@ -636,20 +732,16 @@
     line-height: 1.3;
   }
   table.print-table th {
-    background: #ddd;
-    font-weight: 700;
+    background: #e2e8f0;
+    font-weight: 800;
     text-align: center;
     font-size: 10.5px;
     line-height: 1.4;
-    padding: 8px 5px;
+    padding: 8px 6px;
     height: 32px;
   }
   table.print-table td.center { text-align: center; }
-  table.print-table td.col-nama {
-    white-space: normal;
-    line-height: 1.3;
-    font-size: 10.5px;
-  }
+  table.print-table td.col-nama { white-space: normal; line-height: 1.3; font-size: 10.5px; font-weight: 600; }
 
   table.pic-table {
     border-collapse: collapse;
@@ -664,7 +756,7 @@
     text-align: center;
     font-size: 11px;
   }
-  table.pic-table th { background: #ddd; font-weight: 700; }
+  table.pic-table th { background: #e2e8f0; font-weight: 800; }
   table.pic-table td { height: 26px; }
 
   /* ============ THERMAL LABEL ============ */
@@ -710,13 +802,12 @@
     border: none;
     cursor: pointer;
     font-size: 15px;
-    padding: 2px 4px;
+    padding: 3px 5px;
     line-height: 1;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: background 0.15s ease;
   }
-  .print-label-btn:hover { background: #f0e9f6; }
-  .print-label-btn:active { transform: scale(0.9); }
+  .print-label-btn:hover { background: #f1f5f9; }
 
   /* ============ PAGE DEFINITIONS ============ */
   @page labelPage {
@@ -833,7 +924,7 @@
     background: #fff;
     border: 1px solid var(--line-strong);
     border-radius: 50px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     padding: 6px;
     flex-direction: column;
     gap: 8px;
@@ -846,12 +937,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     padding: 0;
     border-radius: 50%;
-    border: 1px solid var(--brand-purple);
-    background: var(--brand-purple);
+    border: 1px solid var(--brand-primary);
+    background: var(--brand-primary);
     color: #fff;
     font-size: 17px;
     font-weight: 600;
@@ -867,10 +958,10 @@
     right: calc(100% + 10px);
     top: 50%;
     transform: translateY(-50%);
-    background: #1a1a1a;
+    background: #0f172a;
     color: #fff;
     font-size: 11.5px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 5px 10px;
     border-radius: 6px;
     white-space: nowrap;
@@ -886,7 +977,7 @@
     top: 50%;
     transform: translateY(-50%);
     border: 6px solid transparent;
-    border-left-color: #1a1a1a;
+    border-left-color: #0f172a;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.15s ease;
@@ -895,7 +986,7 @@
   #floatingActions .float-btn:hover::before { opacity: 1; }
   #floatingActions .float-btn.secondary {
     background: #fff;
-    color: var(--brand-purple);
+    color: var(--brand-primary);
   }
   #floatingActions .float-btn.secondary:hover { background: var(--panel-gray); }
 
@@ -904,28 +995,26 @@
     display: none !important;
   }
 
-  /* ============ SYNC BADGE (AUTO HIDE) ============ */
+  /* ============ SYNC BADGE ============ */
   #syncBadge {
     position: fixed;
-    bottom: 12px;
-    right: 12px;
-    font-size: 11px;
-    padding: 4px 10px;
+    bottom: 14px;
+    right: 14px;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 12px;
     border-radius: 20px;
-    background: #f4f4f5;
-    color: #767676;
-    border: 1px solid #e8e8e8;
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
     z-index: 9997;
-    font-family: -apple-system, sans-serif;
+    font-family: inherit;
     pointer-events: none;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
-  #syncBadge.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  #syncBadge.show { opacity: 1; transform: translateY(0); }
 
   /* ============ PIC MODAL ============ */
   #picModal.modal-overlay {
@@ -935,7 +1024,8 @@
     width: 100vw !important;
     height: 100vh !important;
     z-index: 99999 !important;
-    background: rgba(0,0,0,0.5) !important;
+    background: rgba(15, 23, 42, 0.6) !important;
+    backdrop-filter: blur(3px) !important;
     display: none;
     align-items: center !important;
     justify-content: center !important;
@@ -945,14 +1035,14 @@
   #picModal.modal-overlay.show { display: flex !important; }
   #picModal .modal-box {
     background: #fff !important;
-    border-radius: 12px !important;
+    border-radius: 14px !important;
     max-width: 440px !important;
     width: 100% !important;
     max-height: 90vh !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25) !important;
     position: relative !important;
     margin: auto !important;
   }
@@ -960,45 +1050,45 @@
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 14px 18px !important;
-    border-bottom: 1px solid #e8e8e8 !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
   }
-  #picModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 700 !important; }
+  #picModal .modal-header h3 { margin: 0 !important; font-size: 16px !important; font-weight: 800 !important; }
   #picModal .modal-close {
     background: transparent !important;
     border: none !important;
     font-size: 18px !important;
-    color: #767676 !important;
+    color: #64748b !important;
     cursor: pointer !important;
     padding: 2px 6px !important;
     border-radius: 6px !important;
   }
-  #picModal .modal-close:hover { background: #f0f0f0 !important; }
-  #picModal .modal-body { padding: 16px 18px !important; }
+  #picModal .modal-close:hover { background: #f1f5f9 !important; }
+  #picModal .modal-body { padding: 18px 20px !important; }
   #picModal .modal-body label {
     display: block !important;
     font-size: 11px !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.4px !important;
-    color: #767676 !important;
+    color: #64748b !important;
     margin-bottom: 5px !important;
-    margin-top: 10px !important;
+    margin-top: 12px !important;
   }
   #picModal .modal-body label:first-child { margin-top: 0 !important; }
   #picModal .modal-body input {
     width: 100% !important;
-    padding: 8px 10px !important;
+    padding: 8px 12px !important;
     font-size: 13px !important;
-    border: 1px solid #d0d0d0 !important;
+    border: 1px solid #cbd5e1 !important;
     border-radius: 8px !important;
     box-sizing: border-box !important;
     font-family: inherit !important;
   }
   #picModal .modal-body input:focus {
     outline: none !important;
-    border-color: #6a2c91 !important;
-    box-shadow: 0 0 0 2px rgba(106,44,145,0.15) !important;
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 0 0 3px rgba(106,44,145,0.15) !important;
   }
   #picModal .modal-error {
     color: #b91c1c !important;
@@ -1010,22 +1100,22 @@
     display: flex !important;
     justify-content: flex-end !important;
     gap: 8px !important;
-    margin-top: 16px !important;
+    margin-top: 18px !important;
   }
   #picModal .modal-list-wrap {
-    padding: 12px 18px 16px !important;
-    border-top: 1px solid #e8e8e8 !important;
-    background: #f4f4f5 !important;
+    padding: 14px 20px 18px !important;
+    border-top: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
     overflow-y: auto !important;
   }
   #picModal .modal-list-head {
     display: flex !important;
     justify-content: space-between !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 10px !important;
     font-size: 11px !important;
-    font-weight: 700 !important;
+    font-weight: 800 !important;
     text-transform: uppercase !important;
-    color: #767676 !important;
+    color: #64748b !important;
     letter-spacing: 0.3px !important;
   }
   #picModal .modal-list { max-height: 220px !important; overflow-y: auto !important; }
@@ -1034,54 +1124,57 @@
     align-items: center !important;
     justify-content: space-between !important;
     background: #fff !important;
-    border: 1px solid #e8e8e8 !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 8px !important;
-    padding: 6px 10px !important;
+    padding: 7px 12px !important;
     margin-bottom: 6px !important;
     font-size: 12.5px !important;
     cursor: grab !important;
     gap: 6px !important;
   }
   #picModal .pic-row.dragging { opacity: 0.4 !important; }
-  #picModal .pic-row.drag-over { border-color: #6a2c91 !important; background: #f9f3fc !important; }
-  #picModal .pic-row .grip { color: #767676 !important; }
-  #picModal .pic-row .num { color: #767676 !important; font-weight: 700 !important; width: 18px !important; }
+  #picModal .pic-row.drag-over { border-color: var(--brand-primary) !important; background: #faf5ff !important; }
+  #picModal .pic-row .grip { color: #94a3b8 !important; }
+  #picModal .pic-row .num { color: #64748b !important; font-weight: 700 !important; width: 18px !important; }
   #picModal .pic-row .pic-text {
     flex: 1 !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
   }
-  #picModal .pic-row .row-btns { display: flex !important; gap: 2px !important; }
+  #picModal .pic-row .row-btns { display: flex !important; gap: 3px !important; }
   #picModal .pic-row .row-btns button {
     background: transparent !important;
     border: none !important;
     cursor: pointer !important;
-    padding: 3px 5px !important;
+    padding: 3px 6px !important;
     border-radius: 5px !important;
     font-size: 13px !important;
-    color: #767676 !important;
+    color: #64748b !important;
   }
-  #picModal .pic-row .row-btns button:hover { background: #f0f0f0 !important; color: #6a2c91 !important; }
+  #picModal .pic-row .row-btns button:hover { background: #f1f5f9 !important; color: var(--brand-primary) !important; }
   #picModal .pic-row .row-btns button.del:hover { background: #fef2f2 !important; color: #b91c1c !important; }
   #picModal .pic-row .row-btns button:disabled { opacity: 0.2 !important; cursor: default !important; }
 </style>
 </head>
-<body>
+<body class="theme-chatime">
 
 <header>
   <div class="head-row">
     <div class="brand">
-      <div class="brand-logo"></div>
+      <div class="brand-logo" id="brandLogo" title="Double click logo untuk membuka Waste Product Converter"></div>
       <div class="brand-text">
-        <div class="eyebrow">F34V Chatime AZKO Kios BAtoh Aceh</div>
-        <h1>CHECKLIST LABELLING</h1>
-        <p>Perhitungan expired otomatis</p>
+        <div class="eyebrow">
+          <span>F34V Chatime AZKO Kios Batoh</span>
+          <span class="brand-tag" id="brandTag">CHATIME</span>
+        </div>
+        <h1 id="brandTitle">CHECKLIST LABELLING CHATIME</h1>
+        <p id="brandSub">Perhitungan expired & sinkronisasi cloud realtime</p>
       </div>
     </div>
     <div class="head-actions">
-      <button class="btn" id="printBtn">Tampilan cetak</button>
+      <button class="btn" id="printBtn">🖨️ Tampilan Cetak</button>
       <button class="btn danger" id="resetAllBtn">Reset All</button>
     </div>
   </div>
@@ -1094,7 +1187,7 @@
     <div class="sticky-top" id="stickyTop">
       <div class="controls">
         <input type="date" id="globalDate" title="Tanggal laporan">
-        <button class="btn primary" id="applyAllBtn">Terapkan tanggal ke semua di tab ini</button>
+        <button class="btn primary" id="applyAllBtn">Terapkan Tanggal ke Semua Item</button>
         <div class="search-wrap">
           <input type="text" class="search" id="searchBox" placeholder="Cari nama artikel...">
           <button type="button" class="search-clear" id="searchClearBtn" title="Hapus pencarian">✕</button>
@@ -1115,10 +1208,10 @@
           </select>
         </div>
         <div class="grp">
-          <button class="btn" id="managePicBtn" title="Tambah / kelola daftar PIC">👥 Kelola PIC</button>
+          <button class="btn btn-pic" id="managePicBtn" title="Tambah / kelola daftar PIC"><span class="icon-pic">👤</span> Kelola PIC</button>
         </div>
 
-        <!-- SUMMARY INLINE WITH CLICKABLE FILTERS -->
+        <!-- DUAL-BRAND SUMMARY INLINE WITH CLICKABLE FILTERS -->
         <div class="summary-inline">
           <div class="box all active" data-filter="all" title="Tampilkan semua item"><span class="num" id="cntAll">0</span><span class="lbl">Semua</span></div>
           <div class="box danger" data-filter="danger" title="Filter Expired"><span class="num" id="cntDanger">0</span><span class="lbl">Expired</span></div>
@@ -1132,9 +1225,17 @@
       </div>
 
       <div class="tabs">
-        <div class="tab active" data-tab="labelling">Labelling</div>
-        <div class="tab" data-tab="ouast">Labelling OUAST</div>
-        <div class="tab" data-tab="kelola">⚙️ Kelola Artikel</div>
+        <div class="tab active" data-tab="labelling">
+          <span>🧋 Labelling Chatime</span>
+          <span class="tab-badge">Beverage</span>
+        </div>
+        <div class="tab" data-tab="ouast">
+          <span>🍲 Labelling OUAST</span>
+          <span class="tab-badge">Food</span>
+        </div>
+        <div class="tab" data-tab="kelola">
+          <span>⚙️ Kelola Artikel</span>
+        </div>
       </div>
     </div>
 
@@ -1144,19 +1245,19 @@
           <thead>
             <tr>
               <th class="status-strip"></th>
-              <th class="col-left" data-sort="name">Nama artikel<span class="arrow">▾</span></th>
-              <th class="col-left" data-sort="exp">Masa simpan<span class="arrow">▾</span></th>
-              <th class="col-center" data-sort="prod">Tanggal produksi<span class="arrow">▾</span></th>
-              <th class="col-center" data-sort="expdate">Tanggal expired<span class="arrow">▾</span></th>
+              <th class="col-left" data-sort="name">Nama Artikel Chatime<span class="arrow">▾</span></th>
+              <th class="col-left" data-sort="exp">Masa Simpan<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="prod">Tanggal Produksi<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="expdate">Tanggal Expired<span class="arrow">▾</span></th>
               <th class="col-center" data-sort="status">Status<span class="arrow">▾</span></th>
-              <th class="col-center">Labelling checked <button class="check-all-btn" id="checkAllLabelling" title="Check/Uncheck semua"></button></th>
+              <th class="col-center">Checked <button class="check-all-btn" id="checkAllLabelling" title="Check/Uncheck semua"></button></th>
               <th class="col-center">Print Label</th>
             </tr>
           </thead>
           <tbody id="bodyLabelling"></tbody>
         </table>
       </div>
-      <div id="emptyLabelling" class="empty" style="display:none;">Tidak ada item yang cocok.</div>
+      <div id="emptyLabelling" class="empty" style="display:none;">Tidak ada item Chatime yang cocok.</div>
     </div>
 
     <div id="ouast" class="panel">
@@ -1165,31 +1266,34 @@
           <thead>
             <tr>
               <th class="status-strip"></th>
-              <th class="col-left" data-sort="name">Nama artikel<span class="arrow">▾</span></th>
-              <th class="col-left" data-sort="exp">Masa simpan<span class="arrow">▾</span></th>
-              <th class="col-center" data-sort="prod">Tanggal produksi<span class="arrow">▾</span></th>
-              <th class="col-center" data-sort="expdate">Tanggal expired<span class="arrow">▾</span></th>
+              <th class="col-left" data-sort="name">Nama Artikel<span class="arrow">▾</span></th>
+              <th class="col-left" data-sort="exp">Masa Simpan<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="prod">Tanggal Produksi<span class="arrow">▾</span></th>
+              <th class="col-center" data-sort="expdate">Tanggal Expired<span class="arrow">▾</span></th>
               <th class="col-center" data-sort="status">Status<span class="arrow">▾</span></th>
-              <th class="col-center">Labelling checked <button class="check-all-btn" id="checkAllOuast" title="Check/Uncheck semua"></button></th>
+              <th class="col-center">Checked <button class="check-all-btn" id="checkAllOuast" title="Check/Uncheck semua"></button></th>
               <th class="col-center">Print Label</th>
             </tr>
           </thead>
           <tbody id="bodyOuast"></tbody>
         </table>
       </div>
-      <div id="emptyOuast" class="empty" style="display:none;">Tidak ada item yang cocok.</div>
+      <div id="emptyOuast" class="empty" style="display:none;">Tidak ada item OUAST yang cocok.</div>
     </div>
 
     <div id="kelola" class="panel">
       <div class="artikel-toolbar">
-        <button class="btn primary" id="addArtikelBtn">+ Tambah Artikel</button>
+        <button class="btn primary" id="addArtikelBtn">+ Tambah Artikel Baru</button>
         <button class="btn" id="resetArtikelBtn">Reset ke Default</button>
+        <div class="artikel-search-wrap">
+          <input type="text" id="artikelSearchBox" placeholder="Cari nama / masa simpan...">
+        </div>
         <div class="spacer"></div>
-        <span style="font-size:11.5px;color:var(--muted);">Drag baris untuk ubah urutan</span>
+        <span style="font-size:12px;color:var(--muted);font-weight:600;">Gunakan tombol ▲/▼ atau drag baris</span>
       </div>
 
       <div class="artikel-tabs">
-        <div class="artikel-tab active" data-artikel-cat="labelling">Labelling</div>
+        <div class="artikel-tab active" data-artikel-cat="labelling">Labelling Chatime</div>
         <div class="artikel-tab" data-artikel-cat="ouast">Labelling OUAST</div>
       </div>
 
@@ -1197,18 +1301,18 @@
         <thead>
           <tr>
             <th style="width:40px;">#</th>
-            <th>Nama Artikel</th>
-            <th style="width:180px;">Masa Simpan</th>
-            <th style="width:120px; text-align:right;">Aksi</th>
+            <th class="sortable" id="artSortName">Nama Artikel <span id="artSortNameArrow">▾</span></th>
+            <th style="width:200px;" class="sortable" id="artSortExp">Masa Simpan <span id="artSortExpArrow">▾</span></th>
+            <th style="width:160px; text-align:right;">Aksi</th>
           </tr>
         </thead>
         <tbody id="artikelBody"></tbody>
       </table>
 
-      <p class="footer-note">Perubahan artikel langsung tersimpan otomatis dan langsung terlihat di tab Labelling / OUAST.</p>
+      <p class="footer-note">Perubahan artikel tersimpan otomatis dan langsung muncul di tab terkait.</p>
     </div>
 
-    <p class="footer-note">Data tersimpan otomatis.</p>
+    <p class="footer-note">Data tersimpan otomatis & tersinkronisasi dengan Google Sheets Kios Batoh.</p>
   </div>
 
   <div id="printView"></div>
@@ -1225,13 +1329,13 @@
 <div id="picModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-header">
-      <h3>👥 Kelola & Tambah PIC</h3>
+      <h3>👥 Kelola & Tambah PIC Toko</h3>
       <button id="closePicModal" class="modal-close">✕</button>
     </div>
     <form id="picForm" class="modal-body">
       <label>Nama Lengkap PIC</label>
       <input type="text" id="picNameInput" placeholder="Contoh: hrsbgst">
-      <label>NIK</label>
+      <label>NIK Staf</label>
       <input type="text" id="picNikInput" placeholder="Contoh: 081198">
       <p id="picError" class="modal-error" style="display:none;"></p>
       <div class="modal-actions">
@@ -1242,7 +1346,7 @@
     <div class="modal-list-wrap">
       <div class="modal-list-head">
         <span>Daftar PIC Tersimpan (<span id="picCount">0</span>)</span>
-        <span style="font-size:10.5px;color:#767676;">Tarik untuk ubah urutan</span>
+        <span style="font-size:10.5px;color:#64748b;">Tarik untuk ubah urutan</span>
       </div>
       <div id="picListContainer" class="modal-list"></div>
     </div>
@@ -1252,7 +1356,7 @@
 
 <script>
 /* =========================================================
-   CHECKLIST LABELLING
+   CHECKLIST LABELLING - DUAL BRAND SIGNATURE (CHATIME x OUAST CUPBOP)
    ========================================================= */
 
 const DEFAULT_DATA = {
@@ -1312,9 +1416,11 @@ let sortState = {
   labelling: { key: null, dir: 1 },
   ouast: { key: null, dir: 1 }
 };
+let artikelSortState = { key: null, dir: 1 };
+let artikelQuery = '';
 let activeTab = 'labelling';
 let activeArtikelCat = 'labelling';
-let activeStatusFilter = 'all'; // State Filter Status
+let activeStatusFilter = 'all';
 let counters = {
   labelling: { all: 0, danger: 0, warn: 0, ok: 0, checked: 0 },
   ouast:     { all: 0, danger: 0, warn: 0, ok: 0, checked: 0 }
@@ -1431,6 +1537,38 @@ function showToast(msg) {
 }
 
 /* =========================================================
+   DYNAMIC THEME SWITCHER (CHATIME x OUAST CUPBOP YELLOW)
+   ========================================================= */
+function updateBrandTheme(tabName) {
+  const body = document.body;
+  const tag = document.getElementById('brandTag');
+  const title = document.getElementById('brandTitle');
+  const sub = document.getElementById('brandSub');
+
+  if (tabName === 'ouast') {
+    body.classList.remove('theme-chatime');
+    body.classList.add('theme-ouast');
+    if (tag) tag.textContent = 'OUAST';
+    if (title) title.textContent = 'CHECKLIST LABELLING OUAST';
+    if (sub) sub.textContent = 'Monitoring bahan ouast Kios Batoh';
+  } else {
+    body.classList.remove('theme-ouast');
+    body.classList.add('theme-chatime');
+    if (tag) tag.textContent = 'CHATIME';
+    if (title) title.textContent = 'CHECKLIST LABELLING CHATIME';
+    if (sub) sub.textContent = 'Monitoring bahan minuman & topping Kios Batoh';
+  }
+}
+
+/* DOUBLE CLICK LOGO -> OPEN WASTE CONVERTER */
+document.getElementById('brandLogo').addEventListener('dblclick', () => {
+  showToast('Membuka Waste Product Converter...');
+  setTimeout(() => {
+    window.location.href = 'Waste Product Converter_2.html';
+  }, 400);
+});
+
+/* =========================================================
    SYNC KE GOOGLE SHEETS
    ========================================================= */
 let syncTimer = null;
@@ -1446,7 +1584,7 @@ function showSyncBadge(status, message) {
   }
   const styles = {
     syncing: { bg: '#fef6e7', color: '#b45309', text: message || '🔄 Sync...' },
-    ok:      { bg: '#ecfdf3', color: '#16803d', text: message || '✅ Tersimpan' },
+    ok:      { bg: '#f0fdf4', color: '#15803d', text: message || '✅ Tersimpan' },
     error:   { bg: '#fef2f2', color: '#b91c1c', text: message || '⚠️ Gagal sync' }
   };
   const s = styles[status];
@@ -1478,7 +1616,7 @@ async function syncToSheets() {
   showSyncBadge('syncing');
 
   try {
-    state.meta.picList = PIC_LIST; // Sync PIC_LIST to Cloud
+    state.meta.picList = PIC_LIST;
     const payload = {
       data: DATA,
       state: state,
@@ -1537,7 +1675,6 @@ async function loadFromSheets() {
     DATA = remoteData.data || DATA;
     state = remoteData.state || state;
 
-    // Load PIC list from Cloud if available
     if (state.meta && Array.isArray(state.meta.picList) && state.meta.picList.length > 0) {
       PIC_LIST = state.meta.picList;
       savePicList(PIC_LIST);
@@ -1650,7 +1787,6 @@ function render(cat) {
   const emptyBox = document.getElementById(cat === 'labelling' ? 'emptyLabelling' : 'emptyOuast');
   const query = document.getElementById('searchBox').value.trim().toLowerCase();
 
-  // Filter status & search
   let items = DATA[cat].filter(([name, exp]) => {
     const nameMatch = String(name).toLowerCase().includes(query);
     if (!nameMatch) return false;
@@ -1801,34 +1937,76 @@ function updateSortArrows() {
   });
 }
 
+/* =========================================================
+   KELOLA ARTIKEL (FILTER + MOVE UP/DOWN BUTTONS)
+   ========================================================= */
 function renderArtikelTable() {
   const tbody = document.getElementById('artikelBody');
   const cat = activeArtikelCat;
-  const items = DATA[cat] || [];
+  let items = (DATA[cat] || []).map((item, originalIndex) => ({
+    name: item[0],
+    exp: item[1],
+    originalIndex
+  }));
+
+  // Filter
+  if (artikelQuery) {
+    const q = artikelQuery.toLowerCase();
+    items = items.filter(it => it.name.toLowerCase().includes(q) || it.exp.toLowerCase().includes(q));
+  }
+
+  // Sort & update master DATA[cat] order
+  if (artikelSortState.key) {
+    items.sort((a, b) => {
+      let cmp = 0;
+      if (artikelSortState.key === 'name') cmp = a.name.localeCompare(b.name);
+      else if (artikelSortState.key === 'exp') cmp = a.exp.localeCompare(b.exp);
+      return cmp * artikelSortState.dir;
+    });
+
+    // Otomatis sinkronkan urutan ke master DATA[cat] untuk seluruh tab & cetak
+    DATA[cat] = items.map(it => [it.name, it.exp]);
+    saveAll();
+  }
+
+  // Update header arrows
+  document.getElementById('artSortNameArrow').textContent =
+    artikelSortState.key === 'name' ? (artikelSortState.dir === 1 ? '▲' : '▼') : '▾';
+  document.getElementById('artSortExpArrow').textContent =
+    artikelSortState.key === 'exp' ? (artikelSortState.dir === 1 ? '▲' : '▼') : '▾';
+
   tbody.innerHTML = '';
 
   if (items.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px;">Belum ada artikel. Klik "+ Tambah Artikel".</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px;">Tidak ada artikel yang cocok.</td></tr>`;
     return;
   }
 
-  items.forEach(([name, exp], idx) => {
+  items.forEach((itemObj, displayIdx) => {
+    const origIdx = displayIdx;
     const tr = document.createElement('tr');
     tr.draggable = true;
-    tr.dataset.idx = idx;
+    tr.dataset.idx = origIdx;
+    
+    const isFirst = origIdx === 0;
+    const isLast = origIdx === DATA[cat].length - 1;
+
     tr.innerHTML = `
-      <td style="text-align:center;cursor:move;color:var(--muted);">${idx + 1}</td>
-      <td><input type="text" class="art-name" data-idx="${idx}" value="${String(name).replace(/"/g,'&quot;')}"></td>
-      <td><input type="text" class="art-exp" data-idx="${idx}" value="${String(exp).replace(/"/g,'&quot;')}"></td>
+      <td style="text-align:center;cursor:move;color:var(--muted);font-weight:700;">${displayIdx + 1}</td>
+      <td><input type="text" class="art-name" data-idx="${origIdx}" value="${String(itemObj.name).replace(/"/g,'&quot;')}"></td>
+      <td><input type="text" class="art-exp" data-idx="${origIdx}" value="${String(itemObj.exp).replace(/"/g,'&quot;')}"></td>
       <td>
         <div class="actions">
-          <button class="del" data-idx="${idx}" title="Hapus">Hapus</button>
+          <button class="move-up" data-idx="${origIdx}" ${isFirst ? 'disabled style="opacity:0.3;cursor:default;"' : ''} title="Pindah 1 ke atas">▲</button>
+          <button class="move-down" data-idx="${origIdx}" ${isLast ? 'disabled style="opacity:0.3;cursor:default;"' : ''} title="Pindah 1 ke bawah">▼</button>
+          <button class="del" data-idx="${origIdx}" title="Hapus">Hapus</button>
         </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 
+  // Drag and drop handler
   let dragIdx = null;
   tbody.querySelectorAll('tr').forEach(tr => {
     tr.addEventListener('dragstart', () => {
@@ -1847,11 +2025,36 @@ function renderArtikelTable() {
       saveAll();
       renderArtikelTable();
       renderAll();
-      showToast('Urutan diubah.');
+      showToast('Urutan baris diubah & tersinkron ke semua tab.');
       dragIdx = null;
     });
   });
 }
+
+// Artikel search listener
+document.getElementById('artikelSearchBox').addEventListener('input', (e) => {
+  artikelQuery = e.target.value.trim();
+  renderArtikelTable();
+});
+
+// Artikel header sort listeners (tersinkronkan ke seluruh tab & cetak)
+document.getElementById('artSortName').addEventListener('click', () => {
+  if (artikelSortState.key !== 'name') { artikelSortState.key = 'name'; artikelSortState.dir = 1; }
+  else if (artikelSortState.dir === 1) { artikelSortState.dir = -1; }
+  else { artikelSortState.key = null; artikelSortState.dir = 1; }
+  renderArtikelTable();
+  renderAll();
+  showToast('Pengurutan nama disinkronkan ke seluruh tab.');
+});
+
+document.getElementById('artSortExp').addEventListener('click', () => {
+  if (artikelSortState.key !== 'exp') { artikelSortState.key = 'exp'; artikelSortState.dir = 1; }
+  else if (artikelSortState.dir === 1) { artikelSortState.dir = -1; }
+  else { artikelSortState.key = null; artikelSortState.dir = 1; }
+  renderArtikelTable();
+  renderAll();
+  showToast('Pengurutan masa simpan disinkronkan ke seluruh tab.');
+});
 
 document.querySelectorAll('.item-table thead th[data-sort]').forEach(th => {
   th.addEventListener('click', () => {
@@ -1876,6 +2079,10 @@ document.querySelectorAll('.tab').forEach(tab => {
     tab.classList.add('active');
     document.getElementById(tab.dataset.tab).classList.add('active');
     activeTab = tab.dataset.tab;
+
+    // Switch dynamic theme
+    updateBrandTheme(activeTab);
+
     if (activeTab !== 'kelola') {
       updateSummary(activeTab);
       updateSortArrows();
@@ -1895,7 +2102,6 @@ document.querySelectorAll('.artikel-tab').forEach(tab => {
   });
 });
 
-// Summary Filter Box Click Listener
 document.querySelectorAll('.summary-inline .box').forEach(box => {
   box.addEventListener('click', () => {
     const filter = box.dataset.filter;
@@ -1999,7 +2205,7 @@ document.getElementById('applyAllBtn').addEventListener('click', () => {
   });
   saveAll();
   renderAll();
-  showToast(`Tanggal diterapkan ke tab ${cat === 'labelling' ? 'Labelling' : 'OUAST'}.`);
+  showToast(`Tanggal diterapkan ke tab ${cat === 'labelling' ? 'Chatime' : 'OUAST'}.`);
 });
 
 document.getElementById('picOpeningGlobal').addEventListener('change', (e) => {
@@ -2021,7 +2227,7 @@ document.getElementById('globalDate').addEventListener('change', (e) => {
 document.getElementById('resetAllBtn').addEventListener('click', () => {
   const cat = activeTab;
   if (cat === 'kelola') { showToast('Tidak bisa reset dari tab Kelola Artikel.'); return; }
-  const label = cat === 'labelling' ? 'Labelling' : 'Labelling OUAST';
+  const label = cat === 'labelling' ? 'Labelling Chatime' : 'Labelling OUAST';
   if (!confirm(`Reset semua data di tab "${label}"?
 
 Semua tanggal produksi, jam, centang, dan PIC akan dihapus.
@@ -2101,19 +2307,48 @@ document.getElementById('artikelBody').addEventListener('input', (e) => {
 });
 
 document.getElementById('artikelBody').addEventListener('click', (e) => {
-  if (!e.target.classList.contains('del')) return;
-  const idx = parseInt(e.target.dataset.idx, 10);
   const cat = activeArtikelCat;
-  const name = DATA[cat][idx][0];
-  if (!confirm(`Hapus artikel "${name}"?
+  const btnUp = e.target.closest('.move-up');
+  const btnDown = e.target.closest('.move-down');
+  const btnDel = e.target.closest('.del');
+
+  if (btnUp) {
+    const idx = parseInt(btnUp.dataset.idx, 10);
+    if (idx > 0) {
+      [DATA[cat][idx - 1], DATA[cat][idx]] = [DATA[cat][idx], DATA[cat][idx - 1]];
+      saveAll();
+      renderArtikelTable();
+      renderAll();
+      showToast('Artikel dipindah 1 ke atas.');
+    }
+    return;
+  }
+
+  if (btnDown) {
+    const idx = parseInt(btnDown.dataset.idx, 10);
+    if (idx < DATA[cat].length - 1) {
+      [DATA[cat][idx + 1], DATA[cat][idx]] = [DATA[cat][idx], DATA[cat][idx + 1]];
+      saveAll();
+      renderArtikelTable();
+      renderAll();
+      showToast('Artikel dipindah 1 ke bawah.');
+    }
+    return;
+  }
+
+  if (btnDel) {
+    const idx = parseInt(btnDel.dataset.idx, 10);
+    const name = DATA[cat][idx][0];
+    if (!confirm(`Hapus artikel "${name}"?
 
 Data checklist untuk artikel ini juga akan dihapus.`)) return;
-  delete state[cat][slugify(name)];
-  DATA[cat].splice(idx, 1);
-  saveAll();
-  renderArtikelTable();
-  renderAll();
-  showToast(`Artikel "${name}" dihapus.`);
+    delete state[cat][slugify(name)];
+    DATA[cat].splice(idx, 1);
+    saveAll();
+    renderArtikelTable();
+    renderAll();
+    showToast(`Artikel "${name}" dihapus.`);
+  }
 });
 
 function applyMetaToControls() {
@@ -2231,7 +2466,7 @@ function buildPrintDualPage() {
         <div class="print-tanggal">Tanggal : ${tanggalStr}</div>
         <table class="pic-table">
           <thead>
-            <tr><th colspan="2">PIC</th></tr>
+            <tr><th colspan="2">PIC TOKO</th></tr>
             <tr><th>Opening</th><th>Closing</th></tr>
           </thead>
           <tbody>
@@ -2244,7 +2479,7 @@ function buildPrintDualPage() {
       </div>
       <div class="print-dual-body">
         <div class="print-col">
-          <div class="print-title">CHECKLIST LABELLING</div>
+          <div class="print-title">CHECKLIST LABELLING CHATIME</div>
           <table class="print-table">
             <colgroup>
               <col style="width:32%;">
@@ -2306,7 +2541,7 @@ document.getElementById('printBtn').addEventListener('click', () => {
     mainView.style.display = 'block';
     document.body.classList.remove('print-view-active');
     document.getElementById('floatingActions').classList.remove('visible');
-    document.getElementById('printBtn').textContent = 'Tampilan cetak';
+    document.getElementById('printBtn').textContent = '🖨️ Tampilan Cetak Dual';
     setTimeout(updateStickyPositions, 50);
   } else {
     printView.innerHTML = buildPrintDualPage();
@@ -2314,7 +2549,7 @@ document.getElementById('printBtn').addEventListener('click', () => {
     printView.style.display = 'block';
     document.body.classList.add('print-view-active');
     document.getElementById('floatingActions').classList.add('visible');
-    document.getElementById('printBtn').textContent = 'Kembali ke tampilan biasa';
+    document.getElementById('printBtn').textContent = '← Kembali ke tampilan biasa';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 });
@@ -2329,7 +2564,7 @@ document.getElementById('floatDownloadBtn').addEventListener('click', async (e) 
     return;
   }
   if (typeof html2canvas === 'undefined') {
-    showToast('Library html2canvas belum siap. Cek koneksi internet.');
+    showToast('Library html2canvas belum siap.');
     return;
   }
 
@@ -2364,7 +2599,7 @@ document.getElementById('floatDownloadBtn').addEventListener('click', async (e) 
     document.body.removeChild(clone);
 
     const tanggal = (state.meta.tanggal || getTodayISO()).replace(/-/g, '');
-    const filename = `Checklist-Labelling_${tanggal}.png`;
+    const filename = `Checklist-Labelling-KiosBatoh_${tanggal}.png`;
 
     const link = document.createElement('a');
     link.download = filename;
@@ -2445,6 +2680,7 @@ document.getElementById('floatBackBtn').addEventListener('click', (e) => {
   updateSortArrows();
   renderAll();
   updateSummary(activeTab);
+  updateBrandTheme(activeTab);
   setTimeout(updateStickyPositions, 100);
 
   showSyncBadge('syncing', '🔄 Memuat dari cloud...');
@@ -2487,7 +2723,7 @@ function savePicList(list) {
     state.meta.picList = list;
     state.meta.lastModified = Date.now();
   }
-  scheduleSyncToSheets(); // Sync PIC_LIST to Google Sheets
+  scheduleSyncToSheets();
 }
 
 let PIC_LIST = loadPicList();
@@ -2590,7 +2826,6 @@ document.getElementById('picModal').addEventListener('click', (e) => {
   if (e.target.id === 'picModal') closePicModal();
 });
 
-// ESC untuk close modal
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const modal = document.getElementById('picModal');
@@ -2613,7 +2848,7 @@ document.getElementById('picForm').addEventListener('submit', (e) => {
   }
   const picString = nik ? `${name} (${nik})` : name;
   if (PIC_LIST.includes(picString)) {
-    errEl.textContent = 'PIC dengan nama/NIK ini sudah ada di daftar';
+    errEl.textContent = 'PIC dengan nama/NIK...';
     errEl.style.display = 'block';
     return;
   }
