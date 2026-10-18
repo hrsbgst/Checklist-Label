@@ -248,7 +248,7 @@
     text-align: center;
   }
 
-  /* Summary inline */
+  /* Summary inline & Filter Box */
   .summary-inline {
     display: flex;
     gap: 6px;
@@ -267,9 +267,23 @@
     align-items: baseline;
     gap: 5px;
     white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .summary-inline .box:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .summary-inline .box.active {
+    outline: 2px solid var(--brand-purple);
+    outline-offset: 1px;
+    background: #fdf8ff;
   }
   .summary-inline .box .num { font-size: 15px; font-weight: 700; line-height: 1; }
   .summary-inline .box .lbl { font-size: 10.5px; color: var(--muted); font-weight: 600; }
+  .summary-inline .box.all { border-color: var(--line-strong); }
+  .summary-inline .box.all .num { color: var(--brand-purple); }
   .summary-inline .box.danger { border-color: #f5c0c0; }
   .summary-inline .box.danger .num { color: var(--danger); }
   .summary-inline .box.warn { border-color: #f5ddb8; }
@@ -1104,11 +1118,13 @@
           <button class="btn" id="managePicBtn" title="Tambah / kelola daftar PIC">👥 Kelola PIC</button>
         </div>
 
+        <!-- SUMMARY INLINE WITH CLICKABLE FILTERS -->
         <div class="summary-inline">
-          <div class="box danger"><span class="num" id="cntDanger">0</span><span class="lbl">Expired</span></div>
-          <div class="box warn"><span class="num" id="cntWarn">0</span><span class="lbl">Segera</span></div>
-          <div class="box ok"><span class="num" id="cntOk">0</span><span class="lbl">Aman</span></div>
-          <div class="box checked"><span class="num" id="cntChecked">0</span><span class="lbl">Dicek</span></div>
+          <div class="box all active" data-filter="all" title="Tampilkan semua item"><span class="num" id="cntAll">0</span><span class="lbl">Semua</span></div>
+          <div class="box danger" data-filter="danger" title="Filter Expired"><span class="num" id="cntDanger">0</span><span class="lbl">Expired</span></div>
+          <div class="box warn" data-filter="warn" title="Filter Segera"><span class="num" id="cntWarn">0</span><span class="lbl">Segera</span></div>
+          <div class="box ok" data-filter="ok" title="Filter Aman"><span class="num" id="cntOk">0</span><span class="lbl">Aman</span></div>
+          <div class="box checked" data-filter="checked" title="Filter Dicek"><span class="num" id="cntChecked">0</span><span class="lbl">Dicek</span></div>
         </div>
 
         <div class="tanggal-label">Tanggal:</div>
@@ -1288,7 +1304,8 @@ let state = {
     picClosing: '',
     tanggal: '',
     lastOpenDate: '',
-    lastModified: 0
+    lastModified: 0,
+    picList: []
   }
 };
 let sortState = {
@@ -1297,9 +1314,10 @@ let sortState = {
 };
 let activeTab = 'labelling';
 let activeArtikelCat = 'labelling';
+let activeStatusFilter = 'all'; // State Filter Status
 let counters = {
-  labelling: { danger: 0, warn: 0, ok: 0, checked: 0 },
-  ouast:     { danger: 0, warn: 0, ok: 0, checked: 0 }
+  labelling: { all: 0, danger: 0, warn: 0, ok: 0, checked: 0 },
+  ouast:     { all: 0, danger: 0, warn: 0, ok: 0, checked: 0 }
 };
 
 function slugify(s) {
@@ -1440,7 +1458,6 @@ function showSyncBadge(status, message) {
   el.classList.add('show');
 
   clearTimeout(syncHideTimer);
-  // Auto-hide setelah 1.5 detik (kecuali masih syncing)
   if (status !== 'syncing') {
     syncHideTimer = setTimeout(() => {
       el.classList.remove('show');
@@ -1461,6 +1478,7 @@ async function syncToSheets() {
   showSyncBadge('syncing');
 
   try {
+    state.meta.picList = PIC_LIST; // Sync PIC_LIST to Cloud
     const payload = {
       data: DATA,
       state: state,
@@ -1519,6 +1537,13 @@ async function loadFromSheets() {
     DATA = remoteData.data || DATA;
     state = remoteData.state || state;
 
+    // Load PIC list from Cloud if available
+    if (state.meta && Array.isArray(state.meta.picList) && state.meta.picList.length > 0) {
+      PIC_LIST = state.meta.picList;
+      savePicList(PIC_LIST);
+      renderPicDropdowns();
+    }
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
     } catch (e) {}
@@ -1552,9 +1577,12 @@ function loadAll() {
         ? parsed.state.ouast : {};
       state.meta = (parsed.state && parsed.state.meta && typeof parsed.state.meta === 'object')
         ? parsed.state.meta
-        : { picOpening: '', picClosing: '', tanggal: '', lastOpenDate: '', lastModified: 0 };
+        : { picOpening: '', picClosing: '', tanggal: '', lastOpenDate: '', lastModified: 0, picList: [] };
       if (typeof state.meta.lastModified !== 'number') {
         state.meta.lastModified = 0;
+      }
+      if (Array.isArray(state.meta.picList) && state.meta.picList.length > 0) {
+        PIC_LIST = state.meta.picList;
       }
     }
   } catch (e) {
@@ -1568,6 +1596,7 @@ function loadAll() {
 function saveAll() {
   try {
     state.meta.lastModified = Date.now();
+    state.meta.picList = PIC_LIST;
     const payload = { data: DATA, state: state };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch (e) {
@@ -1621,13 +1650,28 @@ function render(cat) {
   const emptyBox = document.getElementById(cat === 'labelling' ? 'emptyLabelling' : 'emptyOuast');
   const query = document.getElementById('searchBox').value.trim().toLowerCase();
 
-  let items = DATA[cat].filter(([name]) => String(name).toLowerCase().includes(query));
+  // Filter status & search
+  let items = DATA[cat].filter(([name, exp]) => {
+    const nameMatch = String(name).toLowerCase().includes(query);
+    if (!nameMatch) return false;
+
+    if (activeStatusFilter === 'all') return true;
+
+    const id = slugify(name);
+    const st = readItemState(cat, id);
+    if (activeStatusFilter === 'checked') return st.checked;
+
+    const prodDate = buildProdDate(st.prodDate, st.prodTime);
+    const { status } = computeStatus(prodDate, exp);
+    return status === activeStatusFilter;
+  });
+
   items = sortItems(cat, items);
 
   tbody.innerHTML = '';
   emptyBox.style.display = items.length === 0 ? 'block' : 'none';
 
-  let d = 0, w = 0, o = 0, c = 0;
+  let allCnt = DATA[cat].length, d = 0, w = 0, o = 0, c = 0;
   DATA[cat].forEach(([name, exp]) => {
     const id = slugify(name);
     const st = readItemState(cat, id);
@@ -1682,12 +1726,13 @@ function render(cat) {
     tbody.appendChild(tr);
   });
 
-  counters[cat] = { danger: d, warn: w, ok: o, checked: c };
+  counters[cat] = { all: allCnt, danger: d, warn: w, ok: o, checked: c };
   if (activeTab === cat) updateSummary(cat);
 }
 
 function updateSummary(cat) {
-  const c = counters[cat] || { danger: 0, warn: 0, ok: 0, checked: 0 };
+  const c = counters[cat] || { all: 0, danger: 0, warn: 0, ok: 0, checked: 0 };
+  document.getElementById('cntAll').textContent = c.all;
   document.getElementById('cntDanger').textContent = c.danger;
   document.getElementById('cntWarn').textContent = c.warn;
   document.getElementById('cntOk').textContent = c.ok;
@@ -1850,6 +1895,23 @@ document.querySelectorAll('.artikel-tab').forEach(tab => {
   });
 });
 
+// Summary Filter Box Click Listener
+document.querySelectorAll('.summary-inline .box').forEach(box => {
+  box.addEventListener('click', () => {
+    const filter = box.dataset.filter;
+    if (!filter) return;
+    if (activeStatusFilter === filter && filter !== 'all') {
+      activeStatusFilter = 'all';
+    } else {
+      activeStatusFilter = filter;
+    }
+    document.querySelectorAll('.summary-inline .box').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === activeStatusFilter);
+    });
+    renderAll();
+  });
+});
+
 const searchBoxEl = document.getElementById('searchBox');
 const searchClearEl = document.getElementById('searchClearBtn');
 
@@ -1960,7 +2022,11 @@ document.getElementById('resetAllBtn').addEventListener('click', () => {
   const cat = activeTab;
   if (cat === 'kelola') { showToast('Tidak bisa reset dari tab Kelola Artikel.'); return; }
   const label = cat === 'labelling' ? 'Labelling' : 'Labelling OUAST';
-  if (!confirm(`Reset semua data di tab "${label}"?\n\nSemua tanggal produksi, jam, centang, dan PIC akan dihapus.\n\nLanjut?`)) return;
+  if (!confirm(`Reset semua data di tab "${label}"?
+
+Semua tanggal produksi, jam, centang, dan PIC akan dihapus.
+
+Lanjut?`)) return;
 
   DATA[cat].forEach(([name]) => {
     state[cat][slugify(name)] = { prodDate: '', prodTime: '', checked: false };
@@ -1991,7 +2057,12 @@ document.getElementById('addArtikelBtn').addEventListener('click', () => {
 });
 
 document.getElementById('resetArtikelBtn').addEventListener('click', () => {
-  if (!confirm(`Reset daftar artikel ke default?\n\nArtikel yang sudah ditambah/diubah akan HILANG.\nData checklist TIDAK ikut direset.\n\nLanjut?`)) return;
+  if (!confirm(`Reset daftar artikel ke default?
+
+Artikel yang sudah ditambah/diubah akan HILANG.
+Data checklist TIDAK ikut direset.
+
+Lanjut?`)) return;
   DATA.labelling = JSON.parse(JSON.stringify(DEFAULT_DATA.labelling));
   DATA.ouast = JSON.parse(JSON.stringify(DEFAULT_DATA.ouast));
   saveAll();
@@ -2034,7 +2105,9 @@ document.getElementById('artikelBody').addEventListener('click', (e) => {
   const idx = parseInt(e.target.dataset.idx, 10);
   const cat = activeArtikelCat;
   const name = DATA[cat][idx][0];
-  if (!confirm(`Hapus artikel "${name}"?\n\nData checklist untuk artikel ini juga akan dihapus.`)) return;
+  if (!confirm(`Hapus artikel "${name}"?
+
+Data checklist untuk artikel ini juga akan dihapus.`)) return;
   delete state[cat][slugify(name)];
   DATA[cat].splice(idx, 1);
   saveAll();
@@ -2410,6 +2483,11 @@ function loadPicList() {
 }
 function savePicList(list) {
   try { localStorage.setItem(PIC_STORAGE_KEY, JSON.stringify(list)); } catch (e) {}
+  if (state && state.meta) {
+    state.meta.picList = list;
+    state.meta.lastModified = Date.now();
+  }
+  scheduleSyncToSheets(); // Sync PIC_LIST to Google Sheets
 }
 
 let PIC_LIST = loadPicList();
