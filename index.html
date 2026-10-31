@@ -32,7 +32,7 @@
     --brand-text-header: #ffffff;
     --brand-blue: #2563eb;
     --panel-gray: #f1f5f9;
-    --logo-chatime: url("https://fbindonesia.com/files/uploads/contentbrand/logo_square/2022/Apr/07/624e710680c6a/logo-chatime-rounded.png");
+    --logo-chatime: url("https://png.pngtree.com/png-clipart/20230916/original/pngtree-cute-ghost-logo-vector-illustration-clipart-png-image_12237138.png");
     --sticky-top-offset: 78px;
   }
 
@@ -1314,12 +1314,10 @@
 
 <script>
 /* =========================================================
-   CHECKLIST LABELLING - SINGLE SOURCE OF TRUTH (GOOGLE SHEETS)
+   CHECKLIST LABELLING - PURE GOOGLE SHEETS MODE (NO LOCALSTORAGE)
    ========================================================= */
 
-const STORAGE_KEY = 'chatime-checklist-labelling-v10';
 const API_URL = 'https://script.google.com/macros/s/AKfycbx0EnrBIKR2OJTElE0u0V3uEPeU_JSt2ToyfexrRbpoCwSEvYhokzQkQvOh-q_ErWC3/exec';
-const SYNC_ENABLED = true;
 const SYNC_DEBOUNCE_MS = 1500;
 const SEGERA_THRESHOLD = 0.20;
 const BULAN_ID = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
@@ -1337,6 +1335,9 @@ let state = {
     picList: []
   }
 };
+
+let PIC_LIST = [];
+
 let sortState = {
   labelling: { key: null, dir: 1 },
   ouast: { key: null, dir: 1 }
@@ -1461,9 +1462,6 @@ function showToast(msg) {
   toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
 }
 
-/* =========================================================
-   DYNAMIC THEME SWITCHER
-   ========================================================= */
 function updateBrandTheme(tabName) {
   const body = document.body;
   const title = document.getElementById('brandTitle');
@@ -1483,7 +1481,7 @@ function updateBrandTheme(tabName) {
 }
 
 /* =========================================================
-   SYNC KE GOOGLE SHEETS
+   SYNC & STORAGE UTILS (PURE GOOGLE SHEETS)
    ========================================================= */
 let syncTimer = null;
 let syncHideTimer = null;
@@ -1522,12 +1520,24 @@ function hideSyncBadge() {
   if (el) el.classList.remove('show');
 }
 
+function saveAll() {
+  state.meta.lastModified = Date.now();
+  state.meta.picList = PIC_LIST;
+  scheduleSyncToSheets();
+}
+
+function scheduleSyncToSheets() {
+  clearTimeout(syncTimer);
+  showSyncBadge('syncing', '⏳ Menyimpan...');
+  syncTimer = setTimeout(syncToSheets, SYNC_DEBOUNCE_MS);
+}
+
 async function syncToSheets() {
-  if (!SYNC_ENABLED || !API_URL || API_URL.indexOf('TEMPEL') === 0) return;
+  if (!API_URL || API_URL.indexOf('TEMPEL') === 0) return;
   if (isSyncing) return;
 
   isSyncing = true;
-  showSyncBadge('syncing');
+  showSyncBadge('syncing', '🔄 Menyimpan ke Cloud...');
 
   try {
     state.meta.picList = PIC_LIST;
@@ -1551,26 +1561,21 @@ async function syncToSheets() {
     try { json = JSON.parse(text); } catch(e) {}
 
     if (json && json.ok) {
-      showSyncBadge('ok', '✅ Tersimpan ke Cloud');
+      showSyncBadge('ok', '✅ Tersimpan ke Google Sheets');
     } else {
       console.error('Sync response tidak OK:', text);
-      showSyncBadge('error', '⚠️ Gagal sync');
+      showSyncBadge('error', '⚠️ Gagal simpan ke Cloud');
     }
   } catch (e) {
     console.error('Sync error:', e);
-    showSyncBadge('error', '⚠️ Gagal sync');
+    showSyncBadge('error', '⚠️ Koneksi gagal');
   } finally {
     isSyncing = false;
   }
 }
 
-function scheduleSyncToSheets() {
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(syncToSheets, SYNC_DEBOUNCE_MS);
-}
-
 async function loadFromSheets() {
-  if (!SYNC_ENABLED || !API_URL || API_URL.indexOf('TEMPEL') === 0) return false;
+  if (!API_URL || API_URL.indexOf('TEMPEL') === 0) return false;
   try {
     const res = await fetch(API_URL + '?action=load');
     const json = await res.json();
@@ -1578,61 +1583,22 @@ async function loadFromSheets() {
 
     const remoteData = json.data;
 
-    DATA = remoteData.data || DATA;
-    state = remoteData.state || state;
+    DATA = remoteData.data || { labelling: [], ouast: [] };
+    state = remoteData.state || {
+      labelling: {},
+      ouast: {},
+      meta: { picOpening: '', picClosing: '', tanggal: '', lastOpenDate: '', lastModified: 0, picList: [] }
+    };
 
-    if (state.meta && Array.isArray(state.meta.picList) && state.meta.picList.length > 0) {
+    if (state.meta && Array.isArray(state.meta.picList)) {
       PIC_LIST = state.meta.picList;
-      savePicList(PIC_LIST);
-      renderPicDropdowns();
     }
-
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
-    } catch (e) {}
 
     return true;
   } catch (e) {
-    console.warn('Gagal load dari Sheets, pakai data lokal.', e);
+    console.error('Gagal mengambil data dari Google Sheets:', e);
   }
   return false;
-}
-
-function loadAll() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed === 'object') {
-        if (parsed.data && typeof parsed.data === 'object') {
-          DATA.labelling = parsed.data.labelling || [];
-          DATA.ouast = parsed.data.ouast || [];
-        }
-        state.labelling = (parsed.state && parsed.state.labelling) ? parsed.state.labelling : {};
-        state.ouast = (parsed.state && parsed.state.ouast) ? parsed.state.ouast : {};
-        state.meta = (parsed.state && parsed.state.meta) ? parsed.state.meta : { picOpening: '', picClosing: '', tanggal: '', lastOpenDate: '', lastModified: 0, picList: [] };
-        if (Array.isArray(state.meta.picList) && state.meta.picList.length > 0) {
-          PIC_LIST = state.meta.picList;
-        }
-      }
-    }
-  } catch (e) {
-    console.error('Gagal memuat data lokal', e);
-  }
-  if (!Array.isArray(DATA.labelling)) DATA.labelling = [];
-  if (!Array.isArray(DATA.ouast)) DATA.ouast = [];
-}
-
-function saveAll() {
-  try {
-    state.meta.lastModified = Date.now();
-    state.meta.picList = PIC_LIST;
-    const payload = { data: DATA, state: state };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-  } catch (e) {
-    console.error('Gagal menyimpan', e);
-  }
-  scheduleSyncToSheets();
 }
 
 function readItemState(cat, id) {
@@ -1646,6 +1612,7 @@ function readItemState(cat, id) {
 }
 
 function writeItemState(cat, id, patch) {
+  if (!state[cat]) state[cat] = {};
   if (!state[cat][id]) {
     state[cat][id] = { prodDate: '', prodTime: '', checked: false };
   }
@@ -1789,14 +1756,11 @@ function updateCheckAllButton(cat) {
   btn.disabled = false;
   const allChecked = items.every(([name]) => {
     const id = slugify(name);
-    return state[cat][id] && state[cat][id].checked;
+    return state[cat] && state[cat][id] && state[cat][id].checked;
   });
   btn.classList.toggle('checked', allChecked);
 }
 
-/* =========================================================
-   STICKY POSITION CALC
-   ========================================================= */
 function updateStickyPositions() {
   const header = document.querySelector('header');
   const stickyTop = document.getElementById('stickyTop');
@@ -1913,7 +1877,7 @@ function renderArtikelTable() {
       saveAll();
       renderArtikelTable();
       renderAll();
-      showToast('Urutan baris diubah & tersinkron ke semua tab.');
+      showToast('Urutan baris diubah & tersinkron ke Cloud.');
       dragIdx = null;
     });
   });
@@ -1930,7 +1894,7 @@ document.getElementById('artSortName').addEventListener('click', () => {
   else { artikelSortState.key = null; artikelSortState.dir = 1; }
   renderArtikelTable();
   renderAll();
-  showToast('Pengurutan nama disinkronkan ke seluruh tab.');
+  showToast('Pengurutan nama disinkronkan ke Cloud.');
 });
 
 document.getElementById('artSortExp').addEventListener('click', () => {
@@ -1939,7 +1903,7 @@ document.getElementById('artSortExp').addEventListener('click', () => {
   else { artikelSortState.key = null; artikelSortState.dir = 1; }
   renderArtikelTable();
   renderAll();
-  showToast('Pengurutan masa simpan disinkronkan ke seluruh tab.');
+  showToast('Pengurutan masa simpan disinkronkan ke Cloud.');
 });
 
 document.querySelectorAll('.item-table thead th[data-sort]').forEach(th => {
@@ -2063,7 +2027,7 @@ function handleCheckAll(cat) {
   if (items.length === 0) return;
   const allChecked = items.every(([name]) => {
     const id = slugify(name);
-    return state[cat][id] && state[cat][id].checked;
+    return state[cat] && state[cat][id] && state[cat][id].checked;
   });
   const target = !allChecked;
   items.forEach(([name]) => {
@@ -2101,7 +2065,7 @@ Daftar artikel TIDAK akan terhapus.
 Lanjut?`)) return;
 
   (DATA[cat] || []).forEach(([name]) => {
-    state[cat][slugify(name)] = { prodDate: '', prodTime: '', checked: false };
+    writeItemState(cat, slugify(name), { prodDate: '', prodTime: '', checked: false });
   });
   state.meta.picOpening = '';
   state.meta.picClosing = '';
@@ -2126,7 +2090,7 @@ document.getElementById('addArtikelBtn').addEventListener('click', () => {
     const inp = lastRow.querySelector('.art-name');
     if (inp) { inp.focus(); inp.select(); }
   }
-  showToast('Artikel baru ditambah & tersimpan ke cloud.');
+  showToast('Artikel baru ditambah & tersimpan ke Cloud.');
 });
 
 document.getElementById('artikelBody').addEventListener('input', (e) => {
@@ -2141,7 +2105,7 @@ document.getElementById('artikelBody').addEventListener('input', (e) => {
     if (oldName === newName) return;
     const oldId = slugify(oldName);
     const newId = slugify(newName);
-    if (oldId !== newId && state[cat][oldId]) {
+    if (oldId !== newId && state[cat] && state[cat][oldId]) {
       state[cat][newId] = state[cat][oldId];
       delete state[cat][oldId];
     }
@@ -2194,7 +2158,7 @@ document.getElementById('artikelBody').addEventListener('click', (e) => {
     if (!confirm(`Hapus artikel "${name}"?
 
 Data checklist untuk artikel ini juga akan dihapus.`)) return;
-    delete state[cat][slugify(name)];
+    if (state[cat]) delete state[cat][slugify(name)];
     DATA[cat].splice(idx, 1);
     saveAll();
     renderArtikelTable();
@@ -2210,9 +2174,6 @@ function applyMetaToControls() {
   if (!state.meta.tanggal || state.meta.lastOpenDate !== todayISO) {
     state.meta.tanggal = todayISO;
     state.meta.lastOpenDate = todayISO;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ data: DATA, state: state }));
-    } catch (e) {}
   }
   document.getElementById('tanggalDisplay').textContent = isoToHuman(state.meta.tanggal);
 }
@@ -2480,16 +2441,6 @@ document.getElementById('floatBackBtn').addEventListener('click', (e) => {
   let isDragging = false;
   let offsetX = 0, offsetY = 0;
 
-  try {
-    const saved = localStorage.getItem('chatime-floating-pos');
-    if (saved) {
-      const pos = JSON.parse(saved);
-      floating.style.left = pos.left + 'px';
-      floating.style.top = pos.top + 'px';
-      floating.style.right = 'auto';
-    }
-  } catch (e) {}
-
   floating.addEventListener('mousedown', (e) => {
     if (e.target.closest('.float-btn')) return;
     isDragging = true;
@@ -2515,69 +2466,18 @@ document.getElementById('floatBackBtn').addEventListener('click', (e) => {
     if (!isDragging) return;
     isDragging = false;
     floating.style.cursor = 'move';
-    try {
-      localStorage.setItem('chatime-floating-pos', JSON.stringify({
-        left: parseInt(floating.style.left, 10) || 0,
-        top: parseInt(floating.style.top, 10) || 0
-      }));
-    } catch (e) {}
   });
 })();
 
-/* ============ INIT ============ */
-(async function init() {
-  loadAll();
-  applyMetaToControls();
-  updateSortArrows();
-  renderAll();
-  updateSummary(activeTab);
-  updateBrandTheme(activeTab);
-  setTimeout(updateStickyPositions, 100);
-
-  showSyncBadge('syncing', '🔄 Memuat dari cloud...');
-  const loaded = await loadFromSheets();
-  if (loaded) {
-    applyMetaToControls();
-    renderAll();
-    updateSummary(activeTab);
-    renderPicDropdowns();
-    showSyncBadge('ok', '✅ Data dari cloud');
-  } else {
-    hideSyncBadge();
-  }
-
-  setInterval(() => {
-    const ae = document.activeElement;
-    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'SELECT' || ae.tagName === 'TEXTAREA')) return;
-    if (document.getElementById('printView').style.display === 'block') return;
-    renderAll();
-  }, 30000);
-})();
-
 /* ============ KELOLA PIC ============ */
-const PIC_STORAGE_KEY = 'chatime-pic-list-v1';
-
-function loadPicList() {
-  try {
-    const raw = localStorage.getItem(PIC_STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  return [
-    'Krisna Haryadi (165027)',
-    'Yulia Putri (175170)',
-    'M Haris Sebagust (182665)'
-  ];
-}
 function savePicList(list) {
-  try { localStorage.setItem(PIC_STORAGE_KEY, JSON.stringify(list)); } catch (e) {}
+  PIC_LIST = list;
   if (state && state.meta) {
     state.meta.picList = list;
     state.meta.lastModified = Date.now();
   }
   scheduleSyncToSheets();
 }
-
-let PIC_LIST = loadPicList();
 
 function renderPicDropdowns() {
   ['picOpeningGlobal', 'picClosingGlobal'].forEach(selId => {
@@ -2713,8 +2613,37 @@ document.getElementById('picForm').addEventListener('submit', (e) => {
   renderPicDropdowns();
 });
 
-renderPicDropdowns();
-applyMetaToControls();
+/* ============ INIT APLIKASI ============ */
+(async function init() {
+  showSyncBadge('syncing', '🔄 Memuat data dari Google Sheets...');
+  
+  const loaded = await loadFromSheets();
+  
+  if (loaded) {
+    applyMetaToControls();
+    renderAll();
+    updateSummary(activeTab);
+    renderPicDropdowns();
+    showSyncBadge('ok', '✅ Data dari Cloud');
+  } else {
+    showSyncBadge('error', '⚠️ Gagal memuat data dari Cloud.');
+  }
+
+  // Sinkronisasi otomatis tiap 30 detik
+  setInterval(async () => {
+    const ae = document.activeElement;
+    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'SELECT' || ae.tagName === 'TEXTAREA')) return;
+    if (document.getElementById('printView').style.display === 'block') return;
+    if (isSyncing) return;
+
+    const refreshed = await loadFromSheets();
+    if (refreshed) {
+      applyMetaToControls();
+      renderAll();
+      renderPicDropdowns();
+    }
+  }, 30000);
+})();
 </script>
 
 </body>
