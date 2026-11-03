@@ -1004,8 +1004,8 @@
   }
   #syncBadge.show { opacity: 1; transform: translateY(0); }
 
-  /* ============ PIC MODAL ============ */
-  #picModal.modal-overlay {
+  /* ============ MODAL STYLES (PIC & ALARM) ============ */
+  #picModal.modal-overlay, #alarmModal.modal-overlay {
     position: fixed !important;
     top: 0 !important; left: 0 !important;
     right: 0 !important; bottom: 0 !important;
@@ -1020,8 +1020,9 @@
     padding: 16px !important;
     box-sizing: border-box !important;
   }
-  #picModal.modal-overlay.show { display: flex !important; }
-  #picModal .modal-box {
+  #picModal.modal-overlay.show, #alarmModal.modal-overlay.show { display: flex !important; }
+  
+  #picModal .modal-box, #alarmModal .modal-box {
     background: #fff !important;
     border-radius: 14px !important;
     max-width: 440px !important;
@@ -1034,15 +1035,18 @@
     position: relative !important;
     margin: auto !important;
   }
-  #picModal .modal-header {
+  
+  #picModal .modal-header, #alarmModal .modal-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     padding: 14px 18px !important;
     border-bottom: 1px solid #e2e8f0 !important;
   }
-  #picModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; }
-  #picModal .modal-close {
+  #picModal .modal-header h3, #alarmModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; }
+  #alarmModal .modal-header { background: #fef2f2; color: #b91c1c; border-bottom-color: #fca5a5; }
+
+  #picModal .modal-close, #alarmModal .modal-close {
     background: transparent !important;
     border: none !important;
     font-size: 18px !important;
@@ -1051,8 +1055,22 @@
     padding: 2px 6px !important;
     border-radius: 6px !important;
   }
-  #picModal .modal-close:hover { background: #f1f5f9 !important; }
-  #picModal .modal-body { padding: 16px 18px !important; }
+  #picModal .modal-close:hover, #alarmModal .modal-close:hover { background: #f1f5f9 !important; }
+
+  /* Perbaikan layout vertikal terpisah agar tidak bertumpuk/berantakan */
+  #picModal .modal-body {
+    padding: 16px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+
+  #alarmModal .modal-body {
+    padding: 16px 18px 8px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
   #picModal .modal-body label {
     display: block !important;
     font-size: 10.5px !important;
@@ -1060,10 +1078,11 @@
     text-transform: uppercase !important;
     letter-spacing: 0.4px !important;
     color: #64748b !important;
-    margin-bottom: 4px !important;
-    margin-top: 10px !important;
+    margin-bottom: 2px !important;
+    margin-top: 8px !important;
   }
   #picModal .modal-body label:first-child { margin-top: 0 !important; }
+  
   #picModal .modal-body input {
     width: 100% !important;
     padding: 7px 10px !important;
@@ -1078,18 +1097,22 @@
     border-color: var(--brand-primary) !important;
     box-shadow: 0 0 0 3px rgba(106,44,145,0.15) !important;
   }
+
   #picModal .modal-error {
     color: #b91c1c !important;
     font-size: 11px !important;
-    margin: 6px 0 0 !important;
+    margin: 4px 0 0 !important;
     font-weight: 600 !important;
   }
+
   #picModal .modal-actions {
     display: flex !important;
     justify-content: flex-end !important;
     gap: 8px !important;
-    margin-top: 16px !important;
+    margin-top: 12px !important;
+    width: 100% !important;
   }
+
   #picModal .modal-list-wrap {
     padding: 12px 18px 16px !important;
     border-top: 1px solid #e2e8f0 !important;
@@ -1106,6 +1129,7 @@
     color: #64748b !important;
   }
   #picModal .modal-list { max-height: 200px !important; overflow-y: auto !important; }
+  
   #picModal .pic-row {
     display: flex !important;
     align-items: center !important;
@@ -1143,6 +1167,36 @@
   #picModal .pic-row .row-btns button:hover { background: #f1f5f9 !important; color: var(--brand-primary) !important; }
   #picModal .pic-row .row-btns button.del:hover { background: #fef2f2 !important; color: #b91c1c !important; }
   #picModal .pic-row .row-btns button:disabled { opacity: 0.2 !important; cursor: default !important; }
+
+  #alarmModal .alarm-list-wrap {
+    padding: 12px 18px 16px !important;
+    background: #f8fafc !important;
+    overflow-y: auto !important;
+    max-height: 260px !important;
+  }
+  #alarmModal .alarm-item-row {
+    background: #fff !important;
+    border: 1px solid #fca5a5 !important;
+    border-left: 4px solid var(--danger) !important;
+    border-radius: 7px !important;
+    padding: 8px 12px !important;
+    margin-bottom: 8px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+  #alarmModal .alarm-item-info { display: flex !important; flex-direction: column !important; }
+  #alarmModal .alarm-item-name { font-weight: 700 !important; color: #b91c1c !important; font-size: 12px !important; }
+  #alarmModal .alarm-item-sub { font-size: 10.5px !important; color: #64748b !important; margin-top: 2px !important; }
+  #alarmModal .modal-actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    padding: 14px 18px !important;
+    border-top: 1px solid #e2e8f0 !important;
+    background: #fff !important;
+  }
 </style>
 </head>
 <body class="theme-chatime">
@@ -1348,8 +1402,8 @@
       <h3>🚨 PERINGATAN: ITEM EXPIRED!</h3>
       <button id="closeAlarmModal" class="modal-close">✕</button>
     </div>
-    <div class="modal-body" style="padding-bottom: 0;">
-      <p style="margin: 0 0 10px; font-weight: 600; color: #b91c1c;">
+    <div class="modal-body">
+      <p style="margin: 0 0 4px 0; font-weight: 600; color: #b91c1c; line-height: 1.4;">
         Berikut adalah daftar bahan / item yang sudah kadaluarsa dan harus segera ditindaklanjuti:
       </p>
     </div>
@@ -1879,7 +1933,7 @@ function openAlarmModal(items) {
 
 function closeAlarmModal() {
   document.getElementById('alarmModal').classList.remove('show');
-  alarmDismissedThisSession = true; // Agar tidak terus menerus popup saat halaman aktif, kecuali di-refresh / dibuka ulang
+  alarmDismissedThisSession = true; 
 }
 
 document.getElementById('closeAlarmModal').addEventListener('click', closeAlarmModal);
@@ -1888,10 +1942,9 @@ document.getElementById('alarmModal').addEventListener('click', (e) => {
   if (e.target.id === 'alarmModal') closeAlarmModal();
 });
 
-// Deteksi saat web aktif kembali (tab kembali difokuskan oleh staf)
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
-    alarmDismissedThisSession = false; // Reset status agar alarm bisa muncul lagi jika web dibuka kembali
+    alarmDismissedThisSession = false; 
     checkExpiredAndTriggerAlarm();
   }
 });
@@ -1947,9 +2000,7 @@ function updateSortArrows() {
   });
 }
 
-/* =========================================================
-   KELOLA ARTIKEL
-   ========================================================= */
+/* ============ KELOLA ARTIKEL ============ */
 function renderArtikelTable() {
   const tbody = document.getElementById('artikelBody');
   const cat = activeArtikelCat;
@@ -2786,7 +2837,6 @@ document.getElementById('picForm').addEventListener('submit', (e) => {
   renderPicDropdowns();
   showSyncBadge('ok', '✅ Siap Digunakan');
 
-  // Sinkronisasi otomatis tiap 30 detik
   setInterval(async () => {
     const ae = document.activeElement;
     if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'SELECT' || ae.tagName === 'TEXTAREA')) return;
