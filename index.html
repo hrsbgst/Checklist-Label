@@ -288,6 +288,29 @@
   .summary-inline .box.checked { border-color: #93c5fd; }
   .summary-inline .box.checked .num { color: var(--brand-blue); }
 
+  /* Active Filter Notification Bar */
+  .filter-notice {
+    display: none;
+    font-size: 11px;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+  .filter-notice.show { display: flex; }
+  .filter-notice button {
+    background: transparent;
+    border: none;
+    color: #0369a1;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .filter-notice button:hover { text-decoration: underline; }
+
   /* ============ BRAND TABS & SEARCH BARIS ============ */
   .tabs {
     display: flex;
@@ -981,8 +1004,8 @@
   }
   #syncBadge.show { opacity: 1; transform: translateY(0); }
 
-  /* ============ PIC MODAL ============ */
-  #picModal.modal-overlay {
+  /* ============ PIC MODAL & ALARM MODAL ============ */
+  #picModal.modal-overlay, #alarmModal.modal-overlay {
     position: fixed !important;
     top: 0 !important; left: 0 !important;
     right: 0 !important; bottom: 0 !important;
@@ -997,8 +1020,8 @@
     padding: 16px !important;
     box-sizing: border-box !important;
   }
-  #picModal.modal-overlay.show { display: flex !important; }
-  #picModal .modal-box {
+  #picModal.modal-overlay.show, #alarmModal.modal-overlay.show { display: flex !important; }
+  #picModal .modal-box, #alarmModal .modal-box {
     background: #fff !important;
     border-radius: 14px !important;
     max-width: 440px !important;
@@ -1011,15 +1034,16 @@
     position: relative !important;
     margin: auto !important;
   }
-  #picModal .modal-header {
+  #picModal .modal-header, #alarmModal .modal-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     padding: 14px 18px !important;
     border-bottom: 1px solid #e2e8f0 !important;
   }
-  #picModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; }
-  #picModal .modal-close {
+  #picModal .modal-header h3, #alarmModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; }
+  #alarmModal .modal-header { background: #fef2f2; color: #b91c1c; border-bottom-color: #fca5a5; }
+  #picModal .modal-close, #alarmModal .modal-close {
     background: transparent !important;
     border: none !important;
     font-size: 18px !important;
@@ -1028,98 +1052,37 @@
     padding: 2px 6px !important;
     border-radius: 6px !important;
   }
-  #picModal .modal-close:hover { background: #f1f5f9 !important; }
-  #picModal .modal-body { padding: 16px 18px !important; }
-  #picModal .modal-body label {
-    display: block !important;
-    font-size: 10.5px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.4px !important;
-    color: #64748b !important;
-    margin-bottom: 4px !important;
-    margin-top: 10px !important;
+  #picModal .modal-close:hover, #alarmModal .modal-close:hover { background: #f1f5f9 !important; }
+  #picModal .modal-body, #alarmModal .modal-body { padding: 16px 18px !important; }
+  #alarmModal .alarm-list-wrap {
+    padding: 12px 18px 16px !important;
+    background: #f8fafc !important;
+    overflow-y: auto !important;
+    max-height: 260px !important;
   }
-  #picModal .modal-body label:first-child { margin-top: 0 !important; }
-  #picModal .modal-body input {
-    width: 100% !important;
-    padding: 7px 10px !important;
-    font-size: 12px !important;
-    border: 1px solid #cbd5e1 !important;
+  #alarmModal .alarm-item-row {
+    background: #fff !important;
+    border: 1px solid #fca5a5 !important;
+    border-left: 4px solid var(--danger) !important;
     border-radius: 7px !important;
-    box-sizing: border-box !important;
-    font-family: inherit !important;
+    padding: 8px 12px !important;
+    margin-bottom: 8px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
-  #picModal .modal-body input:focus {
-    outline: none !important;
-    border-color: var(--brand-primary) !important;
-    box-shadow: 0 0 0 3px rgba(106,44,145,0.15) !important;
-  }
-  #picModal .modal-error {
-    color: #b91c1c !important;
-    font-size: 11px !important;
-    margin: 6px 0 0 !important;
-    font-weight: 600 !important;
-  }
-  #picModal .modal-actions {
+  #alarmModal .alarm-item-info { display: flex !important; flex-direction: column !important; }
+  #alarmModal .alarm-item-name { font-weight: 700 !important; color: #b91c1c !important; font-size: 12px !important; }
+  #alarmModal .alarm-item-sub { font-size: 10.5px !important; color: #64748b !important; margin-top: 2px !important; }
+  #alarmModal .modal-actions {
     display: flex !important;
     justify-content: flex-end !important;
     gap: 8px !important;
-    margin-top: 16px !important;
-  }
-  #picModal .modal-list-wrap {
-    padding: 12px 18px 16px !important;
+    padding: 14px 18px !important;
     border-top: 1px solid #e2e8f0 !important;
-    background: #f8fafc !important;
-    overflow-y: auto !important;
-  }
-  #picModal .modal-list-head {
-    display: flex !important;
-    justify-content: space-between !important;
-    margin-bottom: 8px !important;
-    font-size: 10.5px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    color: #64748b !important;
-  }
-  #picModal .modal-list { max-height: 200px !important; overflow-y: auto !important; }
-  #picModal .pic-row {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
     background: #fff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 7px !important;
-    padding: 6px 10px !important;
-    margin-bottom: 5px !important;
-    font-size: 12px !important;
-    cursor: grab !important;
-    gap: 6px !important;
   }
-  #picModal .pic-row.dragging { opacity: 0.4 !important; }
-  #picModal .pic-row.drag-over { border-color: var(--brand-primary) !important; background: #faf5ff !important; }
-  #picModal .pic-row .grip { color: #94a3b8 !important; }
-  #picModal .pic-row .num { color: #64748b !important; font-weight: 700 !important; width: 18px !important; }
-  #picModal .pic-row .pic-text {
-    flex: 1 !important;
-    font-weight: 600 !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-  }
-  #picModal .pic-row .row-btns { display: flex !important; gap: 3px !important; }
-  #picModal .pic-row .row-btns button {
-    background: transparent !important;
-    border: none !important;
-    cursor: pointer !important;
-    padding: 2px 5px !important;
-    border-radius: 4px !important;
-    font-size: 12px !important;
-    color: #64748b !important;
-  }
-  #picModal .pic-row .row-btns button:hover { background: #f1f5f9 !important; color: var(--brand-primary) !important; }
-  #picModal .pic-row .row-btns button.del:hover { background: #fef2f2 !important; color: #b91c1c !important; }
-  #picModal .pic-row .row-btns button:disabled { opacity: 0.2 !important; cursor: default !important; }
 </style>
 </head>
 <body class="theme-chatime">
@@ -1177,6 +1140,12 @@
 
         <div class="tanggal-label">Tanggal:</div>
         <div class="tanggal-value" id="tanggalDisplay">-</div>
+      </div>
+
+      <!-- FILTER ACTIVE NOTICE -->
+      <div class="filter-notice" id="filterNotice">
+        <span>⚠️ Menampilkan hasil filter status: <strong id="activeFilterName">-</strong></span>
+        <button id="resetFilterBtn">Tampilkan Semua</button>
       </div>
 
       <!-- TABS + INLINED SEARCH BOX -->
@@ -1284,6 +1253,7 @@
   <button class="float-btn secondary" id="floatBackBtn" data-tooltip="Kembali ke tampilan biasa">←</button>
 </div>
 
+<!-- PIC MODAL -->
 <div id="picModal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-header">
@@ -1292,7 +1262,7 @@
     </div>
     <form id="picForm" class="modal-body">
       <label>Nama Lengkap PIC</label>
-      <input type="text" id="picNameInput" placeholder="Contoh: hrsbgst">
+      <input type="text" id="picNameInput" placeholder="Contoh: Budi Santoso">
       <label>NIK Staf</label>
       <input type="text" id="picNikInput" placeholder="Contoh: 081198">
       <p id="picError" class="modal-error" style="display:none;"></p>
@@ -1310,11 +1280,33 @@
     </div>
   </div>
 </div>
+
+<!-- ALARM / EXPIRED POPUP MODAL -->
+<div id="alarmModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🚨 PERINGATAN: ITEM EXPIRED!</h3>
+      <button id="closeAlarmModal" class="modal-close">✕</button>
+    </div>
+    <div class="modal-body" style="padding-bottom: 0;">
+      <p style="margin: 0 0 10px; font-weight: 600; color: #b91c1c;">
+        Berikut adalah daftar bahan / item yang sudah kadaluarsa dan harus segera ditindaklanjuti:
+      </p>
+    </div>
+    <div class="alarm-list-wrap" id="alarmListContainer">
+      <!-- Item expired dinamis -->
+    </div>
+    <div class="modal-actions">
+      <button type="button" id="alarmOkBtn" class="btn primary" style="background:#b91c1c; border-color:#b91c1c;">Mengerti & Tutup</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
 /* =========================================================
-   CHECKLIST LABELLING - PURE GOOGLE SHEETS MODE (NO LOCALSTORAGE)
+   CHECKLIST LABELLING - DENGAN ALARM EXPIRED OTOMATIS
    ========================================================= */
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbx0EnrBIKR2OJTElE0u0V3uEPeU_JSt2ToyfexrRbpoCwSEvYhokzQkQvOh-q_ErWC3/exec';
@@ -1481,7 +1473,7 @@ function updateBrandTheme(tabName) {
 }
 
 /* =========================================================
-   SYNC & STORAGE UTILS (PURE GOOGLE SHEETS)
+   ROBUST SYNC & LOCALSTORAGE FALLBACK ENGINE
    ========================================================= */
 let syncTimer = null;
 let syncHideTimer = null;
@@ -1497,7 +1489,7 @@ function showSyncBadge(status, message) {
   const styles = {
     syncing: { bg: '#fef6e7', color: '#b45309', text: message || '🔄 Sync...' },
     ok:      { bg: '#f0fdf4', color: '#15803d', text: message || '✅ Tersimpan' },
-    error:   { bg: '#fef2f2', color: '#b91c1c', text: message || '⚠️ Gagal sync' }
+    error:   { bg: '#fef2f2', color: '#b91c1c', text: message || '⚠️ Mode Offline' }
   };
   const s = styles[status];
   if (!s) return;
@@ -1511,18 +1503,21 @@ function showSyncBadge(status, message) {
   if (status !== 'syncing') {
     syncHideTimer = setTimeout(() => {
       el.classList.remove('show');
-    }, 1500);
+    }, 2000);
   }
-}
-
-function hideSyncBadge() {
-  const el = document.getElementById('syncBadge');
-  if (el) el.classList.remove('show');
 }
 
 function saveAll() {
   state.meta.lastModified = Date.now();
   state.meta.picList = PIC_LIST;
+  
+  try {
+    localStorage.setItem('kios_batoh_data', JSON.stringify(DATA));
+    localStorage.setItem('kios_batoh_state', JSON.stringify(state));
+  } catch (e) {
+    console.error('Gagal menyimpan ke localStorage:', e);
+  }
+
   scheduleSyncToSheets();
 }
 
@@ -1564,41 +1559,59 @@ async function syncToSheets() {
       showSyncBadge('ok', '✅ Tersimpan ke Google Sheets');
     } else {
       console.error('Sync response tidak OK:', text);
-      showSyncBadge('error', '⚠️ Gagal simpan ke Cloud');
+      showSyncBadge('error', '⚠️ Gagal simpan ke Cloud (Tersimpan Lokal)');
     }
   } catch (e) {
-    console.error('Sync error:', e);
-    showSyncBadge('error', '⚠️ Koneksi gagal');
+    console.error('Sync error (Offline):', e);
+    showSyncBadge('error', '⚠️ Offline Mode (Tersimpan Lokal)');
   } finally {
     isSyncing = false;
   }
 }
 
 async function loadFromSheets() {
-  if (!API_URL || API_URL.indexOf('TEMPEL') === 0) return false;
+  try {
+    const localData = localStorage.getItem('kios_batoh_data');
+    const localState = localStorage.getItem('kios_batoh_state');
+    if (localData && localState) {
+      DATA = JSON.parse(localData);
+      state = JSON.parse(localState);
+      if (state.meta && Array.isArray(state.meta.picList)) {
+        PIC_LIST = state.meta.picList;
+      }
+    }
+  } catch (e) {
+    console.error('Gagal memuat dari localStorage:', e);
+  }
+
+  if (!API_URL || API_URL.indexOf('TEMPEL') === 0) return true;
+  
   try {
     const res = await fetch(API_URL + '?action=load');
     const json = await res.json();
     if (!json || !json.ok || !json.data) return false;
 
     const remoteData = json.data;
+    const remoteTimestamp = remoteData.meta ? (remoteData.meta.lastModified || 0) : 0;
+    const localTimestamp = state.meta ? (state.meta.lastModified || 0) : 0;
 
-    DATA = remoteData.data || { labelling: [], ouast: [] };
-    state = remoteData.state || {
-      labelling: {},
-      ouast: {},
-      meta: { picOpening: '', picClosing: '', tanggal: '', lastOpenDate: '', lastModified: 0, picList: [] }
-    };
+    if (remoteTimestamp >= localTimestamp || (!localStorage.getItem('kios_batoh_data'))) {
+      DATA = remoteData.data || DATA;
+      state = remoteData.state || state;
 
-    if (state.meta && Array.isArray(state.meta.picList)) {
-      PIC_LIST = state.meta.picList;
+      if (state.meta && Array.isArray(state.meta.picList)) {
+        PIC_LIST = state.meta.picList;
+      }
+
+      localStorage.setItem('kios_batoh_data', JSON.stringify(DATA));
+      localStorage.setItem('kios_batoh_state', JSON.stringify(state));
     }
 
     return true;
   } catch (e) {
-    console.error('Gagal mengambil data dari Google Sheets:', e);
+    console.error('Gagal mengambil data dari Google Sheets (Menggunakan data lokal):', e);
   }
-  return false;
+  return true;
 }
 
 function readItemState(cat, id) {
@@ -1733,6 +1746,15 @@ function updateSummary(cat) {
   document.getElementById('cntWarn').textContent = c.warn;
   document.getElementById('cntOk').textContent = c.ok;
   document.getElementById('cntChecked').textContent = c.checked;
+
+  const noticeBar = document.getElementById('filterNotice');
+  const activeNameEl = document.getElementById('activeFilterName');
+  if (activeStatusFilter !== 'all') {
+    noticeBar.classList.add('show');
+    activeNameEl.textContent = statusLabel[activeStatusFilter] || activeStatusFilter;
+  } else {
+    noticeBar.classList.remove('show');
+  }
 }
 
 function renderAll() {
@@ -1741,7 +1763,78 @@ function renderAll() {
   updateCheckAllButton('labelling');
   updateCheckAllButton('ouast');
   updateStickyPositions();
+  checkExpiredAndTriggerAlarm();
 }
+
+/* ============ ALARM POPUP EXPIRED CHECKER ============ */
+let alarmDismissedThisSession = false;
+
+function checkExpiredAndTriggerAlarm() {
+  if (alarmDismissedThisSession) return;
+
+  let expiredItems = [];
+
+  ['labelling', 'ouast'].forEach(cat => {
+    const items = DATA[cat] || [];
+    items.forEach(([name, exp]) => {
+      const id = slugify(name);
+      const st = readItemState(cat, id);
+      const prodDate = buildProdDate(st.prodDate, st.prodTime);
+      const { status, expDate } = computeStatus(prodDate, exp);
+      if (status === 'danger') {
+        expiredItems.push({
+          name,
+          category: cat === 'labelling' ? 'Chatime' : 'OUAST',
+          expDate: expDate ? fmtDateHuman(expDate, true, ' jam ') : '-'
+        });
+      }
+    });
+  });
+
+  if (expiredItems.length > 0) {
+    openAlarmModal(expiredItems);
+  }
+}
+
+function openAlarmModal(items) {
+  const container = document.getElementById('alarmListContainer');
+  if (!container) return;
+  container.innerHTML = '';
+
+  items.forEach(it => {
+    const row = document.createElement('div');
+    row.className = 'alarm-item-row';
+    row.innerHTML = `
+      <div class="alarm-item-info">
+        <span class="alarm-item-name">⚠️ ${it.name}</span>
+        <span class="alarm-item-sub">Kategori: <strong>${it.category}</strong> | Exp: ${it.expDate}</span>
+      </div>
+      <span style="font-size:10px; font-weight:700; background:#fef2f2; color:#b91c1c; padding:2px 6px; border-radius:4px; border:1px solid #fca5a5;">EXPIRED</span>
+    `;
+    container.appendChild(row);
+  });
+
+  document.getElementById('alarmModal').classList.add('show');
+}
+
+function closeAlarmModal() {
+  document.getElementById('alarmModal').classList.remove('show');
+  alarmDismissedThisSession = true; // Agar tidak terus menerus popup saat halaman aktif, kecuali di-refresh / dibuka ulang
+}
+
+document.getElementById('closeAlarmModal').addEventListener('click', closeAlarmModal);
+document.getElementById('alarmOkBtn').addEventListener('click', closeAlarmModal);
+document.getElementById('alarmModal').addEventListener('click', (e) => {
+  if (e.target.id === 'alarmModal') closeAlarmModal();
+});
+
+// Deteksi saat web aktif kembali (tab kembali difokuskan oleh staf)
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    alarmDismissedThisSession = false; // Reset status agar alarm bisa muncul lagi jika web dibuka kembali
+    checkExpiredAndTriggerAlarm();
+  }
+});
 
 function updateCheckAllButton(cat) {
   const btnId = cat === 'labelling' ? 'checkAllLabelling' : 'checkAllOuast';
@@ -1965,6 +2058,14 @@ document.querySelectorAll('.summary-inline .box').forEach(box => {
     });
     renderAll();
   });
+});
+
+document.getElementById('resetFilterBtn').addEventListener('click', () => {
+  activeStatusFilter = 'all';
+  document.querySelectorAll('.summary-inline .box').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === 'all');
+  });
+  renderAll();
 });
 
 const searchBoxEl = document.getElementById('searchBox');
@@ -2580,9 +2681,9 @@ document.getElementById('picModal').addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const modal = document.getElementById('picModal');
-    if (modal && modal.classList.contains('show')) {
-      closePicModal();
-    }
+    if (modal && modal.classList.contains('show')) closePicModal();
+    const alarm = document.getElementById('alarmModal');
+    if (alarm && alarm.classList.contains('show')) closeAlarmModal();
   }
 });
 
@@ -2615,19 +2716,15 @@ document.getElementById('picForm').addEventListener('submit', (e) => {
 
 /* ============ INIT APLIKASI ============ */
 (async function init() {
-  showSyncBadge('syncing', '🔄 Memuat data dari Google Sheets...');
+  showSyncBadge('syncing', '🔄 Memuat data...');
   
-  const loaded = await loadFromSheets();
+  await loadFromSheets();
   
-  if (loaded) {
-    applyMetaToControls();
-    renderAll();
-    updateSummary(activeTab);
-    renderPicDropdowns();
-    showSyncBadge('ok', '✅ Data dari Cloud');
-  } else {
-    showSyncBadge('error', '⚠️ Gagal memuat data dari Cloud.');
-  }
+  applyMetaToControls();
+  renderAll();
+  updateSummary(activeTab);
+  renderPicDropdowns();
+  showSyncBadge('ok', '✅ Siap Digunakan');
 
   // Sinkronisasi otomatis tiap 30 detik
   setInterval(async () => {
@@ -2636,12 +2733,10 @@ document.getElementById('picForm').addEventListener('submit', (e) => {
     if (document.getElementById('printView').style.display === 'block') return;
     if (isSyncing) return;
 
-    const refreshed = await loadFromSheets();
-    if (refreshed) {
-      applyMetaToControls();
-      renderAll();
-      renderPicDropdowns();
-    }
+    await loadFromSheets();
+    applyMetaToControls();
+    renderAll();
+    renderPicDropdowns();
   }, 30000);
 })();
 </script>
