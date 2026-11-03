@@ -1004,8 +1004,8 @@
   }
   #syncBadge.show { opacity: 1; transform: translateY(0); }
 
-  /* ============ PIC MODAL & ALARM MODAL ============ */
-  #picModal.modal-overlay, #alarmModal.modal-overlay {
+  /* ============ PIC MODAL ============ */
+  #picModal.modal-overlay {
     position: fixed !important;
     top: 0 !important; left: 0 !important;
     right: 0 !important; bottom: 0 !important;
@@ -1020,8 +1020,8 @@
     padding: 16px !important;
     box-sizing: border-box !important;
   }
-  #picModal.modal-overlay.show, #alarmModal.modal-overlay.show { display: flex !important; }
-  #picModal .modal-box, #alarmModal .modal-box {
+  #picModal.modal-overlay.show { display: flex !important; }
+  #picModal .modal-box {
     background: #fff !important;
     border-radius: 14px !important;
     max-width: 440px !important;
@@ -1034,16 +1034,15 @@
     position: relative !important;
     margin: auto !important;
   }
-  #picModal .modal-header, #alarmModal .modal-header {
+  #picModal .modal-header {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     padding: 14px 18px !important;
     border-bottom: 1px solid #e2e8f0 !important;
   }
-  #picModal .modal-header h3, #alarmModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; }
-  #alarmModal .modal-header { background: #fef2f2; color: #b91c1c; border-bottom-color: #fca5a5; }
-  #picModal .modal-close, #alarmModal .modal-close {
+  #picModal .modal-header h3 { margin: 0 !important; font-size: 15px !important; font-weight: 800 !important; }
+  #picModal .modal-close {
     background: transparent !important;
     border: none !important;
     font-size: 18px !important;
@@ -1052,37 +1051,98 @@
     padding: 2px 6px !important;
     border-radius: 6px !important;
   }
-  #picModal .modal-close:hover, #alarmModal .modal-close:hover { background: #f1f5f9 !important; }
-  #picModal .modal-body, #alarmModal .modal-body { padding: 16px 18px !important; }
-  #alarmModal .alarm-list-wrap {
-    padding: 12px 18px 16px !important;
-    background: #f8fafc !important;
-    overflow-y: auto !important;
-    max-height: 260px !important;
+  #picModal .modal-close:hover { background: #f1f5f9 !important; }
+  #picModal .modal-body { padding: 16px 18px !important; }
+  #picModal .modal-body label {
+    display: block !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.4px !important;
+    color: #64748b !important;
+    margin-bottom: 4px !important;
+    margin-top: 10px !important;
   }
-  #alarmModal .alarm-item-row {
-    background: #fff !important;
-    border: 1px solid #fca5a5 !important;
-    border-left: 4px solid var(--danger) !important;
+  #picModal .modal-body label:first-child { margin-top: 0 !important; }
+  #picModal .modal-body input {
+    width: 100% !important;
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+    border: 1px solid #cbd5e1 !important;
     border-radius: 7px !important;
-    padding: 8px 12px !important;
-    margin-bottom: 8px !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    gap: 8px !important;
+    box-sizing: border-box !important;
+    font-family: inherit !important;
   }
-  #alarmModal .alarm-item-info { display: flex !important; flex-direction: column !important; }
-  #alarmModal .alarm-item-name { font-weight: 700 !important; color: #b91c1c !important; font-size: 12px !important; }
-  #alarmModal .alarm-item-sub { font-size: 10.5px !important; color: #64748b !important; margin-top: 2px !important; }
-  #alarmModal .modal-actions {
+  #picModal .modal-body input:focus {
+    outline: none !important;
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 0 0 3px rgba(106,44,145,0.15) !important;
+  }
+  #picModal .modal-error {
+    color: #b91c1c !important;
+    font-size: 11px !important;
+    margin: 6px 0 0 !important;
+    font-weight: 600 !important;
+  }
+  #picModal .modal-actions {
     display: flex !important;
     justify-content: flex-end !important;
     gap: 8px !important;
-    padding: 14px 18px !important;
-    border-top: 1px solid #e2e8f0 !important;
-    background: #fff !important;
+    margin-top: 16px !important;
   }
+  #picModal .modal-list-wrap {
+    padding: 12px 18px 16px !important;
+    border-top: 1px solid #e2e8f0 !important;
+    background: #f8fafc !important;
+    overflow-y: auto !important;
+  }
+  #picModal .modal-list-head {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-bottom: 8px !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    color: #64748b !important;
+  }
+  #picModal .modal-list { max-height: 200px !important; overflow-y: auto !important; }
+  #picModal .pic-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: #fff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 7px !important;
+    padding: 6px 10px !important;
+    margin-bottom: 5px !important;
+    font-size: 12px !important;
+    cursor: grab !important;
+    gap: 6px !important;
+  }
+  #picModal .pic-row.dragging { opacity: 0.4 !important; }
+  #picModal .pic-row.drag-over { border-color: var(--brand-primary) !important; background: #faf5ff !important; }
+  #picModal .pic-row .grip { color: #94a3b8 !important; }
+  #picModal .pic-row .num { color: #64748b !important; font-weight: 700 !important; width: 18px !important; }
+  #picModal .pic-row .pic-text {
+    flex: 1 !important;
+    font-weight: 600 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  #picModal .pic-row .row-btns { display: flex !important; gap: 3px !important; }
+  #picModal .pic-row .row-btns button {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 2px 5px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    color: #64748b !important;
+  }
+  #picModal .pic-row .row-btns button:hover { background: #f1f5f9 !important; color: var(--brand-primary) !important; }
+  #picModal .pic-row .row-btns button.del:hover { background: #fef2f2 !important; color: #b91c1c !important; }
+  #picModal .pic-row .row-btns button:disabled { opacity: 0.2 !important; cursor: default !important; }
 </style>
 </head>
 <body class="theme-chatime">
